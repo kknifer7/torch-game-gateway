@@ -1,0 +1,15 @@
+spring:
+  config:
+    activate:
+      on-profile: knifer-dev
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 0
+    timeout: 5000ms
+    connect-timeout: 5000ms
+dubbo:
+  application:
+    name: gateway-service
+  registry:
+    address: zookeeper://192.168.231.132:2181
