@@ -54,10 +54,17 @@ public class TestOrdinaryValve {
                 System.out.println("核心2");
             }
         };
+        OrdinaryValve ordinaryValve0 = new OrdinaryValve() {
+            @Override
+            protected void work() {
+                System.out.println("普通0");
+            }
+        };
 
         processCoreValve2.addBefore(processCoreValve1)
-                        .addBefore(processCoreValve0);
+                        .addBefore(processCoreValve0)
+                        .addBefore(ordinaryValve0);
 
-        processCoreValve0.run();
+        ordinaryValve0.run();
     }
 }
