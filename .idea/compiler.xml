@@ -6,16 +6,27 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="torch-game-gateway" />
+        <module name="torch-game-gateway-waf" />
+        <module name="torch-game-gateway-core" />
+        <module name="torch-game-gateway-deacon" />
+        <module name="torch-game-gateway-admin" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="torch-game-gateway" target="1.8" />
+      <module name="torch-game-gateway-admin" target="11" />
+      <module name="torch-game-gateway-core" target="11" />
+      <module name="torch-game-gateway-deacon" target="11" />
+      <module name="torch-game-gateway-waf" target="11" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="torch-game-gateway" options="-parameters" />
+      <module name="torch-game-gateway-admin" options="-parameters" />
+      <module name="torch-game-gateway-core" options="-parameters" />
+      <module name="torch-game-gateway-deacon" options="-parameters" />
+      <module name="torch-game-gateway-waf" options="-parameters" />
     </option>
   </component>
 </project>

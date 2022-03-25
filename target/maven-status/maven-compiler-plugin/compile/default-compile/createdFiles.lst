@@ -1,8 +1,0 @@
-xit\gateway\core\exception\ValveException.class
-xit\gateway\core\valve\Valve.class
-xit\gateway\core\valve\impl\AbstractValve.class
-xit\gateway\core\valve\impl\ProcessCoreValve.class
-xit\gateway\admin\controller\TestController.class
-xit\gateway\core\valve\impl\OrdinaryValve.class
-xit\gateway\TorchGameGatewayApplication.class
-xit\gateway\core\exception\IllegalValveOperationException.class
