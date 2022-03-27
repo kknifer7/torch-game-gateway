@@ -6,7 +6,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.util.CollectionUtils;
 import reactor.core.publisher.Mono;
 import xit.gateway.exception.system.RouteResolvingException;
-import xit.gateway.exception.system.SystemException;
 import xit.gateway.pojo.HttpRoute;
 import xit.gateway.pojo.Route;
 
