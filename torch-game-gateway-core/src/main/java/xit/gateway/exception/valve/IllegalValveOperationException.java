@@ -1,4 +1,4 @@
-package xit.gateway.core.exception.valve;
+package xit.gateway.exception.valve;
 
 public class IllegalValveOperationException extends ValveException{
     public IllegalValveOperationException() {

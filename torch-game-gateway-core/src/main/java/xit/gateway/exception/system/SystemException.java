@@ -1,4 +1,4 @@
-package xit.gateway.core.exception.system;
+package xit.gateway.exception.system;
 
 public class SystemException extends RuntimeException{
     public SystemException(){

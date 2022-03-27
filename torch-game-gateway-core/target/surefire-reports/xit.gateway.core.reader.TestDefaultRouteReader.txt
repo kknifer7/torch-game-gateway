@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: xit.gateway.core.reader.TestDefaultRouteReader
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 6.16 s - in xit.gateway.core.reader.TestDefaultRouteReader

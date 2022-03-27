@@ -5,5 +5,5 @@ package xit.gateway.pojo;
  * Description: RPC路由信息
  * Date: 2022/03/25
  */
-public class RPCRoute extends Route{
+public class RpcRoute extends Route{
 }

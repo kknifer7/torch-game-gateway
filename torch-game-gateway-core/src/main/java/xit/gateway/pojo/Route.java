@@ -8,16 +8,16 @@ import java.time.LocalDateTime;
  * Date: 2022/03/25
  */
 public abstract class Route {
-    private String id;
-    private String name;
-    private String desc;
-    private String host;
-    private String port;
-    private String url;
-    private boolean disabled;
-    private LocalDateTime creationDatetime;
-    private LocalDateTime updateDatetime;
-    private Object extra;
+    protected String id;
+    protected String name;
+    protected String desc;
+    protected String host;
+    protected int port;
+    protected String url;
+    protected boolean disabled;
+    protected LocalDateTime creationDatetime;
+    protected LocalDateTime updateDatetime;
+    protected Object extra;
 
     public String getId() {
         return id;
@@ -51,11 +51,11 @@ public abstract class Route {
         this.host = host;
     }
 
-    public String getPort() {
+    public int getPort() {
         return port;
     }
 
-    public void setPort(String port) {
+    public void setPort(int port) {
         this.port = port;
     }
 
