@@ -9,6 +9,8 @@ import java.io.IOException;
 public class JsonUtils {
     private static final ObjectMapper om;
 
+    private JsonUtils(){}
+
     static {
         om = new ObjectMapper();
     }

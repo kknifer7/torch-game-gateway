@@ -1,3 +1,5 @@
-E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\test\java\xit\gateway\wrapper\TestHttpRouteWrapper.java
+E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\test\java\xit\gateway\core\request\TestDefaultHTTPRequester.java
+E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\test\java\xit\gateway\core\route\reader\TestDefaultRouteReader.java
+E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\test\java\xit\gateway\core\valve\TestRouteInitializationLoadingValve.java
+E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\test\java\xit\gateway\wrapper\TestHttpRequestWrapper.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\test\java\xit\gateway\core\valve\TestOrdinaryValve.java
-E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\test\java\xit\gateway\core\reader\TestDefaultRouteReader.java

@@ -1,5 +1,7 @@
 package xit.gateway.core.valve.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import xit.gateway.core.valve.Pipeline;
 import xit.gateway.core.valve.Valve;
 
@@ -8,38 +10,31 @@ import xit.gateway.core.valve.Valve;
  * Description: 管道流单例
  * Date: 2022/03/25
  */
+@Component
 public class GatewayPipeline implements Pipeline {
-    private final static GatewayPipeline PIPELINE = new GatewayPipeline();
-    private final Valve first;
-    private final Valve last;
+    private Valve first;
+    private Valve last;
 
-    private GatewayPipeline(){
+    @Autowired
+    private GatewayPipeline(RouteInitializationLoadingValve routeLoadingValve){
         // TODO 初始化管道流
-        first = null;
+        first = routeLoadingValve;
         last = null;
     }
 
-    public static GatewayPipeline getInstance(){
-        return PIPELINE;
+    @Override
+    public Pipeline addLast(AbstractValve valve) {
+        last.addAfter(valve);
+        last = valve;
+
+        return this;
     }
 
     @Override
-    public Pipeline addLast() {
-        return null;
-    }
+    public Pipeline addFirst(AbstractValve valve) {
+        first.addBefore(valve);
+        first = valve;
 
-    @Override
-    public Pipeline addFirst() {
-        return null;
-    }
-
-    @Override
-    public Pipeline addAfter(Valve valve, Valve newValve) {
-        return null;
-    }
-
-    @Override
-    public Pipeline addBefore(Valve valve, Valve newValve) {
-        return null;
+        return this;
     }
 }

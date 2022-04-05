@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
  * Description: 路由信息抽象类
  * Date: 2022/03/25
  */
-public abstract class Route {
+public class Route {
     protected String id;
     protected String name;
     protected String desc;
@@ -97,5 +97,21 @@ public abstract class Route {
 
     public void setExtra(Object extra) {
         this.extra = extra;
+    }
+
+    @Override
+    public String toString() {
+        return "Route{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", desc='" + desc + '\'' +
+                ", host='" + host + '\'' +
+                ", port=" + port +
+                ", url='" + url + '\'' +
+                ", disabled=" + disabled +
+                ", creationDatetime=" + creationDatetime +
+                ", updateDatetime=" + updateDatetime +
+                ", extra=" + extra +
+                '}';
     }
 }

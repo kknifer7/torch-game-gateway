@@ -1,0 +1,48 @@
+﻿[
+    {
+        "id": "123456",
+        "name": "default",
+        "baseUrl": "http://localhost:8080",
+        "httpRoutes": {
+            "service-01": [
+                    {
+                        "id": "11111",
+                        "desc": "路由测试",
+                        "host": "localhost",
+                        "port": 8080,
+                        "url": "/val",
+                        "disabled": false,
+                        "extra": 111
+                    }
+            ],
+            "service-02": [
+                    {
+                        "id": "22222",
+                        "desc": "路由测试2",
+                        "host": "localhost",
+                        "port": 8080,
+                        "url": "/val-form",
+                        "disabled": false,
+                        "extra": 222
+                    }
+            ]
+        }
+    },{
+        "id": "67890",
+        "name": "default",
+        "baseUrl": "https://www.10086.cn/",
+        "httpRoutes": {
+            "service-99": [
+                {
+                    "id": "111211",
+                    "desc": "路由测试（中国移动用户协议：/web_notice/protocol/5003337_673_1937.json）",
+                    "host": "www.10086.cn",
+                    "port": 80,
+                    "url": "",
+                    "disabled": false,
+                    "extra": 111
+                }
+            ]
+        }
+    }
+]

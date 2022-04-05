@@ -13,3 +13,9 @@ dubbo:
     name: gateway-service
   registry:
     address: zookeeper://192.168.231.132:2181
+server:
+  port: 8081
+torch:
+  gateway:
+    init:
+      routes-json-path: test-data/route-groups.json

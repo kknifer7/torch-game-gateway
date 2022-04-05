@@ -1,11 +1,12 @@
 package xit.gateway.pojo;
 
-import xit.gateway.wrapper.HttpRouteWrapper;
+import xit.gateway.wrapper.HttpRequestWrapper;
 
 import java.util.List;
 import java.util.Map;
 
 /**
+ * TODO 目前此类无用，待重新设计
  * @author Knifer
  * Description: HTTP路由信息
  * Date: 2022/03/25
@@ -13,18 +14,20 @@ import java.util.Map;
 public class HttpRoute extends Route {
     private Map<String, List<String>> headers;
     private String method;
+    private String accept;
     private Map<String, Object> params;                                 // 请求参数
     private String body;                                                // 请求体
     private String bodyElementType;                                     // 请求体类型
-    private HttpRouteWrapper.ReturnDataType returnDataType;             // 返回类型
+    private HttpRequestWrapper.ReturnDataType returnDataType;             // 返回类型
     private String returnElementType;                                   // 返回体类型
 
     public HttpRoute() {
     }
 
-    public HttpRoute(Map<String, List<String>> headers, String method, Map<String, Object> params, String body, String bodyElementType, HttpRouteWrapper.ReturnDataType returnDataType, String returnElementType) {
+    public HttpRoute(Map<String, List<String>> headers, String method, String accept, Map<String, Object> params, String body, String bodyElementType, HttpRequestWrapper.ReturnDataType returnDataType, String returnElementType) {
         this.headers = headers;
         this.method = method;
+        this.accept = accept;
         this.params = params;
         this.body = body;
         this.bodyElementType = bodyElementType;
@@ -46,6 +49,14 @@ public class HttpRoute extends Route {
 
     public void setMethod(String method) {
         this.method = method;
+    }
+
+    public String getAccept() {
+        return accept;
+    }
+
+    public void setAccept(String accept) {
+        this.accept = accept;
     }
 
     public Map<String, Object> getParams() {
@@ -72,11 +83,11 @@ public class HttpRoute extends Route {
         this.bodyElementType = bodyElementType;
     }
 
-    public HttpRouteWrapper.ReturnDataType getReturnDataType() {
+    public HttpRequestWrapper.ReturnDataType getReturnDataType() {
         return returnDataType;
     }
 
-    public void setReturnDataType(HttpRouteWrapper.ReturnDataType returnDataType) {
+    public void setReturnDataType(HttpRequestWrapper.ReturnDataType returnDataType) {
         this.returnDataType = returnDataType;
     }
 
