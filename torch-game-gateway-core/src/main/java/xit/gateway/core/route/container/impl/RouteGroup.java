@@ -1,11 +1,13 @@
 package xit.gateway.core.route.container.impl;
 
 import xit.gateway.core.route.container.RouteContainer;
+import xit.gateway.exception.route.RouteResolvingException;
 import xit.gateway.pojo.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Knifer
@@ -16,13 +18,13 @@ public class RouteGroup implements RouteContainer {
     private String id;
     private String name;
     private String baseUrl;
-    private Map<String, List<Route>> httpRoutes;
-    private Map<String, List<Route>> rpcRoutes;
+    private ConcurrentHashMap<String, List<Route>> httpRoutes;
+    private ConcurrentHashMap<String, List<Route>> rpcRoutes;
 
     public RouteGroup() {
     }
 
-    public RouteGroup(String id, String name, String baseUrl, Map<String, List<Route>> httpRoutes, Map<String, List<Route>> rpcRoutes) {
+    public RouteGroup(String id, String name, String baseUrl, ConcurrentHashMap<String, List<Route>> httpRoutes, ConcurrentHashMap<String, List<Route>> rpcRoutes) {
         this.id = id;
         this.name = name;
         this.baseUrl = baseUrl;
@@ -58,7 +60,7 @@ public class RouteGroup implements RouteContainer {
         return httpRoutes;
     }
 
-    public void setHttpRoutes(Map<String, List<Route>> httpRoutes) {
+    public void setHttpRoutes(ConcurrentHashMap<String, List<Route>> httpRoutes) {
         this.httpRoutes = httpRoutes;
     }
 
@@ -66,7 +68,7 @@ public class RouteGroup implements RouteContainer {
         return rpcRoutes;
     }
 
-    public void setRpcRoutes(Map<String, List<Route>> rpcRoutes) {
+    public void setRpcRoutes(ConcurrentHashMap<String, List<Route>> rpcRoutes) {
         this.rpcRoutes = rpcRoutes;
     }
 
@@ -84,25 +86,23 @@ public class RouteGroup implements RouteContainer {
     @Override
     public void put(Route route) {
         List<Route> routes;
+        Map<String, List<Route>> routeMap;
 
         if (route instanceof HttpRoute){
-            routes = httpRoutes.get(route.getName());
-            if (routes == null){
-                routes = new ArrayList<>();
-                routes.add(route);
-                httpRoutes.put(route.getName(), routes);
-            }else{
-                routes.add(route);
-            }
+            routeMap = httpRoutes;
         }else if (route instanceof RpcRoute){
-            routes = rpcRoutes.get(route.getName());
-            if (routes == null){
-                routes = new ArrayList<>();
-                routes.add(route);
-                rpcRoutes.put(route.getName(), routes);
-            }else{
-                routes.add(route);
-            }
+            routeMap = rpcRoutes;
+        }else{
+            throw new RouteResolvingException("unknown route type");
+        }
+
+        routes = routeMap.get(route.getName());
+        if (routes == null){
+            routes = new CopyOnWriteArrayList<>();
+            routes.add(route);
+            routeMap.put(route.getName(), routes);
+        }else{
+            routes.add(route);
         }
     }
 

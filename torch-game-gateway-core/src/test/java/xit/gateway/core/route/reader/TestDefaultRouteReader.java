@@ -20,7 +20,7 @@ public class TestDefaultRouteReader {
 
         try {
             //httpRoutes = routeReader.loadHttpRouteFromJSON("test-data/http-routes.json");
-            routeGroups = routeReader.loadRouteGroupFromJSON("test-data/route-groups.json");
+            routeGroups = routeReader.loadRouteGroupFromJSON("../test-data/route-groups.json");
         } catch (IOException e) {
             e.printStackTrace();
         }

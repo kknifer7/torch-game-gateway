@@ -18,9 +18,9 @@ import xit.gateway.core.route.container.impl.RouteGroup;
 import xit.gateway.exception.requester.RequestFailedException;
 import xit.gateway.pojo.Route;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
 /**
@@ -40,7 +40,7 @@ public class DefaultHttpRequester implements HttpRequester {
         this.routeGroup = routeGroup;
         this.routes = this.routeGroup.getHttpRoutes();
         this.webClient = WebClient.create(routeGroup.getBaseUrl());
-        this.keys = new ArrayList<>();
+        this.keys = new CopyOnWriteArrayList<>();
         if (!CollectionUtils.isEmpty(httpRoutes)){
             keys.addAll(httpRoutes.keySet());
         }
