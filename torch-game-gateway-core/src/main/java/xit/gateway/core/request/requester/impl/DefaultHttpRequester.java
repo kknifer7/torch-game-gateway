@@ -5,7 +5,6 @@ import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpCookie;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.server.PathContainer;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.util.CollectionUtils;
@@ -32,7 +31,7 @@ import java.util.stream.Collectors;
 public class DefaultHttpRequester implements HttpRequester {
     private final RouteGroup routeGroup;
     private final List<String> keys;                // 为routes所有路由的名称（服务名），用于从容器中定位Requester
-    private final Map<String, List<Route>> routes;  //
+    private final Map<String, List<Route>> routes;
     private final WebClient webClient;
 
     public DefaultHttpRequester(RouteGroup routeGroup) {

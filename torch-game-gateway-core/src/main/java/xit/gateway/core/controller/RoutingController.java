@@ -8,7 +8,6 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 import xit.gateway.core.request.container.impl.GlobalRequesterContainer;
 import xit.gateway.core.request.requester.HttpRequester;
-import xit.gateway.core.route.container.impl.GlobalRouteContainer;
 import xit.gateway.pojo.ResultMessage;
 import xit.gateway.utils.ResultMessageUtils;
 
@@ -17,7 +16,7 @@ public class RoutingController {
     private final GlobalRequesterContainer requesterContainer;
 
     @Autowired
-    public RoutingController(GlobalRequesterContainer requesterContainer, GlobalRouteContainer routeContainer) {
+    public RoutingController(GlobalRequesterContainer requesterContainer) {
         this.requesterContainer = requesterContainer;
     }
 
