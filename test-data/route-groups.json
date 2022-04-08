@@ -26,6 +26,19 @@
                         "extra": 222
                     }
             ]
+        },
+        "rpcRoutes": {
+            "service-88": [
+                {
+                    "id": "rpc123456",
+                    "desc": "RPC路由测试",
+                    "host": "localhost",
+                    "port": 8888,
+                    "url": "",
+                    "disabled": false,
+                    "extra": null
+                }
+            ]
         }
     },{
         "id": "67890",

@@ -1,4 +1,5 @@
 xit\gateway\pojo\RpcRoute.class
+xit\gateway\core\request\requester\impl\DefaultRpcRequester.class
 xit\gateway\core\valve\Valve.class
 xit\gateway\wrapper\HttpRequestWrapper.class
 xit\gateway\core\route\container\RouteContainer.class
@@ -24,10 +25,12 @@ xit\gateway\context\impl\DefaultGatewayContext.class
 xit\gateway\core\config\WebFluxConfig.class
 xit\gateway\core\route\reader\impl\DefaultRouteReader.class
 xit\gateway\exception\route\RouteResolvingException.class
+xit\gateway\core\request\requester\impl\DefaultRpcRequester$DefaultRpcClientHandler.class
 xit\gateway\core\request\requester\impl\DefaultHttpRequester.class
 xit\gateway\core\valve\impl\OrdinaryValve.class
 xit\gateway\core\route\reader\impl\DefaultRouteReader$3.class
 xit\gateway\exception\route\RouteLoadingException.class
+xit\gateway\core\request\requester\impl\DefaultRpcRequester$1.class
 xit\gateway\pojo\Route.class
 xit\gateway\core\route\container\impl\RouteGroup.class
 xit\gateway\pojo\HttpRoute.class
@@ -48,3 +51,4 @@ xit\gateway\core\route\container\impl\GlobalRouteContainer.class
 xit\gateway\utils\ResultMessageUtils.class
 xit\gateway\core\valve\impl\ProcessCoreValve.class
 xit\gateway\core\route\reader\impl\DefaultRouteReader$1.class
+xit\gateway\core\request\requester\RpcRequester.class

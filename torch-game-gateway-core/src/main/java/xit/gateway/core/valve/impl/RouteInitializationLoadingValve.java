@@ -22,7 +22,7 @@ import java.util.List;
  * Date: 2022/03/28
  */
 @Component
-public class RouteInitializationLoadingValve extends OrdinaryValve{
+public class RouteInitializationLoadingValve extends ProcessCoreValve{
     private final RouteReader routeReader;
 
     private final GlobalRouteContainer globalRouteContainer;
@@ -59,7 +59,7 @@ public class RouteInitializationLoadingValve extends OrdinaryValve{
             globalRouteGroupContainer.putAll(routeGroups);
             routeGroups.forEach(rg -> {
                 globalRouteContainer.putAll(rg);
-                globalRequesterContainer.put(requesterFactory.getRequester(rg));
+                globalRequesterContainer.putAll(requesterFactory.getRequester(rg));
             });
         }
     }

@@ -21,6 +21,13 @@ public class GlobalRequesterContainer implements RequesterContainer {
     }
 
     @Override
+    public void putAll(Requester[] requesters) {
+        for (Requester requester : requesters){
+            put(requester);
+        }
+    }
+
+    @Override
     public Requester get(String primary) {
         return requesterMap.get(primary);
     }

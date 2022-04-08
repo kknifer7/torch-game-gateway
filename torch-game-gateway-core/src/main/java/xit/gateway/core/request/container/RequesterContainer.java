@@ -10,6 +10,8 @@ import xit.gateway.core.request.requester.Requester;
 public interface RequesterContainer {
     void put(Requester requester);
 
+    void putAll(Requester[] requesters);
+
     Requester get(String primary);
 
     boolean contains(String primaryKey);
