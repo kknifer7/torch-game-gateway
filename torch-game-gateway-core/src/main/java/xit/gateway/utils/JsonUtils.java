@@ -1,5 +1,6 @@
 package xit.gateway.utils;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -21,6 +22,18 @@ public class JsonUtils {
 
     public static<T> T readValue(String filePath, TypeReference<T> typeReference) throws IOException {
         return om.readValue(new File(filePath), typeReference);
+    }
+
+    public static String object2String(Object obj){
+        String result = null;
+
+        try {
+            result = om.writeValueAsString(obj);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        return result;
     }
 
     public static ObjectMapper getOm(){

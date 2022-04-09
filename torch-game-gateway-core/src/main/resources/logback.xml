@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- 日志输出格式 -->
+    <property name="pattern" value="[%-4level] %d{yyyy-MM-dd HH:mm:ss} %c %M %L %thread %m%n"/>
+
+    <!-- 控制台appender -->
+    <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <target>
+            <!-- “System.out”原色输出，“System.err”红色输出 -->
+            System.out
+        </target>
+        <!-- 输出格式 -->
+        <encoder>
+            <!-- 直接引用上面定义的通用属性 -->
+            <pattern>${pattern}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+            <evaluator>
+                <expression>
+                    return (message.contains("Error finishing response. Closing connection")) || (message.contains("200 OK"));
+                </expression>
+            </evaluator>
+            <OnMismatch>NEUTRAL</OnMismatch>
+            <OnMatch>DENY</OnMatch>
+        </filter>
+    </appender>
+
+    <!-- 日志记录器 -->
+    <root level="INFO"><!-- level=ALL 可以记录所有级别的日志 -->
+        <!-- 引用上面定义的appender -->
+        <appender-ref ref="consoleAppender"/>
+    </root>
+</configuration>
