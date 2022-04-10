@@ -96,11 +96,11 @@ public class RouteGroup implements RouteContainer {
             throw new RouteResolvingException("unknown route type");
         }
 
-        routes = routeMap.get(route.getName());
+        routes = routeMap.get(route.getId());
         if (routes == null){
             routes = new CopyOnWriteArrayList<>();
             routes.add(route);
-            routeMap.put(route.getName(), routes);
+            routeMap.put(route.getId(), routes);
         }else{
             routes.add(route);
         }
@@ -112,11 +112,11 @@ public class RouteGroup implements RouteContainer {
     }
 
     @Override
-    public List<Route> get(String routeName) {
-        List<Route> result = httpRoutes.get(routeName);
+    public List<Route> get(String routeId) {
+        List<Route> result = httpRoutes.get(routeId);
 
         if (result == null){
-            result = rpcRoutes.get(routeName);
+            result = rpcRoutes.get(routeId);
         }
 
         return result;

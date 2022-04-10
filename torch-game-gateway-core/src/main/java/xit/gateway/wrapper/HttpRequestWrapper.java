@@ -61,27 +61,6 @@ public class HttpRequestWrapper extends Route {
         this.path = request.getPath();
     }
 
-    /*public HttpRequestWrapper(HttpRoute httpRoute){
-        BeanUtils.copyProperties(httpRoute, this);
-
-        this.headers = new HttpHeaders(
-                CollectionUtils.toMultiValueMap(httpRoute.getHeaders())
-        );
-        this.method = HttpMethod.resolve(httpRoute.getMethod());
-        this.accept = MediaType.parseMediaType(httpRoute.getAccept());
-        this.body = Mono.just(httpRoute.getBody());
-        try {
-            this.bodyElementType = Class.forName(httpRoute.getBodyElementType());
-        } catch (ClassNotFoundException e) {
-            throw new RouteResolvingException("class not found: " + httpRoute.getBodyElementType());
-        }
-        try {
-            this.returnElementType = Class.forName(httpRoute.getReturnElementType());
-        } catch (ClassNotFoundException e) {
-            throw new RouteResolvingException("class not found: " + httpRoute.getReturnElementType());
-        }
-    }*/
-
     public HttpHeaders getHeaders() {
         return headers;
     }
@@ -150,7 +129,6 @@ public class HttpRequestWrapper extends Route {
     public String toString() {
         return "HttpRouteWrapper{" +
                 "id='" + id + '\'' +
-                ", name='" + name + '\'' +
                 ", desc='" + desc + '\'' +
                 ", host='" + host + '\'' +
                 ", port=" + port +

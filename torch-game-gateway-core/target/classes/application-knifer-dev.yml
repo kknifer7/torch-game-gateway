@@ -19,3 +19,5 @@ torch:
   gateway:
     init:
       routes-json-path: test-data/route-groups.json
+    loadbalance:
+      loadbalancer-class: xit.gateway.core.loadbalancer.impl.RoundRobinLoadbalancer

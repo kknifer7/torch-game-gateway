@@ -1,6 +1,8 @@
 package xit.gateway.core.request.requester.impl;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpCookie;
 import org.springframework.http.HttpStatus;
@@ -13,6 +15,8 @@ import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
+import xit.gateway.core.loadbalancer.Loadbalancer;
+import xit.gateway.core.request.requester.AbstractRequester;
 import xit.gateway.core.request.requester.HttpRequester;
 import xit.gateway.core.route.container.impl.RouteGroup;
 import xit.gateway.exception.requester.RequestFailedException;
@@ -28,16 +32,19 @@ import java.util.stream.Collectors;
  * Description: HTTP REST 请求器实现。
  * Date: 2022/03/27
  */
-public class DefaultHttpRequester implements HttpRequester {
+public class DefaultHttpRequester extends AbstractRequester implements HttpRequester {
+    private final Logger logger = LoggerFactory.getLogger(DefaultHttpRequester.class);
     private final RouteGroup routeGroup;
     private final List<String> keys;                // 为routes所有路由的名称（服务名），用于从容器中定位Requester
     private final Map<String, List<Route>> routes;
+    private final Loadbalancer loadbalancer;
     private final WebClient webClient;
 
-    public DefaultHttpRequester(RouteGroup routeGroup) {
+    public DefaultHttpRequester(RouteGroup routeGroup, Loadbalancer loadbalancer) {
         Map<String, List<Route>> httpRoutes = routeGroup.getHttpRoutes();
 
         this.routeGroup = routeGroup;
+        this.loadbalancer = loadbalancer;
         this.routes = this.routeGroup.getHttpRoutes();
         this.webClient = WebClient.create(routeGroup.getBaseUrl());
         this.keys = new CopyOnWriteArrayList<>();
@@ -52,6 +59,7 @@ public class DefaultHttpRequester implements HttpRequester {
         ServerHttpRequest request = exchange.getRequest();
         ServerHttpResponse response = exchange.getResponse();
 
+        logger.info("调用服务：" + route.getDesc());
         spec = webClient.method(request.getMethod())
                 .uri(resolveServiceUri(serviceName, route, request))
                 .headers((headers) -> {
@@ -129,7 +137,7 @@ public class DefaultHttpRequester implements HttpRequester {
             throw new RequestFailedException("can not request: route not found");
         }
 
-        // TODO 目前没有负载均衡策略，默认取第一个服务
-        return invoke(serviceName, routeList.get(0), exchange);
+        // TODO 负载均衡
+        return invoke(serviceName, loadbalancer.choose(routeList, requesterContext), exchange);
     }
 }

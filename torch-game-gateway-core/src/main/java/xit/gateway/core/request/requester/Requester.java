@@ -2,9 +2,15 @@ package xit.gateway.core.request.requester;
 
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
+import xit.gateway.core.request.requester.context.RequesterContext;
 
 import java.util.List;
 
+/**
+ * @author Knifer
+ * Description: 请求发送器。
+ * Date: 2022/03/27
+ */
 public interface Requester {
     /**
      * 执行请求
@@ -18,4 +24,10 @@ public interface Requester {
      * @return keys
      */
     List<String> getKeys();
+
+    /**
+     * 获取请求器上下文
+     * @return context
+     */
+    RequesterContext getRequesterContext();
 }

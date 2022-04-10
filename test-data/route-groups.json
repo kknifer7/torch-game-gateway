@@ -5,15 +5,31 @@
         "baseUrl": "http://localhost:8080",
         "httpRoutes": {
             "service-01": [
-                    {
-                        "id": "11111",
-                        "desc": "路由测试",
-                        "host": "localhost",
-                        "port": 8080,
-                        "url": "/val",
-                        "disabled": false,
-                        "extra": 111
-                    }
+                {
+                    "id": "11111",
+                    "desc": "路由测试1",
+                    "host": "localhost",
+                    "port": 8080,
+                    "url": "/val",
+                    "disabled": false,
+                    "extra": 111
+                }, {
+                    "id": "22222",
+                    "desc": "路由测试2",
+                    "host": "localhost",
+                    "port": 8080,
+                    "url": "/val",
+                    "disabled": false,
+                    "extra": 222
+                }, {
+                    "id": "33333",
+                    "desc": "路由测试3",
+                    "host": "localhost",
+                    "port": 8080,
+                    "url": "/val",
+                    "disabled": false,
+                    "extra": 333
+                }
             ],
             "service-02": [
                     {

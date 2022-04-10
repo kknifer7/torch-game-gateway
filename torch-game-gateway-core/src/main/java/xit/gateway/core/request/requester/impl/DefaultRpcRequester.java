@@ -18,6 +18,8 @@ import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
+import xit.gateway.core.loadbalancer.Loadbalancer;
+import xit.gateway.core.request.requester.AbstractRequester;
 import xit.gateway.core.request.requester.RpcRequester;
 import xit.gateway.core.route.container.impl.RouteGroup;
 import xit.gateway.pojo.Route;
@@ -27,15 +29,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.*;
 
-public class DefaultRpcRequester implements RpcRequester {
+public class DefaultRpcRequester extends AbstractRequester implements RpcRequester {
     private final List<String> keys;
     private final Map<String, List<Route>> routes;
+    private final Loadbalancer loadbalancer;
     private final Map<String, ChannelFuture> rpcChannels;
     private final Map<ChannelId, Promise<byte[]>> requestPromise;
     private final Logger logger = LoggerFactory.getLogger(DefaultRpcRequester.class);
 
-    public DefaultRpcRequester(RouteGroup routeGroup) {
+    public DefaultRpcRequester(RouteGroup routeGroup, Loadbalancer loadbalancer) {
         this.routes = routeGroup.getRpcRoutes();
+        this.loadbalancer = loadbalancer;
         this.keys = new CopyOnWriteArrayList<>();
         this.rpcChannels = new ConcurrentHashMap<>();
         this.requestPromise = new ConcurrentHashMap<>();
@@ -57,7 +61,7 @@ public class DefaultRpcRequester implements RpcRequester {
                 .option(ChannelOption.TCP_NODELAY, true)
                 .handler(new ChannelInitializer<NioSocketChannel>() {
                     @Override
-                    protected void initChannel(NioSocketChannel nioSocketChannel) throws Exception {
+                    protected void initChannel(NioSocketChannel nioSocketChannel) {
                         // 传输数据时将字节编码为字符串
                         ChannelPipeline pipeline = nioSocketChannel.pipeline();
 
@@ -85,7 +89,7 @@ public class DefaultRpcRequester implements RpcRequester {
         ServerHttpResponse response = exchange.getResponse();
         List<Route> routes = this.routes.get(routeName);
         // TODO 负载均衡
-        Channel channel = rpcChannels.get(routes.get(0).getId()).channel();
+        Channel channel = rpcChannels.get(loadbalancer.choose(routes, requesterContext).getId()).channel();
         Promise<byte[]> resultPromise = new DefaultPromise<>(channel.eventLoop());
 
         requestPromise.put(channel.id(), resultPromise);
@@ -110,6 +114,7 @@ public class DefaultRpcRequester implements RpcRequester {
         @Override
         public void channelActive(ChannelHandlerContext ctx) throws Exception {
             System.out.println("连接建立");
+            super.channelActive(ctx);
         }
 
         @Override

@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
  */
 public class Route {
     protected String id;
-    protected String name;
     protected String desc;
     protected String host;
     protected int port;
@@ -25,14 +24,6 @@ public class Route {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getDesc() {
@@ -103,7 +94,6 @@ public class Route {
     public String toString() {
         return "Route{" +
                 "id='" + id + '\'' +
-                ", name='" + name + '\'' +
                 ", desc='" + desc + '\'' +
                 ", host='" + host + '\'' +
                 ", port=" + port +
