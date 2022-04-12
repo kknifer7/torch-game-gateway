@@ -1,6 +1,7 @@
 package xit.gateway.core.route.container.impl;
 
 import org.springframework.stereotype.Component;
+import xit.gateway.core.route.container.AbstractRouteContainer;
 import xit.gateway.pojo.Route;
 
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.Map;
  * Date: 2022/03/27
  */
 @Component
-public class GlobalRouteContainer extends AbstractRouteContainer{
+public class GlobalRouteContainer extends AbstractRouteContainer {
     public GlobalRouteContainer(){
         super();
     }

@@ -1,7 +1,5 @@
 package xit.gateway.core.valve;
 
-import xit.gateway.core.valve.impl.AbstractValve;
-
 /**
  * @author Knifer
  * Description: 管道接口。用于快速在管道流中添加阀门

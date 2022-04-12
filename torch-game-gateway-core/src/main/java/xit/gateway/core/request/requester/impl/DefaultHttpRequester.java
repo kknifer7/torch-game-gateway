@@ -137,7 +137,7 @@ public class DefaultHttpRequester extends AbstractRequester implements HttpReque
             throw new RequestFailedException("can not request: route not found");
         }
 
-        // TODO 负载均衡
+        // 负载均衡
         return invoke(serviceName, loadbalancer.choose(routeList, requesterContext), exchange);
     }
 }

@@ -50,7 +50,7 @@ public class DefaultRpcRequester extends AbstractRequester implements RpcRequest
     }
 
     private void connectServices(){
-        // TODO 初始化连接所有RPC服务
+        // 初始化连接所有RPC服务
         if (CollectionUtils.isEmpty(routes)) return;
 
         logger.debug("初始化连接所有RPC服务");
@@ -88,7 +88,7 @@ public class DefaultRpcRequester extends AbstractRequester implements RpcRequest
         ServerHttpRequest request = exchange.getRequest();
         ServerHttpResponse response = exchange.getResponse();
         List<Route> routes = this.routes.get(routeName);
-        // TODO 负载均衡
+        // 负载均衡
         Channel channel = rpcChannels.get(loadbalancer.choose(routes, requesterContext).getId()).channel();
         Promise<byte[]> resultPromise = new DefaultPromise<>(channel.eventLoop());
 

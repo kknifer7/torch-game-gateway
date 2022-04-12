@@ -1,4 +1,4 @@
-package xit.gateway.core.valve.impl;
+package xit.gateway.core.valve;
 
 import xit.gateway.exception.valve.IllegalValveOperationException;
 

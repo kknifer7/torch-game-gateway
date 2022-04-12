@@ -1,7 +1,5 @@
 package xit.gateway.core.valve;
 
-import xit.gateway.core.valve.impl.AbstractValve;
-
 /**
  * @author knifer
  * Description: 阀门接口。“阀门”是责任链上的一个结点

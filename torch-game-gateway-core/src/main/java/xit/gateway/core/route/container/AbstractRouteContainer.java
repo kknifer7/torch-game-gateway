@@ -1,4 +1,4 @@
-package xit.gateway.core.route.container.impl;
+package xit.gateway.core.route.container;
 
 import xit.gateway.core.route.container.RouteContainer;
 import xit.gateway.pojo.Route;

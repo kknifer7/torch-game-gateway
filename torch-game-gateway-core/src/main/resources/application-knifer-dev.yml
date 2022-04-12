@@ -8,11 +8,6 @@ spring:
     database: 0
     timeout: 5000ms
     connect-timeout: 5000ms
-dubbo:
-  application:
-    name: gateway-service
-  registry:
-    address: zookeeper://192.168.231.132:2181
 server:
   port: 8081
 torch:
