@@ -13,7 +13,7 @@ import java.util.List;
  * Date: 2022/03/25
  */
 public interface RouteReader {
-    List<HttpRoute> loadHttpRouteFromJSON(String filePath) throws IOException;
-    List<RpcRoute> loadRpcRouteFromJSON(String filePath) throws IOException;
-    List<RouteGroup> loadRouteGroupFromJSON(String filePath) throws IOException;
+    List<HttpRoute> readHttpRouteFromJSON(String filePath) throws IOException;
+    List<RpcRoute> readRpcRouteFromJSON(String filePath) throws IOException;
+    List<RouteGroup> readRouteGroupFromJSON(String filePath) throws IOException;
 }

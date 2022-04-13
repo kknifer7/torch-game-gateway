@@ -70,6 +70,7 @@ public class DefaultRpcRequester extends AbstractRequester implements RpcRequest
                     }
                 });
 
+        // TODO 待完成：循环重连机制
         routes.values().forEach(routeList -> routeList.forEach(route ->
                         bootstrap.remoteAddress(route.getHost(), route.getPort())
                                 .connect()

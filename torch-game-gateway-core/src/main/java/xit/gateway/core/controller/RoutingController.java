@@ -11,6 +11,11 @@ import xit.gateway.core.request.requester.Requester;
 import xit.gateway.pojo.ResultMessage;
 import xit.gateway.utils.ResultMessageUtils;
 
+/**
+ * @author Knifer
+ * Description: 负责处理代理任务。
+ * Date: 2022/04/13
+ */
 @RestController
 public class RoutingController {
     private final GlobalRequesterContainer requesterContainer;

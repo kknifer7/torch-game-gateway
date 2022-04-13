@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import xit.gateway.core.route.container.impl.RouteGroup;
-import xit.gateway.core.route.accessor.impl.RouteRedisAccessor;
+import xit.gateway.core.route.accessor.RouteAccessor;
 import xit.gateway.core.route.reader.RouteReader;
 import xit.gateway.core.valve.ProcessCoreValve;
 import xit.gateway.exception.route.RouteLoadingException;
@@ -20,15 +20,15 @@ import java.util.List;
 @Component
 public class RouteInitializationLoadingValve extends ProcessCoreValve {
     private final RouteReader routeReader;
-    private final RouteRedisAccessor routeRedisLoader;
+    private final RouteAccessor routeLoader;
 
     @Value("${torch.gateway.init.routes-json-path}")
     private String initRoutesJsonPath;
 
     @Autowired
-    public RouteInitializationLoadingValve(RouteReader routeReader, RouteRedisAccessor routeRedisLoader) {
+    public RouteInitializationLoadingValve(RouteReader routeReader, RouteAccessor routeLoader) {
         this.routeReader = routeReader;
-        this.routeRedisLoader = routeRedisLoader;
+        this.routeLoader = routeLoader;
     }
 
     @Override
@@ -36,13 +36,13 @@ public class RouteInitializationLoadingValve extends ProcessCoreValve {
         List<RouteGroup> routeGroups;
 
         try {
-            routeGroups = routeReader.loadRouteGroupFromJSON(initRoutesJsonPath);
+            routeGroups = routeReader.readRouteGroupFromJSON(initRoutesJsonPath);
         } catch (IOException e) {
             throw new RouteLoadingException("routeing load failed: " + e.getMessage());
         }
 
         if (routeGroups != null && !routeGroups.isEmpty()){
-            routeRedisLoader.mountRouteGroups(routeGroups);
+            routeLoader.loadRouteGroups(routeGroups);
         }
     }
 }

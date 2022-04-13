@@ -2,7 +2,9 @@ package xit.gateway.core.route.container.impl;
 
 import xit.gateway.core.route.container.RouteContainer;
 import xit.gateway.exception.route.RouteResolvingException;
-import xit.gateway.pojo.*;
+import xit.gateway.pojo.HttpRoute;
+import xit.gateway.pojo.Route;
+import xit.gateway.pojo.RpcRoute;
 
 import java.util.List;
 import java.util.Map;

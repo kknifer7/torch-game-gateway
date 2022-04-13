@@ -1,4 +1,4 @@
-package xit.gateway.core.route.accessor;
+package xit.gateway.core.route.accessor.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -7,18 +7,19 @@ import xit.gateway.core.request.requester.factory.RequesterFactory;
 import xit.gateway.core.route.container.impl.GlobalRouteContainer;
 import xit.gateway.core.route.container.impl.GlobalRouteGroupContainer;
 import xit.gateway.core.route.container.impl.RouteGroup;
+import xit.gateway.core.route.accessor.RouteAccessor;
 
 import java.util.List;
 
 @Component
-public abstract class AbstractRouteAccessor implements RouteAccessor {
-    protected final GlobalRouteContainer globalRouteContainer;
-    protected final GlobalRouteGroupContainer globalRouteGroupContainer;
-    protected final GlobalRequesterContainer globalRequesterContainer;
-    protected final RequesterFactory requesterFactory;
+public class DefaultRouteAccessor implements RouteAccessor {
+    private final GlobalRouteContainer globalRouteContainer;
+    private final GlobalRouteGroupContainer globalRouteGroupContainer;
+    private final GlobalRequesterContainer globalRequesterContainer;
+    private final RequesterFactory requesterFactory;
 
     @Autowired
-    public AbstractRouteAccessor(GlobalRouteContainer globalRouteContainer, GlobalRouteGroupContainer globalRouteGroupContainer, GlobalRequesterContainer globalRequesterContainer, RequesterFactory requesterFactory) {
+    public DefaultRouteAccessor(GlobalRouteContainer globalRouteContainer, GlobalRouteGroupContainer globalRouteGroupContainer, GlobalRequesterContainer globalRequesterContainer, RequesterFactory requesterFactory) {
         this.globalRouteContainer = globalRouteContainer;
         this.globalRouteGroupContainer = globalRouteGroupContainer;
         this.globalRequesterContainer = globalRequesterContainer;
@@ -26,7 +27,7 @@ public abstract class AbstractRouteAccessor implements RouteAccessor {
     }
 
     @Override
-    public void mountRouteGroups(List<RouteGroup> routeGroupList) {
+    public void loadRouteGroups(List<RouteGroup> routeGroupList) {
         globalRouteGroupContainer.putAll(routeGroupList);
         routeGroupList.forEach(rg -> {
             globalRouteContainer.putAll(rg);

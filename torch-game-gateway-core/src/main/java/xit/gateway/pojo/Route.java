@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 /**
  * @author Knifer
- * Description: 路由信息抽象类
+ * Description: 路由信息类
  * Date: 2022/03/25
  */
 public class Route {

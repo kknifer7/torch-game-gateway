@@ -14,17 +14,17 @@ import java.util.List;
 @Component
 public class DefaultRouteReader implements RouteReader {
     @Override
-    public List<HttpRoute> loadHttpRouteFromJSON(String filePath) throws IOException {
+    public List<HttpRoute> readHttpRouteFromJSON(String filePath) throws IOException {
         return JsonUtils.readValue(filePath, new TypeReference<>(){});
     }
 
     @Override
-    public List<RpcRoute> loadRpcRouteFromJSON(String filePath) throws IOException {
+    public List<RpcRoute> readRpcRouteFromJSON(String filePath) throws IOException {
         return JsonUtils.readValue(filePath, new TypeReference<>(){});
     }
 
     @Override
-    public List<RouteGroup> loadRouteGroupFromJSON(String filePath) throws IOException {
+    public List<RouteGroup> readRouteGroupFromJSON(String filePath) throws IOException {
         return JsonUtils.readValue(filePath, new TypeReference<>(){});
     }
 }

@@ -4,8 +4,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import xit.gateway.core.route.reader.impl.DefaultRouteReader;
-import xit.gateway.pojo.HttpRoute;
 import xit.gateway.core.route.container.impl.RouteGroup;
+import xit.gateway.pojo.Route;
 
 import java.io.IOException;
 import java.util.List;
@@ -15,12 +15,12 @@ public class TestDefaultRouteReader {
     @Test
     void testLoadJSON(){
         RouteReader routeReader = new DefaultRouteReader();
-        List<HttpRoute> httpRoutes = null;
+        List<Route> httpRoutes = null;
         List<RouteGroup> routeGroups = null;
 
         try {
-            //httpRoutes = routeReader.loadHttpRouteFromJSON("test-data/http-routes.json");
-            routeGroups = routeReader.loadRouteGroupFromJSON("../test-data/route-groups.json");
+            //httpRoutes = routeReader.readHttpRouteFromJSON("test-data/http-routes.json");
+            routeGroups = routeReader.readRouteGroupFromJSON("../test-data/route-groups.json");
         } catch (IOException e) {
             e.printStackTrace();
         }

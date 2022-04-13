@@ -1,14 +1,7 @@
 package xit.gateway.wrapper;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import xit.gateway.core.route.reader.RouteReader;
-import xit.gateway.core.route.reader.impl.DefaultRouteReader;
-import xit.gateway.pojo.HttpRoute;
-
-import java.io.IOException;
-import java.util.List;
 
 @SpringBootTest
 public class TestHttpRequestWrapper {
