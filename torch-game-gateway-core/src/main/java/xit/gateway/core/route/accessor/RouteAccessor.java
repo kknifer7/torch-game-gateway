@@ -1,6 +1,6 @@
 package xit.gateway.core.route.accessor;
 
-import xit.gateway.core.route.container.impl.RouteGroup;
+import xit.gateway.core.route.container.RouteGroup;
 
 import java.util.List;
 

@@ -1,5 +1,4 @@
 xit\gateway\core\valve\TestOrdinaryValve$7.class
-xit\gateway\core\route\loader\TestRouteRedisLoader.class
 xit\gateway\core\valve\TestRouteInitializationLoadingValve.class
 xit\gateway\core\request\TestDefaultHTTPRequester.class
 xit\gateway\core\valve\TestOrdinaryValve$1.class
@@ -7,6 +6,7 @@ xit\gateway\core\valve\TestOrdinaryValve$5.class
 xit\gateway\core\valve\TestOrdinaryValve$4.class
 xit\gateway\core\valve\TestOrdinaryValve$3.class
 xit\gateway\core\route\reader\TestDefaultRouteReader.class
+xit\gateway\core\route\accessor\TestRouteRedisLoader.class
 xit\gateway\wrapper\TestHttpRequestWrapper.class
 xit\gateway\core\valve\TestOrdinaryValve$6.class
 xit\gateway\core\valve\TestOrdinaryValve$2.class

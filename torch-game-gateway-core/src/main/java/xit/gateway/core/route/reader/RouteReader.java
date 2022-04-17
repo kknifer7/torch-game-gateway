@@ -1,7 +1,7 @@
 package xit.gateway.core.route.reader;
 
 import xit.gateway.pojo.HttpRoute;
-import xit.gateway.core.route.container.impl.RouteGroup;
+import xit.gateway.core.route.container.RouteGroup;
 import xit.gateway.pojo.RpcRoute;
 
 import java.io.IOException;

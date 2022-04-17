@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import org.springframework.stereotype.Component;
 import xit.gateway.core.route.reader.RouteReader;
 import xit.gateway.pojo.HttpRoute;
-import xit.gateway.core.route.container.impl.RouteGroup;
+import xit.gateway.core.route.container.RouteGroup;
 import xit.gateway.pojo.RpcRoute;
 import xit.gateway.utils.JsonUtils;
 

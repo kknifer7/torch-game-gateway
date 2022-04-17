@@ -6,7 +6,7 @@ import xit.gateway.core.loadbalancer.Loadbalancer;
 import xit.gateway.core.request.requester.Requester;
 import xit.gateway.core.request.requester.impl.DefaultHttpRequester;
 import xit.gateway.core.request.requester.impl.DefaultRpcRequester;
-import xit.gateway.core.route.container.impl.RouteGroup;
+import xit.gateway.core.route.container.RouteGroup;
 
 @Component
 public class RequesterFactory {

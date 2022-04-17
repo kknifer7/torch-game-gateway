@@ -1,7 +1,7 @@
-package xit.gateway.core.route.container.impl;
+package xit.gateway.core.route.container;
 
 import org.springframework.stereotype.Component;
-import xit.gateway.core.route.container.RouteGroupContainer;
+import xit.gateway.core.container.SingleContainer;
 import xit.gateway.utils.UUIDUtils;
 
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Component
-public class GlobalRouteGroupContainer implements RouteGroupContainer {
+public class GlobalRouteGroupContainer implements SingleContainer<RouteGroup> {
     private final Map<String, RouteGroup> routeGroupMap;
 
     public GlobalRouteGroupContainer(){
@@ -19,7 +19,7 @@ public class GlobalRouteGroupContainer implements RouteGroupContainer {
 
     @Override
     public void put(RouteGroup routeGroup) {
-        handleRouteGroupDuplicate(routeGroup);
+        handleDuplicate(routeGroup);
         routeGroupMap.put(routeGroup.getId(), routeGroup);
     }
 
@@ -27,7 +27,7 @@ public class GlobalRouteGroupContainer implements RouteGroupContainer {
     public void putAll(List<RouteGroup> routeGroupList) {
         routeGroupMap.putAll(
                 routeGroupList.stream()
-                        .peek(this::handleRouteGroupDuplicate)
+                        .peek(this::handleDuplicate)
                         .collect(Collectors.toMap(RouteGroup::getId, routeGroup -> routeGroup))
         );
     }
@@ -48,7 +48,7 @@ public class GlobalRouteGroupContainer implements RouteGroupContainer {
     }
 
     @Override
-    public void handleRouteGroupDuplicate(RouteGroup routeGroup) {
+    public void handleDuplicate(RouteGroup routeGroup) {
         String id = routeGroup.getId();
 
         if (id == null || routeGroupMap.containsKey(id)){

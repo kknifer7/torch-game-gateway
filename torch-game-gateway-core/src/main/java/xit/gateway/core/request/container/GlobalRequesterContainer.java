@@ -1,14 +1,15 @@
-package xit.gateway.core.request.container.impl;
+package xit.gateway.core.request.container;
 
 import org.springframework.stereotype.Component;
-import xit.gateway.core.request.container.RequesterContainer;
+import xit.gateway.core.container.SingleContainer;
 import xit.gateway.core.request.requester.Requester;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
-public class GlobalRequesterContainer implements RequesterContainer {
+public class GlobalRequesterContainer implements SingleContainer<Requester> {
     protected final Map<String, Requester> requesterMap;
 
     public GlobalRequesterContainer() {
@@ -21,6 +22,12 @@ public class GlobalRequesterContainer implements RequesterContainer {
     }
 
     @Override
+    public void putAll(List<Requester> requesters) {
+        for (Requester requester : requesters){
+            put(requester);
+        }
+    }
+
     public void putAll(Requester[] requesters) {
         for (Requester requester : requesters){
             put(requester);

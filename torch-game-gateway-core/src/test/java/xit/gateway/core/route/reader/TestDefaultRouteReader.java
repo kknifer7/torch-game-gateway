@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import xit.gateway.core.route.reader.impl.DefaultRouteReader;
-import xit.gateway.core.route.container.impl.RouteGroup;
+import xit.gateway.core.route.container.RouteGroup;
 import xit.gateway.pojo.Route;
 
 import java.io.IOException;

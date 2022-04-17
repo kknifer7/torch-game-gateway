@@ -1,6 +1,6 @@
-package xit.gateway.core.route.container.impl;
+package xit.gateway.core.route.container;
 
-import xit.gateway.core.route.container.RouteContainer;
+import xit.gateway.core.container.MultiContainer;
 import xit.gateway.exception.route.RouteResolvingException;
 import xit.gateway.pojo.HttpRoute;
 import xit.gateway.pojo.Route;
@@ -16,7 +16,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * Description: 路由组（聚合管理路由条目）。
  * Date: 2022/03/27
  */
-public class RouteGroup implements RouteContainer {
+public class RouteGroup implements MultiContainer<Route> {
     private String id;
     private String name;
     private String baseUrl;

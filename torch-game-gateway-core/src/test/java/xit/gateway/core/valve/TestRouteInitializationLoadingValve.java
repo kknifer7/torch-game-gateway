@@ -17,7 +17,6 @@ public class TestRouteInitializationLoadingValve {
     @Test
     void test(){
         valve.run();
-        Assertions.assertNotEquals(null, gatewayContext.routeContainer().get("service-01"));
-        System.out.println(gatewayContext.routeContainer().get("service-01").get(0));
+        Assertions.assertNotEquals(null, gatewayContext.routeGroupContainer().get("service-01"));
     }
 }

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
-import xit.gateway.core.request.container.impl.GlobalRequesterContainer;
+import xit.gateway.core.request.container.GlobalRequesterContainer;
 import xit.gateway.core.request.requester.Requester;
 import xit.gateway.pojo.ResultMessage;
 import xit.gateway.utils.ResultMessageUtils;

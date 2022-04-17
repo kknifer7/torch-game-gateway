@@ -3,7 +3,7 @@ package xit.gateway.core.valve.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import xit.gateway.core.route.container.impl.RouteGroup;
+import xit.gateway.core.route.container.RouteGroup;
 import xit.gateway.core.route.accessor.RouteAccessor;
 import xit.gateway.core.route.reader.RouteReader;
 import xit.gateway.core.valve.ProcessCoreValve;

@@ -1,19 +1,7 @@
 package xit.gateway.core.request;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import reactor.core.CorePublisher;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
-import xit.gateway.core.request.requester.HttpRequester;
-import xit.gateway.core.request.requester.impl.DefaultHttpRequester;
-import xit.gateway.core.route.container.impl.RouteGroup;
-import xit.gateway.core.route.reader.RouteReader;
-import xit.gateway.core.route.reader.impl.DefaultRouteReader;
-
-import java.io.IOException;
-import java.util.List;
 
 @SpringBootTest
 public class TestDefaultHTTPRequester {
