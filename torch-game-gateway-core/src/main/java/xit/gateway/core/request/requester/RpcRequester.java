@@ -1,7 +1,9 @@
 package xit.gateway.core.request.requester;
 
 import org.springframework.web.server.ServerWebExchange;
-import reactor.core.publisher.Mono;
+import xit.gateway.pojo.RequesterProxyResult;
+
+import java.net.UnknownHostException;
 
 /**
  * @author Knifer
@@ -9,5 +11,5 @@ import reactor.core.publisher.Mono;
  * Date: 2022/03/27
  */
 public interface RpcRequester extends Requester{
-    Mono<Void> invoke(String routeName, ServerWebExchange exchange);
+    RequesterProxyResult invoke(String routeName, ServerWebExchange exchange);
 }

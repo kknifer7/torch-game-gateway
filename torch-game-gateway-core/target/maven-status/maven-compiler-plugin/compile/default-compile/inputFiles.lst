@@ -18,8 +18,10 @@ E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\g
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\core\container\SingleContainer.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\utils\RedisUtils.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\core\loadbalancer\impl\RandomLoadbalancer.java
+E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\core\request\recordwatchdog\impl\DefaultRecordWatchdog.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\core\loadbalancer\Loadbalancer.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\starter\GatewayStarter.java
+E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\pojo\RequesterProxyResult.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\exception\requester\RouteDisabledException.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\exception\requester\RequestFailedException.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\pojo\Route.java
@@ -49,6 +51,7 @@ E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\g
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\core\route\reader\impl\DefaultRouteReader.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\exception\system\SystemException.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\core\route\limiter\AbstractRouteLimiter.java
+E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\core\request\recordwatchdog\RecordWatchdog.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\core\valve\OrdinaryValve.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\core\valve\impl\RouteInitializationLoadingValve.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\core\valve\ProcessCoreValve.java

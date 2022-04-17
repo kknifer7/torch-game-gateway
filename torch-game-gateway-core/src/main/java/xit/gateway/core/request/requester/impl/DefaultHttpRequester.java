@@ -3,6 +3,8 @@ package xit.gateway.core.request.requester.impl;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpCookie;
 import org.springframework.http.HttpStatus;
@@ -20,8 +22,13 @@ import xit.gateway.core.request.requester.AbstractRequester;
 import xit.gateway.core.request.requester.HttpRequester;
 import xit.gateway.core.route.container.RouteGroup;
 import xit.gateway.exception.requester.RequestFailedException;
+import xit.gateway.pojo.CallRecord;
+import xit.gateway.pojo.CalledRoute;
+import xit.gateway.pojo.RequesterProxyResult;
 import xit.gateway.pojo.Route;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -40,6 +47,9 @@ public class DefaultHttpRequester extends AbstractRequester implements HttpReque
     private final Loadbalancer loadbalancer;
     private final WebClient webClient;
 
+    @Value("${service.port}")
+    private String gatewayPort;
+
     public DefaultHttpRequester(RouteGroup routeGroup, Loadbalancer loadbalancer) {
         Map<String, List<Route>> httpRoutes = routeGroup.getHttpRoutes();
 
@@ -53,16 +63,28 @@ public class DefaultHttpRequester extends AbstractRequester implements HttpReque
         }
     }
 
-    private Mono<Void> invoke(String serviceName, Route route, ServerWebExchange exchange) {
+    private RequesterProxyResult invoke(String serviceName, Route route, ServerWebExchange exchange) {
         if (route.isDisabled()){
             throw new RequestFailedException("路由暂不可用", exchange.getRequest().getPath().value());
         }
 
         Mono<Void> result;
+        long startTime;
         WebClient.RequestHeadersSpec<?> spec;
         ServerHttpRequest request = exchange.getRequest();
         ServerHttpResponse response = exchange.getResponse();
+        CallRecord.Builder callRecordBuilder = CallRecord.builder()
+                .gatewayHost("hosthost")
+                .gatewayPort(gatewayPort)
+                .gatewayUri(request.getPath().value())
+                .serviceId(serviceName)
+                .timestamp(System.currentTimeMillis())
+                .route(() -> {
+                    CalledRoute calledRoute = new CalledRoute();
+                    BeanUtils.copyProperties(route, calledRoute);
 
+                    return calledRoute;
+                });
         logger.info("调用服务：" + route.getDesc());
         spec = webClient.method(request.getMethod())
                 .uri(resolveServiceUri(serviceName, route, request))
@@ -76,17 +98,22 @@ public class DefaultHttpRequester extends AbstractRequester implements HttpReque
         transformCookiesToSpec(request, spec);
 
         // 调用、处理响应结果或异常
+        startTime = System.currentTimeMillis();
         result = spec.exchangeToMono(proxyResponse -> {
+            callRecordBuilder.callTime(System.currentTimeMillis() - startTime)
+                    .success(true);
             prepareResponse(response, proxyResponse);
             return response.writeWith(proxyResponse.bodyToMono(DataBuffer.class));
         }).onErrorResume(ex -> Mono.defer(() -> {
+            callRecordBuilder.callTime(System.currentTimeMillis() - startTime)
+                    .success(false);
             String errorMsg = "服务调用失败：" + ex.getLocalizedMessage();
             response.setStatusCode(HttpStatus.OK);
             response.getHeaders().setContentType(MediaType.TEXT_PLAIN);
             return response.writeWith(Mono.just(response.bufferFactory().wrap(errorMsg.getBytes())));
         }).then(Mono.empty()));
 
-        return result;
+        return new RequesterProxyResult(callRecordBuilder.build(), result);
     }
 
     /**
@@ -134,7 +161,7 @@ public class DefaultHttpRequester extends AbstractRequester implements HttpReque
     }
 
     @Override
-    public Mono<Void> invoke(String serviceName, ServerWebExchange exchange) {
+    public RequesterProxyResult invoke(String serviceName, ServerWebExchange exchange) {
         List<Route> routeList = routes.get(serviceName);
 
         if (routeList == null){

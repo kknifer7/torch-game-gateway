@@ -11,6 +11,8 @@ import io.netty.util.concurrent.DefaultPromise;
 import io.netty.util.concurrent.Promise;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -22,8 +24,13 @@ import xit.gateway.core.loadbalancer.Loadbalancer;
 import xit.gateway.core.request.requester.AbstractRequester;
 import xit.gateway.core.request.requester.RpcRequester;
 import xit.gateway.core.route.container.RouteGroup;
+import xit.gateway.pojo.CallRecord;
+import xit.gateway.pojo.CalledRoute;
+import xit.gateway.pojo.RequesterProxyResult;
 import xit.gateway.pojo.Route;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +43,9 @@ public class DefaultRpcRequester extends AbstractRequester implements RpcRequest
     private final Map<String, ChannelFuture> rpcChannels;
     private final Map<ChannelId, Promise<byte[]>> requestPromise;
     private final Logger logger = LoggerFactory.getLogger(DefaultRpcRequester.class);
+
+    @Value("${service.port}")
+    private String gatewayPort;
 
     public DefaultRpcRequester(RouteGroup routeGroup, Loadbalancer loadbalancer) {
         this.routes = routeGroup.getRpcRoutes();
@@ -84,24 +94,39 @@ public class DefaultRpcRequester extends AbstractRequester implements RpcRequest
     }
 
     @Override
-    public Mono<Void> invoke(String routeName, ServerWebExchange exchange) {
+    public RequesterProxyResult invoke(String serviceName, ServerWebExchange exchange) {
         logger.debug("HTTP -> RPC");
         ServerHttpRequest request = exchange.getRequest();
         ServerHttpResponse response = exchange.getResponse();
-        List<Route> routes = this.routes.get(routeName);
+        List<Route> routes = this.routes.get(serviceName);
         // 负载均衡
-        Channel channel = rpcChannels.get(loadbalancer.choose(routes, requesterContext).getId()).channel();
+        Route route = loadbalancer.choose(routes, requesterContext);
+        Channel channel = rpcChannels.get(route.getId()).channel();
         Promise<byte[]> resultPromise = new DefaultPromise<>(channel.eventLoop());
+        Mono<Void> result;
+        CallRecord.Builder callRecordBuilder = CallRecord.builder()
+                .gatewayHost("hosthosthost")
+                .gatewayPort(gatewayPort)
+                .gatewayUri(request.getPath().value())
+                .serviceId(serviceName)
+                .timestamp(System.currentTimeMillis())
+                .route(() -> {
+                    CalledRoute calledRoute = new CalledRoute();
+                    BeanUtils.copyProperties(route, calledRoute);
+
+                    return calledRoute;
+                });
+        long startTime = System.currentTimeMillis();
 
         requestPromise.put(channel.id(), resultPromise);
-
-        return request.getBody().flatMap(dataBuffer -> {
+        result = request.getBody().flatMap(dataBuffer -> {
             Mono<DataBuffer> res = null;
 
             channel.writeAndFlush(dataBuffer.toString(StandardCharsets.UTF_8));
             try {
                 res = Mono.just(response.bufferFactory().wrap(resultPromise.get(10, TimeUnit.SECONDS)));
-            }catch (InterruptedException | ExecutionException | TimeoutException e){
+                callRecordBuilder.callTime(System.currentTimeMillis() - startTime);
+            } catch (InterruptedException | ExecutionException | TimeoutException e) {
                 e.printStackTrace();
             }
             response.setStatusCode(HttpStatus.OK);
@@ -109,6 +134,8 @@ public class DefaultRpcRequester extends AbstractRequester implements RpcRequest
 
             return response.writeWith(res).then();
         }).then();
+
+        return new RequesterProxyResult(callRecordBuilder.build(), result);
     }
 
     private class DefaultRpcClientHandler extends ChannelInboundHandlerAdapter{

@@ -7,11 +7,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 import xit.gateway.core.request.container.GlobalRequesterContainer;
+import xit.gateway.core.request.recordwatchdog.RecordWatchdog;
 import xit.gateway.core.request.requester.Requester;
-import xit.gateway.exception.requester.RequestFailedException;
 import xit.gateway.exception.requester.RequesterNotFoundException;
-import xit.gateway.pojo.ResultMessage;
-import xit.gateway.utils.ResultMessageUtils;
+import xit.gateway.pojo.RequesterProxyResult;
+
+import java.net.UnknownHostException;
 
 /**
  * @author Knifer
@@ -21,14 +22,16 @@ import xit.gateway.utils.ResultMessageUtils;
 @RestController
 public class RoutingController {
     private final GlobalRequesterContainer requesterContainer;
+    private final RecordWatchdog recordWatchdog;
 
     @Autowired
-    public RoutingController(GlobalRequesterContainer requesterContainer) {
+    public RoutingController(GlobalRequesterContainer requesterContainer, RecordWatchdog recordWatchdog) {
         this.requesterContainer = requesterContainer;
+        this.recordWatchdog = recordWatchdog;
     }
 
     @RequestMapping("/before/{serviceId}/**")
-    public Mono<?> all(@PathVariable("serviceId") String serviceId, ServerWebExchange exchange) {
+    public Mono<?> all(@PathVariable("serviceId") String serviceId, ServerWebExchange exchange) throws UnknownHostException {
         Requester requester = requesterContainer.get(serviceId);
 
         if (requester == null){
@@ -38,7 +41,10 @@ public class RoutingController {
             );
         }
 
-        return requester.invoke(serviceId, exchange);
+        RequesterProxyResult result = requester.invoke(serviceId, exchange);
+        recordWatchdog.watchAndSend(result);
+
+        return result.getResult();
     }
 
     @RequestMapping("/test")

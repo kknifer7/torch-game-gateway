@@ -1,0 +1,12 @@
+spring:
+  config:
+    activate:
+      on-profile: knifer-dev
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 0
+    timeout: 5000ms
+    connect-timeout: 5000ms
+server:
+  port: 8082

@@ -10,6 +10,7 @@
         <module name="torch-game-gateway-core" />
         <module name="torch-game-gateway-deacon" />
         <module name="torch-game-gateway-admin" />
+        <module name="torch-game-gateway-model" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -17,6 +18,7 @@
       <module name="torch-game-gateway-admin" target="11" />
       <module name="torch-game-gateway-core" target="11" />
       <module name="torch-game-gateway-deacon" target="11" />
+      <module name="torch-game-gateway-model" target="11" />
       <module name="torch-game-gateway-waf" target="11" />
     </bytecodeTargetLevel>
   </component>
@@ -26,6 +28,7 @@
       <module name="torch-game-gateway-admin" options="-parameters" />
       <module name="torch-game-gateway-core" options="-parameters" />
       <module name="torch-game-gateway-deacon" options="-parameters" />
+      <module name="torch-game-gateway-model" options="-parameters" />
       <module name="torch-game-gateway-waf" options="-parameters" />
     </option>
   </component>

@@ -1,4 +1,5 @@
 xit\gateway\pojo\RpcRoute.class
+xit\gateway\core\request\recordwatchdog\impl\DefaultRecordWatchdog.class
 xit\gateway\core\request\requester\impl\DefaultRpcRequester.class
 xit\gateway\core\route\limiter\RouteLimiter.class
 xit\gateway\core\request\requester\context\RequesterContext.class
@@ -40,6 +41,7 @@ xit\gateway\core\request\requester\impl\DefaultRpcRequester$1.class
 xit\gateway\pojo\Route.class
 xit\gateway\core\valve\OrdinaryValve.class
 xit\gateway\pojo\HttpRoute.class
+xit\gateway\pojo\RequesterProxyResult.class
 xit\gateway\core\route\accessor\RouteAccessor.class
 xit\gateway\utils\RouteUtils.class
 xit\gateway\constant\ProtocolType.class
@@ -66,4 +68,5 @@ xit\gateway\core\route\reader\impl\DefaultRouteReader$1.class
 xit\gateway\core\config\GatewayConfig.class
 xit\gateway\core\request\requester\RpcRequester.class
 xit\gateway\exception\requester\RequesterException.class
+xit\gateway\core\request\recordwatchdog\RecordWatchdog.class
 xit\gateway\core\loadbalancer\impl\NoLoadbalancer.class

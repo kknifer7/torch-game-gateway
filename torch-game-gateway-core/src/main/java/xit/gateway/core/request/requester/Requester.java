@@ -1,9 +1,10 @@
 package xit.gateway.core.request.requester;
 
 import org.springframework.web.server.ServerWebExchange;
-import reactor.core.publisher.Mono;
 import xit.gateway.core.request.requester.context.RequesterContext;
+import xit.gateway.pojo.RequesterProxyResult;
 
+import java.net.UnknownHostException;
 import java.util.List;
 
 /**
@@ -17,7 +18,7 @@ public interface Requester {
      * @return 响应结果
      * @param routeName 要请求的路由名
      */
-    Mono<?> invoke(String routeName, ServerWebExchange exchange);
+    RequesterProxyResult invoke(String routeName, ServerWebExchange exchange);
 
     /**
      * 获取能够索引到这个Requester的所有Key（一般为requester中routeGroup下所有路由的名称）

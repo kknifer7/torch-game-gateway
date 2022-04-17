@@ -9,6 +9,7 @@
         <module>torch-game-gateway-admin</module>
         <module>torch-game-gateway-waf</module>
         <module>torch-game-gateway-deacon</module>
+        <module>torch-game-gateway-model</module>
     </modules>
 
     <parent>

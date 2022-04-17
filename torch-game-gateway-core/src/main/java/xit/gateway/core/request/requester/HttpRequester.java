@@ -1,7 +1,9 @@
 package xit.gateway.core.request.requester;
 
 import org.springframework.web.server.ServerWebExchange;
-import reactor.core.publisher.Mono;
+import xit.gateway.pojo.RequesterProxyResult;
+
+import java.net.UnknownHostException;
 
 /**
  * @author Knifer
@@ -14,5 +16,5 @@ public interface HttpRequester extends Requester{
      * @return 响应结果
      * @param routeName 要请求的路由
      */
-    Mono<Void> invoke(String routeName, ServerWebExchange exchange);
+    RequesterProxyResult invoke(String routeName, ServerWebExchange exchange);
 }

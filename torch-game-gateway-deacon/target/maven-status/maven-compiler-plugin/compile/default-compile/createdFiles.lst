@@ -1,0 +1,12 @@
+xit\gateway\constant\ResultCode.class
+xit\gateway\controller\DeaconController.class
+xit\gateway\core\fuse\impl\DefaultFuse.class
+xit\gateway\config\redis\RedisConfig.class
+xit\gateway\core\fuse\Fuse.class
+xit\gateway\constant\ValueEnum.class
+xit\gateway\utils\RedisUtils.class
+xit\gateway\pojo\ResultInfo.class
+xit\gateway\constant\RedisKey.class
+xit\gateway\config\DeaconConfig.class
+xit\gateway\TorchGameGatewayDeaconApplication.class
+xit\gateway\utils\RIUtils.class
