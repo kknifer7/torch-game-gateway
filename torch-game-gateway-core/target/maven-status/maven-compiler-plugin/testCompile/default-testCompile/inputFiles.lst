@@ -3,3 +3,6 @@ E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\test\java\xit\g
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\test\java\xit\gateway\core\valve\TestRouteInitializationLoadingValve.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\test\java\xit\gateway\wrapper\TestHttpRequestWrapper.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\test\java\xit\gateway\core\valve\TestOrdinaryValve.java
+E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\test\java\xit\gateway\core\jwt\TestJJWT.java
+E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\test\java\xit\gateway\core\route\limiter\TestDefaultRouteLimiter.java
+E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\test\java\xit\gateway\core\route\accessor\TestRouteRedisLoader.java
