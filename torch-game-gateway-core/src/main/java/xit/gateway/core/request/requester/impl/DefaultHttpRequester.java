@@ -54,6 +54,10 @@ public class DefaultHttpRequester extends AbstractRequester implements HttpReque
     }
 
     private Mono<Void> invoke(String serviceName, Route route, ServerWebExchange exchange) {
+        if (route.isDisabled()){
+            throw new RequestFailedException("路由暂不可用", exchange.getRequest().getPath().value());
+        }
+
         Mono<Void> result;
         WebClient.RequestHeadersSpec<?> spec;
         ServerHttpRequest request = exchange.getRequest();
@@ -134,7 +138,7 @@ public class DefaultHttpRequester extends AbstractRequester implements HttpReque
         List<Route> routeList = routes.get(serviceName);
 
         if (routeList == null){
-            throw new RequestFailedException("can not request: route not found");
+            throw new RequestFailedException("can not request: route not found", exchange.getRequest().getPath().value());
         }
 
         // 负载均衡

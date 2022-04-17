@@ -20,10 +20,8 @@
 
     <properties>
         <skip-test>true</skip-test>
+        <jjwt.version>0.11.2</jjwt.version>
         <guava.version>31.1-jre</guava.version>
-        <dubbo.version>3.0.6</dubbo.version>
-        <curator.version>2.12.0</curator.version>
-        <zookeeper.version>3.4.14</zookeeper.version>
     </properties>
 
     <groupId>groupId</groupId>
@@ -42,6 +40,25 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>${guava.version}</version>
+        </dependency>
+
+        <!-- JWT -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>${jjwt.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>${jjwt.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-jackson</artifactId>
+            <version>${jjwt.version}</version>
+            <scope>runtime</scope>
         </dependency>
 
         <!-- Reactive Web -->

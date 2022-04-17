@@ -68,7 +68,7 @@
                     "host": "www.10086.cn",
                     "port": 80,
                     "url": "",
-                    "disabled": false,
+                    "disabled": true,
                     "extra": 111
                 }
             ]

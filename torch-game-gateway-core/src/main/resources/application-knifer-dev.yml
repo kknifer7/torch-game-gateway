@@ -16,3 +16,7 @@ torch:
       routes-json-path: test-data/route-groups.json
     loadbalance:
       loadbalancer-class: xit.gateway.core.loadbalancer.impl.RoundRobinLoadbalancer
+    route-limiting:
+      time-unit: second
+      permits-per-unit: 2
+      limit: 10

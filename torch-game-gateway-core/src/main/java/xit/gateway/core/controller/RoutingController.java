@@ -8,6 +8,8 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 import xit.gateway.core.request.container.GlobalRequesterContainer;
 import xit.gateway.core.request.requester.Requester;
+import xit.gateway.exception.requester.RequestFailedException;
+import xit.gateway.exception.requester.RequesterNotFoundException;
 import xit.gateway.pojo.ResultMessage;
 import xit.gateway.utils.ResultMessageUtils;
 
@@ -30,11 +32,10 @@ public class RoutingController {
         Requester requester = requesterContainer.get(serviceId);
 
         if (requester == null){
-            return Mono.just(ResultMessageUtils.create(
-                    ResultMessage.ResultCode.ROUTE_NOT_FOUND,
+            throw new RequesterNotFoundException(
                     "服务未找到",
                     exchange.getRequest().getPath().value()
-            ));
+            );
         }
 
         return requester.invoke(serviceId, exchange);

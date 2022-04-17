@@ -57,7 +57,9 @@ public class ResultMessage {
 
     public enum ResultCode implements ValueEnum<Integer> {
         OK(200),
-        ROUTE_NOT_FOUND(404);
+        ROUTE_DISABLED(401),
+        REQUEST_FAILED(500),
+        REQUESTER_NOT_FOUND(404);
 
         private final Integer code;
 
