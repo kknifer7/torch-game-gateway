@@ -18,7 +18,7 @@ public interface Requester {
      * @return 响应结果
      * @param routeName 要请求的路由名
      */
-    RequesterProxyResult invoke(String routeName, ServerWebExchange exchange);
+    RequesterProxyResult invoke(String routeName, ServerWebExchange exchange) throws UnknownHostException;
 
     /**
      * 获取能够索引到这个Requester的所有Key（一般为requester中routeGroup下所有路由的名称）

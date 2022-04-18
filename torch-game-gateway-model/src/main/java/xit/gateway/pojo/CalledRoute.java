@@ -84,4 +84,17 @@ public class CalledRoute {
     public void setUpdateDatetime(LocalDateTime updateDatetime) {
         this.updateDatetime = updateDatetime;
     }
+
+    @Override
+    public String toString() {
+        return "CalledRoute{" +
+                "id='" + id + '\'' +
+                ", desc='" + desc + '\'' +
+                ", host='" + host + '\'' +
+                ", port=" + port +
+                ", url='" + url + '\'' +
+                ", creationDatetime=" + creationDatetime +
+                ", updateDatetime=" + updateDatetime +
+                '}';
+    }
 }

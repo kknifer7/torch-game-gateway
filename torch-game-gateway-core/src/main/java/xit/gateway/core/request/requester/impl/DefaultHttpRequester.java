@@ -4,7 +4,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpCookie;
 import org.springframework.http.HttpStatus;
@@ -27,8 +26,6 @@ import xit.gateway.pojo.CalledRoute;
 import xit.gateway.pojo.RequesterProxyResult;
 import xit.gateway.pojo.Route;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -46,9 +43,6 @@ public class DefaultHttpRequester extends AbstractRequester implements HttpReque
     private final Map<String, List<Route>> routes;
     private final Loadbalancer loadbalancer;
     private final WebClient webClient;
-
-    @Value("${service.port}")
-    private String gatewayPort;
 
     public DefaultHttpRequester(RouteGroup routeGroup, Loadbalancer loadbalancer) {
         Map<String, List<Route>> httpRoutes = routeGroup.getHttpRoutes();
@@ -74,8 +68,8 @@ public class DefaultHttpRequester extends AbstractRequester implements HttpReque
         ServerHttpRequest request = exchange.getRequest();
         ServerHttpResponse response = exchange.getResponse();
         CallRecord.Builder callRecordBuilder = CallRecord.builder()
-                .gatewayHost("hosthost")
-                .gatewayPort(gatewayPort)
+                .gatewayHost(request.getLocalAddress().getHostName())
+                .gatewayPort(String.valueOf(request.getLocalAddress().getPort()))
                 .gatewayUri(request.getPath().value())
                 .serviceId(serviceName)
                 .timestamp(System.currentTimeMillis())

@@ -76,6 +76,14 @@ public class RedisUtils {
         hIncrBy(key.getValue(), hashKey, incrByNumber);
     }
 
+    public static<T> void lPush(String key, T value){
+        redisTemplate.opsForList().leftPush(key, value);
+    }
+
+    public static<T> void lPush(RedisKey key, T value){
+        lPush(key.getValue(), value);
+    }
+
     public static<T> Map<String, T> hGetAll(String key, Class<T> hashValueClazz){
         return redisTemplate.opsForHash().entries(key);
     }

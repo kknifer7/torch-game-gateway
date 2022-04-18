@@ -23,9 +23,9 @@ public class DeaconController {
     @PutMapping("/record-visit")
     public ResultInfo<Void> recordVisit(@RequestBody CallRecord record){
         // 设置调用记录
-        RedisUtils.hSet(RedisKey.CALL_RECORD, record.getServiceId(), record);
+        RedisUtils.lPush(RedisKey.CALL_RECORD, record);
         // 必要则熔断
-        fuse.fuseIfNecessary(record);
+        //fuse.fuseIfNecessary(record);
 
         return RIUtils.createOK();
     }

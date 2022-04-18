@@ -1,7 +1,7 @@
 package xit.gateway.constant;
 
 public enum RedisKey implements ValueEnum<String>{
-    // hash
+    // list
     CALL_RECORD("call_record"),
     // hash
     FUSE_COUNT("fuse_count"),

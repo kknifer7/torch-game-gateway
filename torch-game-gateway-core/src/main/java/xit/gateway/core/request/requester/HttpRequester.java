@@ -3,8 +3,6 @@ package xit.gateway.core.request.requester;
 import org.springframework.web.server.ServerWebExchange;
 import xit.gateway.pojo.RequesterProxyResult;
 
-import java.net.UnknownHostException;
-
 /**
  * @author Knifer
  * Description: Rest HTTP请求发送器。

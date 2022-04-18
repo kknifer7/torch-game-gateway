@@ -10,3 +10,8 @@ spring:
     connect-timeout: 5000ms
 server:
   port: 8082
+torch:
+  gateway:
+    deacon:
+      fuse:
+        fuse-class: xit.gateway.core.fuse.impl.DefaultFuse

@@ -37,4 +37,13 @@ public class CalledGateway {
     public void setUri(String uri) {
         this.uri = uri;
     }
+
+    @Override
+    public String toString() {
+        return "CalledGateway{" +
+                "host='" + host + '\'' +
+                ", port='" + port + '\'' +
+                ", uri='" + uri + '\'' +
+                '}';
+    }
 }

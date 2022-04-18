@@ -12,7 +12,6 @@ import io.netty.util.concurrent.Promise;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -29,8 +28,6 @@ import xit.gateway.pojo.CalledRoute;
 import xit.gateway.pojo.RequesterProxyResult;
 import xit.gateway.pojo.Route;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
@@ -43,9 +40,6 @@ public class DefaultRpcRequester extends AbstractRequester implements RpcRequest
     private final Map<String, ChannelFuture> rpcChannels;
     private final Map<ChannelId, Promise<byte[]>> requestPromise;
     private final Logger logger = LoggerFactory.getLogger(DefaultRpcRequester.class);
-
-    @Value("${service.port}")
-    private String gatewayPort;
 
     public DefaultRpcRequester(RouteGroup routeGroup, Loadbalancer loadbalancer) {
         this.routes = routeGroup.getRpcRoutes();
@@ -105,8 +99,8 @@ public class DefaultRpcRequester extends AbstractRequester implements RpcRequest
         Promise<byte[]> resultPromise = new DefaultPromise<>(channel.eventLoop());
         Mono<Void> result;
         CallRecord.Builder callRecordBuilder = CallRecord.builder()
-                .gatewayHost("hosthosthost")
-                .gatewayPort(gatewayPort)
+                .gatewayHost(request.getLocalAddress().getHostName())
+                .gatewayPort(String.valueOf(request.getLocalAddress().getPort()))
                 .gatewayUri(request.getPath().value())
                 .serviceId(serviceName)
                 .timestamp(System.currentTimeMillis())
@@ -125,12 +119,17 @@ public class DefaultRpcRequester extends AbstractRequester implements RpcRequest
             channel.writeAndFlush(dataBuffer.toString(StandardCharsets.UTF_8));
             try {
                 res = Mono.just(response.bufferFactory().wrap(resultPromise.get(10, TimeUnit.SECONDS)));
-                callRecordBuilder.callTime(System.currentTimeMillis() - startTime);
             } catch (InterruptedException | ExecutionException | TimeoutException e) {
                 e.printStackTrace();
             }
+            callRecordBuilder.callTime(System.currentTimeMillis() - startTime);
             response.setStatusCode(HttpStatus.OK);
             requestPromise.remove(channel.id());
+            if (res == null){
+                res = Mono.just(response.bufferFactory().wrap("请求失败：服务不可用".getBytes(StandardCharsets.UTF_8)));
+            }else{
+                callRecordBuilder.success(true);
+            }
 
             return response.writeWith(res).then();
         }).then();
