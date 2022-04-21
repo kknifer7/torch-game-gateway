@@ -1,6 +1,6 @@
-package xit.gateway.core.loadbalancer.impl;
+package xit.gateway.core.route.loadbalancer.impl;
 
-import xit.gateway.core.loadbalancer.Loadbalancer;
+import xit.gateway.core.route.loadbalancer.Loadbalancer;
 import xit.gateway.core.request.requester.context.RequesterContext;
 import xit.gateway.pojo.Route;
 

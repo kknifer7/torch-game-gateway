@@ -1,4 +1,9 @@
+xit\gateway\constant\ResultCode.class
+xit\gateway\constant\ValueEnum.class
+xit\gateway\pojo\ResultInfo.class
+xit\gateway\pojo\CallRecord.class
+xit\gateway\constant\RedisKey.class
+xit\gateway\utils\RIUtils.class
 xit\gateway\pojo\CalledRoute.class
 xit\gateway\pojo\CalledGateway.class
 xit\gateway\pojo\CallRecord$Builder.class
-xit\gateway\pojo\CallRecord.class

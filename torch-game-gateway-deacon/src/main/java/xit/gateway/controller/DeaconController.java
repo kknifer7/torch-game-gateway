@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Mono;
 import xit.gateway.constant.RedisKey;
 import xit.gateway.core.fuse.Fuse;
 import xit.gateway.pojo.CallRecord;
@@ -21,11 +22,18 @@ public class DeaconController {
     }
 
     @PutMapping("/record-visit")
-    public ResultInfo<Void> recordVisit(@RequestBody CallRecord record){
+    public Mono<ResultInfo<Void>> recordVisit(@RequestBody CallRecord record){
         // 设置调用记录
         RedisUtils.lPush(RedisKey.CALL_RECORD, record);
         // 必要则熔断
         //fuse.fuseIfNecessary(record);
+
+        return RIUtils.createOK();
+    }
+
+    @PutMapping("/flush-fuse")
+    public Mono<ResultInfo<Void>> flushFuse(){
+        fuse.flush();
 
         return RIUtils.createOK();
     }

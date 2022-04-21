@@ -20,15 +20,15 @@ import java.util.List;
 @Component
 public class RouteInitializationLoadingValve extends ProcessCoreValve {
     private final RouteReader routeReader;
-    private final RouteAccessor routeLoader;
+    private final RouteAccessor routeAccessor;
 
     @Value("${torch.gateway.init.routes-json-path}")
     private String initRoutesJsonPath;
 
     @Autowired
-    public RouteInitializationLoadingValve(RouteReader routeReader, RouteAccessor routeLoader) {
+    public RouteInitializationLoadingValve(RouteReader routeReader, RouteAccessor routeAccessor) {
         this.routeReader = routeReader;
-        this.routeLoader = routeLoader;
+        this.routeAccessor = routeAccessor;
     }
 
     @Override
@@ -42,7 +42,7 @@ public class RouteInitializationLoadingValve extends ProcessCoreValve {
         }
 
         if (routeGroups != null && !routeGroups.isEmpty()){
-            routeLoader.loadRouteGroups(routeGroups);
+            routeAccessor.loadRouteGroups(routeGroups);
         }
     }
 }

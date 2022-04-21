@@ -16,7 +16,7 @@ import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
-import xit.gateway.core.loadbalancer.Loadbalancer;
+import xit.gateway.core.route.loadbalancer.Loadbalancer;
 import xit.gateway.core.request.requester.AbstractRequester;
 import xit.gateway.core.request.requester.HttpRequester;
 import xit.gateway.core.route.container.RouteGroup;

@@ -30,6 +30,7 @@ public class DefaultFuse implements Fuse {
         Integer fuseCount;
 
         fuseCount = RedisUtils.hGet(RedisKey.FUSE_COUNT, routeId, Integer.class);
+        fuseCount = fuseCount == null ? 1 : fuseCount + 1;
         if (fuseCount >= FUSING_THRESHOLD.get()){
             // TODO 下达熔断通知
             logger.info("熔断路由：" + record.getRoute().getDesc());

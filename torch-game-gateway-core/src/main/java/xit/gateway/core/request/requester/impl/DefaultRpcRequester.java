@@ -19,7 +19,7 @@ import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
-import xit.gateway.core.loadbalancer.Loadbalancer;
+import xit.gateway.core.route.loadbalancer.Loadbalancer;
 import xit.gateway.core.request.requester.AbstractRequester;
 import xit.gateway.core.request.requester.RpcRequester;
 import xit.gateway.core.route.container.RouteGroup;

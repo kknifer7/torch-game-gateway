@@ -2,7 +2,7 @@ package xit.gateway.core.controller;
 
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
-import xit.gateway.pojo.ResultMessage;
+import xit.gateway.pojo.ResultInfo;
 
 /**
  * @author Knifer
@@ -13,8 +13,9 @@ import xit.gateway.pojo.ResultMessage;
 @RestController
 @RequestMapping("/action")
 public class ActionController {
+
     @PostMapping("/sync-route/{serviceName}/{routeId}")
-    public Mono<ResultMessage> syncRoute(
+    public Mono<ResultInfo<Void>> syncRoute(
             @PathVariable("serviceName") String serviceName,
             @PathVariable("routeId") String routeId
     ){
@@ -25,7 +26,12 @@ public class ActionController {
     }
 
     @PostMapping("/sync-route-group/{routeGroupId}")
-    public Mono<ResultMessage> syncRouteGroup(){
+    public Mono<ResultInfo<Void>> syncRouteGroup(){
+        return null;
+    }
+
+    @PostMapping("/login")
+    public Mono<ResultInfo<Void>> login(){
         return null;
     }
 }

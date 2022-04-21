@@ -2,7 +2,7 @@ package xit.gateway.core.request.requester.factory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import xit.gateway.core.loadbalancer.Loadbalancer;
+import xit.gateway.core.route.loadbalancer.Loadbalancer;
 import xit.gateway.core.request.requester.Requester;
 import xit.gateway.core.request.requester.impl.DefaultHttpRequester;
 import xit.gateway.core.request.requester.impl.DefaultRpcRequester;
