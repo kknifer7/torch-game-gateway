@@ -2,7 +2,7 @@ package xit.gateway.core.controller;
 
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
-import xit.gateway.pojo.ResultInfo;
+import xit.gateway.core.pojo.ResultInfo;
 
 /**
  * @author Knifer
@@ -27,11 +27,6 @@ public class ActionController {
 
     @PostMapping("/sync-route-group/{routeGroupId}")
     public Mono<ResultInfo<Void>> syncRouteGroup(){
-        return null;
-    }
-
-    @PostMapping("/login")
-    public Mono<ResultInfo<Void>> login(){
         return null;
     }
 }

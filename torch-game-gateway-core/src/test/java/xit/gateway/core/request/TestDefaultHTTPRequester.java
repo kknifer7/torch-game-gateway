@@ -1,12 +1,26 @@
 package xit.gateway.core.request;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import xit.gateway.core.request.requester.HttpRequester;
+import xit.gateway.core.request.requester.impl.DefaultHttpRequester;
+import xit.gateway.core.route.container.RouteGroup;
+import xit.gateway.core.route.loadbalancer.Loadbalancer;
+import xit.gateway.core.route.reader.RouteReader;
+
+import java.io.IOException;
 
 @SpringBootTest
 public class TestDefaultHTTPRequester {
+    @Autowired
+    private RouteReader routeReader;
+    @Autowired
+    private Loadbalancer loadbalancer;
+
     @Test
-    void test(){
+    void test() throws IOException {
+        //DefaultHttpRequester requester = new DefaultHttpRequester(routeReader.readRouteGroupFromJSON("test-data/route-groups.json").get(1), loadbalancer);
         /*RouteReader routeReader = new DefaultRouteReader();
         List<RouteGroup> routeGroups = null;
         HttpRequester requester;

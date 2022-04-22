@@ -1,6 +1,6 @@
 package xit.gateway.core.request.recordwatchdog;
 
-import xit.gateway.pojo.RequesterProxyResult;
+import xit.gateway.core.pojo.RequesterProxyResult;
 
 /**
  * @author Knifer

@@ -4,10 +4,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import xit.gateway.core.request.recordwatchdog.RecordWatchdog;
-import xit.gateway.pojo.RequesterProxyResult;
+import xit.gateway.core.pojo.RequesterProxyResult;
 
-import java.time.Duration;
-import java.time.temporal.ChronoUnit;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -15,9 +13,6 @@ import java.util.concurrent.Executors;
 public class DefaultRecordWatchdog implements RecordWatchdog {
     private final Executor executor;
     private final WebClient webClient;
-
-    @Value("${torch.gateway.call-trace.deacon.timeout}")
-    private long timeout;
 
     public DefaultRecordWatchdog(
             @Value("${torch.gateway.call-trace.record-threads}")
@@ -34,12 +29,12 @@ public class DefaultRecordWatchdog implements RecordWatchdog {
         executor.execute(() -> {
             // TODO 如有时间，优化这里的循环
             while (true){
-                if (proxyResult.getCallRecord().getCallTime() != 0){
+                if (proxyResult.isCompleted()){
                     webClient.put()
                             .bodyValue(proxyResult.getCallRecord())
                             .retrieve()
                             .bodyToMono(String.class)
-                            .block(Duration.of(timeout, ChronoUnit.MILLIS));
+                            .subscribe();
                     return;
                 }
             }

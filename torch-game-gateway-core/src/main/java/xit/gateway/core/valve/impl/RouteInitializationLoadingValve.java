@@ -3,11 +3,12 @@ package xit.gateway.core.valve.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import xit.gateway.core.route.container.RouteGroup;
+import org.springframework.util.CollectionUtils;
 import xit.gateway.core.route.accessor.RouteAccessor;
 import xit.gateway.core.route.reader.RouteReader;
 import xit.gateway.core.valve.ProcessCoreValve;
-import xit.gateway.exception.route.RouteLoadingException;
+import xit.gateway.core.exception.route.RouteLoadingException;
+import xit.gateway.core.pojo.Route;
 
 import java.io.IOException;
 import java.util.List;
@@ -33,16 +34,16 @@ public class RouteInitializationLoadingValve extends ProcessCoreValve {
 
     @Override
     protected void work() {
-        List<RouteGroup> routeGroups;
+        List<Route> routes;
 
         try {
-            routeGroups = routeReader.readRouteGroupFromJSON(initRoutesJsonPath);
+            routes = routeReader.readRoutesFromJSON(initRoutesJsonPath);
         } catch (IOException e) {
             throw new RouteLoadingException("routeing load failed: " + e.getMessage());
         }
 
-        if (routeGroups != null && !routeGroups.isEmpty()){
-            routeAccessor.loadRouteGroups(routeGroups);
+        if (!CollectionUtils.isEmpty(routes)){
+            routeAccessor.loadRoutes(routes);
         }
     }
 }

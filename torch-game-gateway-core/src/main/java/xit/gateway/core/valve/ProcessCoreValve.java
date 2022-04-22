@@ -1,6 +1,6 @@
 package xit.gateway.core.valve;
 
-import xit.gateway.exception.valve.IllegalValveOperationException;
+import xit.gateway.core.exception.valve.IllegalValveOperationException;
 
 /**
  * @author knifer

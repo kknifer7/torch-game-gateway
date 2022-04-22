@@ -43,6 +43,12 @@
             <version>${guava.version}</version>
         </dependency>
 
+        <!-- jackson-jsr310（LocalDatetime支持） -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+        </dependency>
+
         <!-- Test -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

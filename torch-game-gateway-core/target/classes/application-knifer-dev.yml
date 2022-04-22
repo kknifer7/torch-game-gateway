@@ -8,14 +8,18 @@ spring:
     database: 0
     timeout: 5000ms
     connect-timeout: 5000ms
+  r2dbc:
+    username: admin
+    password: 123
+    url: r2dbcs:mysql://192.168.231.132:6670/torch_game_gateway?SSL=false&sslMode=DISABLED
 server:
   port: 8081
 torch:
   gateway:
     init:
-      routes-json-path: test-data/route-groups.json
+      routes-json-path: test-data/routes.json
     loadbalance:
-      loadbalancer-class: xit.gateway.core.loadbalancer.impl.RoundRobinLoadbalancer
+      loadbalancer-class: xit.gateway.core.route.loadbalancer.impl.NoLoadbalancer
     route-limiting:
       time-unit: second
       permits-per-unit: 2
@@ -24,4 +28,3 @@ torch:
       record-threads: 2
       deacon:
         address: http://localhost:8082/record-visit
-        timeout: 2000

@@ -2,7 +2,7 @@ package xit.gateway.core.route.limiter.impl;
 
 import com.google.common.util.concurrent.RateLimiter;
 import xit.gateway.core.route.limiter.AbstractRouteLimiter;
-import xit.gateway.pojo.Route;
+import xit.gateway.core.pojo.Route;
 
 public class DefaultRouteLimiter extends AbstractRouteLimiter {
     private RateLimiter rateLimiter;

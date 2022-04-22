@@ -1,13 +1,14 @@
 package xit.gateway.core.route.container;
 
 import xit.gateway.core.container.MultiContainer;
-import xit.gateway.exception.route.RouteResolvingException;
-import xit.gateway.pojo.HttpRoute;
-import xit.gateway.pojo.Route;
-import xit.gateway.pojo.RpcRoute;
+import xit.gateway.core.exception.route.RouteResolvingException;
+import xit.gateway.core.pojo.HttpRoute;
+import xit.gateway.core.pojo.Route;
+import xit.gateway.core.pojo.RpcRoute;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -98,6 +99,7 @@ public class RouteGroup implements MultiContainer<Route> {
             throw new RouteResolvingException("unknown route type");
         }
 
+        // TODO 这里不应该是routeId，应该是serviceId
         routes = routeMap.get(route.getId());
         if (routes == null){
             routes = new CopyOnWriteArrayList<>();
@@ -122,6 +124,11 @@ public class RouteGroup implements MultiContainer<Route> {
         }
 
         return result;
+    }
+
+    @Override
+    public Set<Map.Entry<String, List<Route>>> entrySet() {
+        return null;
     }
 
     @Override

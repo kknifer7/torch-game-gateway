@@ -1,7 +1,7 @@
 package xit.gateway.core.route.loadbalancer;
 
-import xit.gateway.core.request.requester.context.RequesterContext;
-import xit.gateway.pojo.Route;
+import xit.gateway.core.request.requester.context.RouteRequestContext;
+import xit.gateway.core.pojo.Route;
 
 import java.util.List;
 
@@ -11,5 +11,5 @@ import java.util.List;
  * Date: 2022/04/10
  */
 public interface Loadbalancer {
-    Route choose(List<Route> routes, RequesterContext requesterContext);
+    Route choose(List<Route> routes, RouteRequestContext requesterContext);
 }

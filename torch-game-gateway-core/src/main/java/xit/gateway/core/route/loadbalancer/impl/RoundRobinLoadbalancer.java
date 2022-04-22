@@ -1,8 +1,8 @@
 package xit.gateway.core.route.loadbalancer.impl;
 
 import xit.gateway.core.route.loadbalancer.Loadbalancer;
-import xit.gateway.core.request.requester.context.RequesterContext;
-import xit.gateway.pojo.Route;
+import xit.gateway.core.request.requester.context.RouteRequestContext;
+import xit.gateway.core.pojo.Route;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -15,7 +15,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class RoundRobinLoadbalancer implements Loadbalancer {
 
     @Override
-    public Route choose(List<Route> routes, RequesterContext requesterContext) {
+    public Route choose(List<Route> routes, RouteRequestContext requesterContext) {
         int size = routes.size();
         AtomicInteger lastIdx = requesterContext.lastCalledIndex();
         int curr,next;

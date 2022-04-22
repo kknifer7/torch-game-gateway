@@ -1,6 +1,6 @@
 package xit.gateway.core.route.limiter;
 
-import xit.gateway.pojo.Route;
+import xit.gateway.core.pojo.Route;
 
 public abstract class AbstractRouteLimiter implements RouteLimiter{
     protected final Route route;

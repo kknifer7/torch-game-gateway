@@ -1,6 +1,6 @@
 package xit.gateway.core.route.accessor;
 
-import xit.gateway.core.route.container.RouteGroup;
+import xit.gateway.core.pojo.Route;
 
 import java.util.List;
 
@@ -11,8 +11,21 @@ import java.util.List;
  */
 public interface RouteAccessor {
     /**
-     * 将路由组挂载到项目中使其生效
-     * @param routeGroupList 路由组列表
+     * 将路由挂载到项目中使其生效
+     * @param routes 路由列表
      */
-    void loadRouteGroups(List<RouteGroup> routeGroupList);
+    void loadRoutes(List<Route> routes);
+
+    /**
+     * 更新路由
+     * @param route 新路由
+     */
+    void updateRoute(Route route);
+
+    /**
+     * 禁用路由
+     * @param serviceId 服务名称
+     * @param routeId 路由ID
+     */
+    void disableRoute(String serviceId, String routeId);
 }

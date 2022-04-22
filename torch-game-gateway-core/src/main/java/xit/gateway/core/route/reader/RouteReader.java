@@ -1,8 +1,6 @@
 package xit.gateway.core.route.reader;
 
-import xit.gateway.pojo.HttpRoute;
-import xit.gateway.core.route.container.RouteGroup;
-import xit.gateway.pojo.RpcRoute;
+import xit.gateway.core.pojo.Route;
 
 import java.io.IOException;
 import java.util.List;
@@ -13,7 +11,5 @@ import java.util.List;
  * Date: 2022/03/25
  */
 public interface RouteReader {
-    List<HttpRoute> readHttpRouteFromJSON(String filePath) throws IOException;
-    List<RpcRoute> readRpcRouteFromJSON(String filePath) throws IOException;
-    List<RouteGroup> readRouteGroupFromJSON(String filePath) throws IOException;
+    List<Route> readRoutesFromJSON(String filePath) throws IOException;
 }

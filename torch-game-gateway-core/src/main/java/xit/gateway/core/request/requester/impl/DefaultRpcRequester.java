@@ -16,53 +16,41 @@ import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
-import xit.gateway.core.route.loadbalancer.Loadbalancer;
+import xit.gateway.core.exception.requester.RequestFailedException;
 import xit.gateway.core.request.requester.AbstractRequester;
 import xit.gateway.core.request.requester.RpcRequester;
-import xit.gateway.core.route.container.RouteGroup;
-import xit.gateway.pojo.CallRecord;
-import xit.gateway.pojo.CalledRoute;
-import xit.gateway.pojo.RequesterProxyResult;
-import xit.gateway.pojo.Route;
+import xit.gateway.core.pojo.CallRecord;
+import xit.gateway.core.pojo.CalledRoute;
+import xit.gateway.core.pojo.RequesterProxyResult;
+import xit.gateway.core.pojo.Route;
 
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.*;
 
 public class DefaultRpcRequester extends AbstractRequester implements RpcRequester {
-    private final List<String> keys;
-    private final Map<String, List<Route>> routes;
-    private final Loadbalancer loadbalancer;
-    private final Map<String, ChannelFuture> rpcChannels;
+    private Channel channel;
     private final Map<ChannelId, Promise<byte[]>> requestPromise;
     private final Logger logger = LoggerFactory.getLogger(DefaultRpcRequester.class);
 
-    public DefaultRpcRequester(RouteGroup routeGroup, Loadbalancer loadbalancer) {
-        this.routes = routeGroup.getRpcRoutes();
-        this.loadbalancer = loadbalancer;
-        this.keys = new CopyOnWriteArrayList<>();
-        this.rpcChannels = new ConcurrentHashMap<>();
+    public DefaultRpcRequester(Route route) {
+        super(route);
         this.requestPromise = new ConcurrentHashMap<>();
-        if (!CollectionUtils.isEmpty(routes)){
-            keys.addAll(routes.keySet());
-        }
-        connectServices();
+        connectService();
     }
 
-    private void connectServices(){
-        // 初始化连接所有RPC服务
-        if (CollectionUtils.isEmpty(routes)) return;
-
-        logger.debug("初始化连接所有RPC服务");
+    private void connectService(){
+        // 初始化连接RPC服务
+        logger.debug("初始化连接RPC服务");
+        NioEventLoopGroup group = new NioEventLoopGroup();
         Bootstrap bootstrap = new Bootstrap()
-                .group(new NioEventLoopGroup())
+                .group(group)
                 .channel(NioSocketChannel.class)
                 .option(ChannelOption.SO_KEEPALIVE, true)
                 .option(ChannelOption.TCP_NODELAY, true)
+                .remoteAddress(route.getHost(), route.getPort())
                 .handler(new ChannelInitializer<NioSocketChannel>() {
                     @Override
                     protected void initChannel(NioSocketChannel nioSocketChannel) {
@@ -74,35 +62,37 @@ public class DefaultRpcRequester extends AbstractRequester implements RpcRequest
                     }
                 });
 
-        // TODO 待完成：循环重连机制
-        routes.values().forEach(routeList -> routeList.forEach(route ->
-                        bootstrap.remoteAddress(route.getHost(), route.getPort())
-                                .connect()
-                                .addListener((ChannelFuture future) -> rpcChannels.put(route.getId(), future))
-        ));
+        // TODO 待开发：断开重连机制
+        bootstrap.connect().addListener(future -> {
+            if (!future.isSuccess()){
+                logger.warn("RPC服务：{}，连接失败", route.getDesc());
+                reconnect(group);
+            }
+        });
+    }
+
+    private void reconnect(EventLoopGroup group){
+        group.schedule(() -> {
+            logger.info("RPC服务：{}，尝试重连", route.getDesc());
+            connectService();
+        }, 5, TimeUnit.SECONDS);
     }
 
     @Override
-    public List<String> getKeys() {
-        return keys;
-    }
-
-    @Override
-    public RequesterProxyResult invoke(String serviceName, ServerWebExchange exchange) {
-        logger.debug("HTTP -> RPC");
+    public RequesterProxyResult invoke(ServerWebExchange exchange) {
+        if (route.getDisabled() || channel == null){
+            throw new RequestFailedException("路由暂不可用", exchange.getRequest().getPath().value());
+        }
         ServerHttpRequest request = exchange.getRequest();
         ServerHttpResponse response = exchange.getResponse();
-        List<Route> routes = this.routes.get(serviceName);
-        // 负载均衡
-        Route route = loadbalancer.choose(routes, requesterContext);
-        Channel channel = rpcChannels.get(route.getId()).channel();
         Promise<byte[]> resultPromise = new DefaultPromise<>(channel.eventLoop());
+        RequesterProxyResult proxyResult = new RequesterProxyResult();
         Mono<Void> result;
         CallRecord.Builder callRecordBuilder = CallRecord.builder()
                 .gatewayHost(request.getLocalAddress().getHostName())
                 .gatewayPort(String.valueOf(request.getLocalAddress().getPort()))
                 .gatewayUri(request.getPath().value())
-                .serviceId(serviceName)
+                .serviceId(route.getName())
                 .timestamp(System.currentTimeMillis())
                 .route(() -> {
                     CalledRoute calledRoute = new CalledRoute();
@@ -123,6 +113,7 @@ public class DefaultRpcRequester extends AbstractRequester implements RpcRequest
                 e.printStackTrace();
             }
             callRecordBuilder.callTime(System.currentTimeMillis() - startTime);
+            proxyResult.setCompleted(true);
             response.setStatusCode(HttpStatus.OK);
             requestPromise.remove(channel.id());
             if (res == null){
@@ -133,14 +124,17 @@ public class DefaultRpcRequester extends AbstractRequester implements RpcRequest
 
             return response.writeWith(res).then();
         }).then();
+        proxyResult.setCallRecord(callRecordBuilder.build());
+        proxyResult.setResult(result);
 
-        return new RequesterProxyResult(callRecordBuilder.build(), result);
+        return proxyResult;
     }
 
     private class DefaultRpcClientHandler extends ChannelInboundHandlerAdapter{
         @Override
         public void channelActive(ChannelHandlerContext ctx) throws Exception {
-            System.out.println("连接建立");
+            logger.info("RPC服务：{}，连接成功", route.getDesc());
+            channel = ctx.channel();
             super.channelActive(ctx);
         }
 

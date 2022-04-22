@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import xit.gateway.context.impl.DefaultGatewayContext;
+import xit.gateway.core.context.impl.DefaultGatewayContext;
 import xit.gateway.core.valve.impl.RouteInitializationLoadingValve;
 
 @SpringBootTest
@@ -17,6 +17,6 @@ public class TestRouteInitializationLoadingValve {
     @Test
     void test(){
         valve.run();
-        Assertions.assertNotEquals(null, gatewayContext.routeGroupContainer().get("service-01"));
+        Assertions.assertNotEquals(null, gatewayContext.routesContainer().get("service-01"));
     }
 }

@@ -3,7 +3,7 @@ package xit.gateway.core.route.limiter;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import xit.gateway.core.route.limiter.impl.DefaultRouteLimiter;
-import xit.gateway.pojo.Route;
+import xit.gateway.core.pojo.Route;
 
 @SpringBootTest
 public class TestDefaultRouteLimiter {

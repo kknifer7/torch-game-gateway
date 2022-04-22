@@ -10,25 +10,21 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
-import xit.gateway.core.route.loadbalancer.Loadbalancer;
+import xit.gateway.core.exception.route.RouteDisabledException;
 import xit.gateway.core.request.requester.AbstractRequester;
 import xit.gateway.core.request.requester.HttpRequester;
-import xit.gateway.core.route.container.RouteGroup;
-import xit.gateway.exception.requester.RequestFailedException;
-import xit.gateway.pojo.CallRecord;
-import xit.gateway.pojo.CalledRoute;
-import xit.gateway.pojo.RequesterProxyResult;
-import xit.gateway.pojo.Route;
+import xit.gateway.core.pojo.CallRecord;
+import xit.gateway.core.pojo.CalledRoute;
+import xit.gateway.core.pojo.RequesterProxyResult;
+import xit.gateway.core.pojo.Route;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
 /**
@@ -38,32 +34,22 @@ import java.util.stream.Collectors;
  */
 public class DefaultHttpRequester extends AbstractRequester implements HttpRequester {
     private final Logger logger = LoggerFactory.getLogger(DefaultHttpRequester.class);
-    private final RouteGroup routeGroup;
-    private final List<String> keys;                // 为routes所有路由的名称（服务名），用于从容器中定位Requester
-    private final Map<String, List<Route>> routes;
-    private final Loadbalancer loadbalancer;
     private final WebClient webClient;
 
-    public DefaultHttpRequester(RouteGroup routeGroup, Loadbalancer loadbalancer) {
-        Map<String, List<Route>> httpRoutes = routeGroup.getHttpRoutes();
-
-        this.routeGroup = routeGroup;
-        this.loadbalancer = loadbalancer;
-        this.routes = this.routeGroup.getHttpRoutes();
-        this.webClient = WebClient.create(routeGroup.getBaseUrl());
-        this.keys = new CopyOnWriteArrayList<>();
-        if (!CollectionUtils.isEmpty(httpRoutes)){
-            keys.addAll(httpRoutes.keySet());
-        }
+    public DefaultHttpRequester(Route route) {
+        super(route);
+        this.webClient = WebClient.create(route.getUrl());
     }
 
-    private RequesterProxyResult invoke(String serviceName, Route route, ServerWebExchange exchange) {
-        if (route.isDisabled()){
-            throw new RequestFailedException("路由暂不可用", exchange.getRequest().getPath().value());
+    @Override
+    public RequesterProxyResult invoke(ServerWebExchange exchange) {
+        if (route.getDisabled()){
+            throw new RouteDisabledException("路由暂不可用", exchange.getRequest().getPath().value());
         }
 
         Mono<Void> result;
         long startTime;
+        RequesterProxyResult proxyResult = new RequesterProxyResult();
         WebClient.RequestHeadersSpec<?> spec;
         ServerHttpRequest request = exchange.getRequest();
         ServerHttpResponse response = exchange.getResponse();
@@ -71,7 +57,7 @@ public class DefaultHttpRequester extends AbstractRequester implements HttpReque
                 .gatewayHost(request.getLocalAddress().getHostName())
                 .gatewayPort(String.valueOf(request.getLocalAddress().getPort()))
                 .gatewayUri(request.getPath().value())
-                .serviceId(serviceName)
+                .serviceId(route.getName())
                 .timestamp(System.currentTimeMillis())
                 .route(() -> {
                     CalledRoute calledRoute = new CalledRoute();
@@ -81,7 +67,7 @@ public class DefaultHttpRequester extends AbstractRequester implements HttpReque
                 });
         logger.info("调用服务：" + route.getDesc());
         spec = webClient.method(request.getMethod())
-                .uri(resolveServiceUri(serviceName, route, request))
+                .uri(resolveServiceUri(request))
                 .headers((headers) -> {
                     headers.putAll(request.getHeaders());
                     headers.remove("HOST"); // 由于是MultiMap，所以不能直接add覆盖，要先删除原值
@@ -96,36 +82,39 @@ public class DefaultHttpRequester extends AbstractRequester implements HttpReque
         result = spec.exchangeToMono(proxyResponse -> {
             callRecordBuilder.callTime(System.currentTimeMillis() - startTime)
                     .success(true);
+            proxyResult.setCompleted(true);
             prepareResponse(response, proxyResponse);
             return response.writeWith(proxyResponse.bodyToMono(DataBuffer.class));
         }).onErrorResume(ex -> Mono.defer(() -> {
             callRecordBuilder.callTime(System.currentTimeMillis() - startTime)
                     .success(false);
+            proxyResult.setCompleted(true);
             String errorMsg = "服务调用失败：" + ex.getLocalizedMessage();
             response.setStatusCode(HttpStatus.OK);
             response.getHeaders().setContentType(MediaType.TEXT_PLAIN);
             return response.writeWith(Mono.just(response.bufferFactory().wrap(errorMsg.getBytes())));
         }).then(Mono.empty()));
+        proxyResult.setCallRecord(callRecordBuilder.build());
+        proxyResult.setResult(result);
 
-        return new RequesterProxyResult(callRecordBuilder.build(), result);
+        return proxyResult;
     }
 
     /**
      * 解析出访问目标服务的路径和url上的参数
-     * @param serviceName 服务名称
      * @param request 请求
      * @return path
      */
-    private String resolveServiceUri(String serviceName, Route route, ServerHttpRequest request){
+    private String resolveServiceUri(ServerHttpRequest request){
         List<String> queryParamList =
                 request.getQueryParams().entrySet()
                         .stream()
                         .map(entry -> entry.getKey() + "=" + StringUtils.join(entry.getValue(), ","))
                         .collect(Collectors.toList());
         String path = request.getPath().value();
+        String serviceId = route.getName();
 
-        return route.getUrl() +
-                StringUtils.substring(path, StringUtils.indexOf(path, serviceName) + serviceName.length())
+        return StringUtils.substring(path, StringUtils.indexOf(path, serviceId) + serviceId.length())
                 + "?" +
                 StringUtils.join(queryParamList, "&");
     }
@@ -147,22 +136,5 @@ public class DefaultHttpRequester extends AbstractRequester implements HttpReque
         response.getHeaders().putAll(proxyResponse.headers().asHttpHeaders());
         response.getCookies().putAll(proxyResponse.cookies());
         response.setStatusCode(proxyResponse.statusCode());
-    }
-
-    @Override
-    public List<String> getKeys() {
-        return keys;
-    }
-
-    @Override
-    public RequesterProxyResult invoke(String serviceName, ServerWebExchange exchange) {
-        List<Route> routeList = routes.get(serviceName);
-
-        if (routeList == null){
-            throw new RequestFailedException("can not request: route not found", exchange.getRequest().getPath().value());
-        }
-
-        // 负载均衡
-        return invoke(serviceName, loadbalancer.choose(routeList, requesterContext), exchange);
     }
 }

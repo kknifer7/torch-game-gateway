@@ -18,17 +18,11 @@ public class GlobalRequesterContainer implements SingleContainer<Requester> {
 
     @Override
     public void put(Requester requester) {
-        requester.getKeys().forEach(each -> requesterMap.put(each, requester));
+        requesterMap.put(requester.getKeyInContainer(), requester);
     }
 
     @Override
     public void putAll(List<Requester> requesters) {
-        for (Requester requester : requesters){
-            put(requester);
-        }
-    }
-
-    public void putAll(Requester[] requesters) {
         for (Requester requester : requesters){
             put(requester);
         }

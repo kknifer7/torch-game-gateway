@@ -1,10 +1,10 @@
 package xit.gateway.utils;
 
 import reactor.core.publisher.Mono;
-import xit.gateway.constant.ResultCode;
-import xit.gateway.pojo.ResultInfo;
+import xit.gateway.core.constant.ResultCode;
+import xit.gateway.core.pojo.ResultInfo;
 
-import static xit.gateway.constant.ResultCode.OK;
+import static xit.gateway.core.constant.ResultCode.OK;
 
 public class RIUtils {
     public static<T> Mono<ResultInfo<T>> createOK(String msg){

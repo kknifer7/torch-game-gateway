@@ -64,6 +64,10 @@
             <groupId>dev.miku</groupId>
             <artifactId>r2dbc-mysql</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.r2dbc</groupId>
+            <artifactId>r2dbc-pool</artifactId>
+        </dependency>
 
         <!-- Security -->
         <dependency>

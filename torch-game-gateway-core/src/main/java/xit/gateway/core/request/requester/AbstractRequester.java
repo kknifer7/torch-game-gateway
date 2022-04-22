@@ -1,7 +1,6 @@
 package xit.gateway.core.request.requester;
 
-import xit.gateway.core.request.requester.context.RequesterContext;
-import xit.gateway.core.request.requester.context.impl.DefaultRequesterContext;
+import xit.gateway.core.pojo.Route;
 
 /**
  * @author Knifer
@@ -9,14 +8,16 @@ import xit.gateway.core.request.requester.context.impl.DefaultRequesterContext;
  * Date: 2022/04/10
  */
 public abstract class AbstractRequester implements Requester{
-    protected final RequesterContext requesterContext;
+    protected final Route route;
+    protected String key;
 
-    public AbstractRequester() {
-        this.requesterContext = new DefaultRequesterContext();
+    public AbstractRequester(Route route) {
+        this.route = route;
+        this.key = route.getId();
     }
 
     @Override
-    public RequesterContext getRequesterContext() {
-        return requesterContext;
+    public String getKeyInContainer() {
+        return key;
     }
 }
