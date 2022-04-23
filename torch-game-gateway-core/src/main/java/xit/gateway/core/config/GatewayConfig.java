@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import xit.gateway.core.route.loadbalancer.Loadbalancer;
+import xit.gateway.api.route.loadbalancer.Loadbalancer;
 import xit.gateway.core.route.loadbalancer.impl.NoLoadbalancer;
 
 @Configuration

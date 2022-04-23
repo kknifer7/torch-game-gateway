@@ -2,7 +2,7 @@ package xit.gateway.core.context.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import xit.gateway.core.context.GatewayContext;
+import xit.gateway.api.context.GatewayContext;
 import xit.gateway.core.request.container.GlobalRequesterContainer;
 import xit.gateway.core.request.container.GlobalRouteRequestContextContainer;
 import xit.gateway.core.route.container.GlobalRoutesContainer;

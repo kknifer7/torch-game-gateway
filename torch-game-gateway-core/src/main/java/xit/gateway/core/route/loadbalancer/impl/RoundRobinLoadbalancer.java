@@ -1,8 +1,8 @@
 package xit.gateway.core.route.loadbalancer.impl;
 
-import xit.gateway.core.route.loadbalancer.Loadbalancer;
-import xit.gateway.core.request.requester.context.RouteRequestContext;
-import xit.gateway.core.pojo.Route;
+import xit.gateway.api.route.loadbalancer.Loadbalancer;
+import xit.gateway.api.request.context.RouteRequestContext;
+import xit.gateway.pojo.Route;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;

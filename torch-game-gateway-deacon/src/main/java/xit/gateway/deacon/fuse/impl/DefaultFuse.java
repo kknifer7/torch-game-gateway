@@ -5,11 +5,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import xit.gateway.core.constant.RedisKey;
-import xit.gateway.deacon.fuse.Fuse;
-import xit.gateway.deacon.service.ConfigService;
-import xit.gateway.core.pojo.CallRecord;
-import xit.gateway.deacon.utils.RedisUtils;
+import xit.gateway.constant.RedisKey;
+import xit.gateway.api.fuse.Fuse;
+import xit.gateway.api.service.ConfigService;
+import xit.gateway.pojo.CallRecord;
+import xit.gateway.utils.RedisUtils;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

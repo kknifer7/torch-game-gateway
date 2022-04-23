@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
+    <option name="USE_RELEASE_OPTION" value="false" />
     <annotationProcessing>
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -9,26 +10,26 @@
         <module name="torch-game-gateway-waf" />
         <module name="torch-game-gateway-core" />
         <module name="torch-game-gateway-deacon" />
+        <module name="torch-game-gateway-common" />
         <module name="torch-game-gateway-admin" />
-        <module name="torch-game-gateway-model" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
+    <bytecodeTargetLevel target="11">
       <module name="torch-game-gateway" target="1.8" />
       <module name="torch-game-gateway-admin" target="11" />
+      <module name="torch-game-gateway-common" target="11" />
       <module name="torch-game-gateway-core" target="11" />
       <module name="torch-game-gateway-deacon" target="11" />
-      <module name="torch-game-gateway-model" target="11" />
       <module name="torch-game-gateway-waf" target="11" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="torch-game-gateway" options="-parameters" />
+      <module name="torch-game-gateway" options="" />
       <module name="torch-game-gateway-admin" options="-parameters" />
+      <module name="torch-game-gateway-common" options="-parameters" />
       <module name="torch-game-gateway-core" options="-parameters" />
       <module name="torch-game-gateway-deacon" options="-parameters" />
-      <module name="torch-game-gateway-model" options="-parameters" />
       <module name="torch-game-gateway-waf" options="-parameters" />
     </option>
   </component>

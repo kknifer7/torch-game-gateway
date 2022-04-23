@@ -3,9 +3,9 @@ package xit.gateway.core.route.reader;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import xit.gateway.api.route.reader.RouteReader;
 import xit.gateway.core.route.reader.impl.DefaultRouteReader;
-import xit.gateway.core.route.container.RouteGroup;
-import xit.gateway.core.pojo.Route;
+import xit.gateway.pojo.Route;
 
 import java.io.IOException;
 import java.util.List;

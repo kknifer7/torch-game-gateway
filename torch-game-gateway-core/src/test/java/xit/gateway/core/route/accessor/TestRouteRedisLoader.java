@@ -4,7 +4,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import xit.gateway.deacon.utils.RedisUtils;
+import xit.gateway.api.route.accessor.RouteAccessor;
+import xit.gateway.utils.RedisUtils;
 
 @SpringBootTest
 public class TestRouteRedisLoader {

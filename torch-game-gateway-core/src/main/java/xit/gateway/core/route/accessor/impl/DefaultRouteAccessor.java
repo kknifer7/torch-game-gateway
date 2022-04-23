@@ -4,23 +4,23 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
-import xit.gateway.core.context.GatewayContext;
-import xit.gateway.core.request.container.GlobalRequesterContainer;
-import xit.gateway.core.request.container.GlobalRouteRequestContextContainer;
-import xit.gateway.core.request.requester.Requester;
+import xit.gateway.api.container.request.RequesterContainer;
+import xit.gateway.api.container.request.RouteRequestContextContainer;
+import xit.gateway.api.container.request.RoutesContainer;
+import xit.gateway.api.context.GatewayContext;
 import xit.gateway.core.request.requester.context.impl.DefaultRouteRequestContext;
-import xit.gateway.core.route.container.GlobalRoutesContainer;
-import xit.gateway.core.route.accessor.RouteAccessor;
-import xit.gateway.core.exception.system.SystemException;
-import xit.gateway.core.pojo.Route;
+import xit.gateway.api.route.accessor.RouteAccessor;
+import xit.gateway.core.request.requester.factory.RequesterFactory;
+import xit.gateway.exception.system.SystemException;
+import xit.gateway.pojo.Route;
 
 import java.util.List;
 
 @Component
 public class DefaultRouteAccessor implements RouteAccessor {
-    private final GlobalRequesterContainer globalRequesterContainer;
-    private final GlobalRoutesContainer globalRoutesContainer;
-    private final GlobalRouteRequestContextContainer globalRouteRequestContextContainer;
+    private final RequesterContainer globalRequesterContainer;
+    private final RoutesContainer globalRoutesContainer;
+    private final RouteRequestContextContainer globalRouteRequestContextContainer;
 
     @Autowired
     public DefaultRouteAccessor(GatewayContext context) {
@@ -33,7 +33,7 @@ public class DefaultRouteAccessor implements RouteAccessor {
     public void loadRoutes(List<Route> routeList) {
         routeList.forEach(route -> {
             globalRoutesContainer.put(route);
-            globalRequesterContainer.put(Requester.get(route));
+            globalRequesterContainer.put(RequesterFactory.get(route));
             globalRouteRequestContextContainer.put(route.getName(), new DefaultRouteRequestContext());
         });
     }

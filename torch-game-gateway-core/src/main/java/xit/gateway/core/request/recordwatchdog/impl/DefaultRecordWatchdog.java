@@ -3,8 +3,8 @@ package xit.gateway.core.request.recordwatchdog.impl;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
-import xit.gateway.core.request.recordwatchdog.RecordWatchdog;
-import xit.gateway.core.pojo.RequesterProxyResult;
+import xit.gateway.api.request.recordwatchdog.RecordWatchdog;
+import xit.gateway.pojo.RequesterProxyResult;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;

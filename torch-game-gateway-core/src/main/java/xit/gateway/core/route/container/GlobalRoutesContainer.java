@@ -1,10 +1,9 @@
 package xit.gateway.core.route.container;
 
 import org.springframework.stereotype.Component;
-import xit.gateway.core.container.MultiContainer;
-import xit.gateway.core.pojo.Route;
+import xit.gateway.api.container.request.RoutesContainer;
+import xit.gateway.pojo.Route;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -17,7 +16,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * Date: 2022/04/22
  */
 @Component
-public class GlobalRoutesContainer implements MultiContainer<Route> {
+public class GlobalRoutesContainer implements RoutesContainer {
     private final ConcurrentHashMap<String, List<Route>> map;
 
     public GlobalRoutesContainer() {

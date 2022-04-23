@@ -1,14 +1,12 @@
 xit\gateway\deacon\controller\DeaconController.class
 xit\gateway\deacon\service\impl\ConfigServiceImpl.class
 xit\gateway\deacon\dao\CallRecordDAO.class
-xit\gateway\deacon\fuse\Fuse.class
-xit\gateway\deacon\service\ConfigService.class
 xit\gateway\deacon\fuse\impl\DefaultFuse.class
+xit\gateway\deacon\cluster\heartbeatserver\impl\DefaultNettyHeartBeatServer.class
 xit\gateway\deacon\config\redis\RedisConfig.class
 xit\gateway\deacon\TorchGameGatewayDeaconApplication.class
-xit\gateway\deacon\service\CallRecordService.class
+xit\gateway\deacon\cluster\heartbeatserver\impl\DefaultNettyHeartBeatServer$1.class
 xit\gateway\deacon\service\impl\CallRecordServiceImpl.class
-xit\gateway\deacon\utils\RedisUtils.class
 xit\gateway\deacon\config\DeaconConfig.class
+xit\gateway\deacon\cluster\heartbeatserver\impl\DefaultNettyHeartBeatServer$DefaultHeartBeatServerHandler.class
 xit\gateway\deacon\dao\ConfigDAO.class
-xit\gateway\deacon\utils\UUIDUtils.class

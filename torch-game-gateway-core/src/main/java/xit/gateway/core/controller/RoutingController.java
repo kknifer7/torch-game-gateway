@@ -6,17 +6,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
-import xit.gateway.core.context.GatewayContext;
-import xit.gateway.core.pojo.Route;
-import xit.gateway.core.request.container.GlobalRequesterContainer;
-import xit.gateway.core.request.container.GlobalRouteRequestContextContainer;
-import xit.gateway.core.request.recordwatchdog.RecordWatchdog;
-import xit.gateway.core.request.requester.Requester;
-import xit.gateway.core.route.accessor.RouteAccessor;
-import xit.gateway.core.exception.route.RouteNotFoundException;
-import xit.gateway.core.pojo.RequesterProxyResult;
-import xit.gateway.core.route.container.GlobalRoutesContainer;
-import xit.gateway.core.route.loadbalancer.Loadbalancer;
+import xit.gateway.api.container.request.RequesterContainer;
+import xit.gateway.api.container.request.RouteRequestContextContainer;
+import xit.gateway.api.container.request.RoutesContainer;
+import xit.gateway.api.context.GatewayContext;
+import xit.gateway.pojo.Route;
+import xit.gateway.api.request.recordwatchdog.RecordWatchdog;
+import xit.gateway.api.request.requester.Requester;
+import xit.gateway.api.route.accessor.RouteAccessor;
+import xit.gateway.exception.route.RouteNotFoundException;
+import xit.gateway.pojo.RequesterProxyResult;
+import xit.gateway.api.route.loadbalancer.Loadbalancer;
 
 import java.net.UnknownHostException;
 
@@ -27,9 +27,9 @@ import java.net.UnknownHostException;
  */
 @RestController
 public class RoutingController {
-    private final GlobalRequesterContainer requesterContainer;
-    private final GlobalRoutesContainer routesContainer;
-    private final GlobalRouteRequestContextContainer routeRequestContextContainer;
+    private final RequesterContainer requesterContainer;
+    private final RoutesContainer routesContainer;
+    private final RouteRequestContextContainer routeRequestContextContainer;
     private final RecordWatchdog recordWatchdog;
     private final Loadbalancer loadbalancer;
     @Autowired

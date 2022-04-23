@@ -2,9 +2,9 @@ package xit.gateway.core.valve.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import xit.gateway.core.valve.AbstractValve;
-import xit.gateway.core.valve.Pipeline;
-import xit.gateway.core.valve.Valve;
+import xit.gateway.api.valve.AbstractValve;
+import xit.gateway.api.valve.Pipeline;
+import xit.gateway.api.valve.Valve;
 
 /**
  * @author Knifer

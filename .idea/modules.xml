@@ -4,9 +4,9 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/torch-game-gateway.iml" filepath="$PROJECT_DIR$/.idea/torch-game-gateway.iml" />
       <module fileurl="file://$PROJECT_DIR$/torch-game-gateway-admin/torch-game-gateway-admin.iml" filepath="$PROJECT_DIR$/torch-game-gateway-admin/torch-game-gateway-admin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/torch-game-gateway-common/torch-game-gateway-common.iml" filepath="$PROJECT_DIR$/torch-game-gateway-common/torch-game-gateway-common.iml" />
       <module fileurl="file://$PROJECT_DIR$/torch-game-gateway-core/torch-game-gateway-core.iml" filepath="$PROJECT_DIR$/torch-game-gateway-core/torch-game-gateway-core.iml" />
       <module fileurl="file://$PROJECT_DIR$/torch-game-gateway-deacon/torch-game-gateway-deacon.iml" filepath="$PROJECT_DIR$/torch-game-gateway-deacon/torch-game-gateway-deacon.iml" />
-      <module fileurl="file://$PROJECT_DIR$/torch-game-gateway-model/torch-game-gateway-model.iml" filepath="$PROJECT_DIR$/torch-game-gateway-model/torch-game-gateway-model.iml" />
       <module fileurl="file://$PROJECT_DIR$/torch-game-gateway-waf/torch-game-gateway-waf.iml" filepath="$PROJECT_DIR$/torch-game-gateway-waf/torch-game-gateway-waf.iml" />
     </modules>
   </component>

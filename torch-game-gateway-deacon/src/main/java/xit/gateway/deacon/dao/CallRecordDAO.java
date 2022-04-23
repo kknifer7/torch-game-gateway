@@ -6,7 +6,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
-import xit.gateway.core.pojo.CallRecord;
+import xit.gateway.pojo.CallRecord;
 
 @Repository
 public interface CallRecordDAO extends ReactiveCrudRepository<CallRecord, String> {

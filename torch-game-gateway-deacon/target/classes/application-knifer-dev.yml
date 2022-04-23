@@ -19,3 +19,5 @@ torch:
     deacon:
       fuse:
         fuse-class: xit.gateway.deacon.fuse.impl.DefaultFuse
+      cluster:
+        heart-beat-idle-timeout: 10

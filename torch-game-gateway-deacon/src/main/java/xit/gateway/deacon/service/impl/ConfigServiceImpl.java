@@ -3,9 +3,9 @@ package xit.gateway.deacon.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
+import xit.gateway.api.service.ConfigService;
 import xit.gateway.deacon.dao.ConfigDAO;
-import xit.gateway.deacon.service.ConfigService;
-import xit.gateway.core.pojo.Config;
+import xit.gateway.pojo.Config;
 
 @Service
 public class ConfigServiceImpl implements ConfigService {

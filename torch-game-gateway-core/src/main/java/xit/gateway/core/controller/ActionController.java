@@ -2,7 +2,7 @@ package xit.gateway.core.controller;
 
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
-import xit.gateway.core.pojo.ResultInfo;
+import xit.gateway.pojo.ResultInfo;
 
 /**
  * @author Knifer

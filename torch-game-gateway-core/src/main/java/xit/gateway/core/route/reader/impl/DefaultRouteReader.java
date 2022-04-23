@@ -2,9 +2,9 @@ package xit.gateway.core.route.reader.impl;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.springframework.stereotype.Component;
-import xit.gateway.core.route.reader.RouteReader;
-import xit.gateway.core.pojo.Route;
-import xit.gateway.deacon.utils.JsonUtils;
+import xit.gateway.api.route.reader.RouteReader;
+import xit.gateway.pojo.Route;
+import xit.gateway.utils.JsonUtils;
 
 import java.io.IOException;
 import java.util.List;

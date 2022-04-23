@@ -3,11 +3,8 @@ package xit.gateway.core.request;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import xit.gateway.core.request.requester.HttpRequester;
-import xit.gateway.core.request.requester.impl.DefaultHttpRequester;
-import xit.gateway.core.route.container.RouteGroup;
-import xit.gateway.core.route.loadbalancer.Loadbalancer;
-import xit.gateway.core.route.reader.RouteReader;
+import xit.gateway.api.route.loadbalancer.Loadbalancer;
+import xit.gateway.api.route.reader.RouteReader;
 
 import java.io.IOException;
 

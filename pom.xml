@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
     <modules>
+        <module>torch-game-gateway-common</module>
         <module>torch-game-gateway-core</module>
         <module>torch-game-gateway-admin</module>
         <module>torch-game-gateway-waf</module>
         <module>torch-game-gateway-deacon</module>
-        <module>torch-game-gateway-model</module>
     </modules>
 
     <parent>
@@ -19,36 +19,17 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
+    <groupId>groupId</groupId>
+    <artifactId>torch-game-gateway</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
     <properties>
         <skip-test>true</skip-test>
         <jjwt.version>0.11.2</jjwt.version>
         <guava.version>31.1-jre</guava.version>
     </properties>
 
-    <groupId>groupId</groupId>
-    <artifactId>torch-game-gateway</artifactId>
-    <version>1.0-SNAPSHOT</version>
-
     <dependencies>
-        <!-- 工具类 Commons-lang3 -->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-        </dependency>
-
-        <!-- 工具类 Guava -->
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>${guava.version}</version>
-        </dependency>
-
-        <!-- jackson-jsr310（LocalDatetime支持） -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jsr310</artifactId>
-        </dependency>
-
         <!-- Test -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

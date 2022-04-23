@@ -1,6 +1,6 @@
 package xit.gateway.core.request.requester.context.impl;
 
-import xit.gateway.core.request.requester.context.RouteRequestContext;
+import xit.gateway.api.request.context.RouteRequestContext;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

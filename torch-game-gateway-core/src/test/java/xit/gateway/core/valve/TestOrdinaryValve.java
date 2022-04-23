@@ -2,6 +2,8 @@ package xit.gateway.core.valve;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import xit.gateway.api.valve.OrdinaryValve;
+import xit.gateway.api.valve.ProcessCoreValve;
 
 @SpringBootTest
 public class TestOrdinaryValve {
