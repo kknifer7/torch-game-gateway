@@ -7,17 +7,19 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.logging.LoggingHandler;
-import io.netty.handler.timeout.IdleState;
-import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.handler.timeout.IdleStateHandler;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import xit.gateway.api.cluster.heartbeatserver.HeartBeatServer;
+import xit.gateway.deacon.cluster.gateway.container.impl.GlobalGatewayContainer;
 import xit.gateway.pojo.Gateway;
+import xit.gateway.pojo.GatewayHeartBeatInfo;
 import xit.gateway.utils.JsonUtils;
 
-import java.util.Date;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 @Component
@@ -27,20 +29,24 @@ public class DefaultNettyHeartBeatServer implements HeartBeatServer {
     private final int heartBeatIdleTimeout;
     private final int heartBeatServerPort;
     private final String password;
+    private final GlobalGatewayContainer gatewayContainer;
 
+    @Autowired
     public DefaultNettyHeartBeatServer(
             @Value("${torch.gateway.deacon.cluster.heart-beat-idle-timeout}")
                     int heartBeatIdleTimeout,
             @Value("${torch.gateway.deacon.cluster.heart-beat-server-port}")
                     int heartBeatServerPort,
             @Value("${torch.gateway.deacon.password}")
-                    String password
+                    String password,
+            GlobalGatewayContainer gatewayContainer
     ) {
         this.bossGroup = new NioEventLoopGroup(1);
         this.workerGroup = new NioEventLoopGroup(1);
         this.heartBeatIdleTimeout = heartBeatIdleTimeout;
         this.heartBeatServerPort = heartBeatServerPort;
         this.password = password;
+        this.gatewayContainer = gatewayContainer;
     }
 
     @Override
@@ -51,7 +57,7 @@ public class DefaultNettyHeartBeatServer implements HeartBeatServer {
                 .option(ChannelOption.SO_BACKLOG,1024)
                 .childHandler(new ChannelInitializer<SocketChannel>() {
                     @Override
-                    protected void initChannel(SocketChannel socketChannel) throws Exception {
+                    protected void initChannel(SocketChannel socketChannel) {
                         socketChannel.pipeline()
                                 .addLast(new LoggingHandler())
                                 .addLast(new StringDecoder())
@@ -60,7 +66,7 @@ public class DefaultNettyHeartBeatServer implements HeartBeatServer {
                                         0, 0,
                                         TimeUnit.SECONDS)
                                 )
-                                .addLast(new DefaultHeartBeatServerHandler(password));
+                                .addLast(new DefaultHeartBeatServerHandler(password, gatewayContainer));
                     }
                 })
                 .bind(heartBeatServerPort);
@@ -68,9 +74,14 @@ public class DefaultNettyHeartBeatServer implements HeartBeatServer {
 
     private static class DefaultHeartBeatServerHandler extends ChannelInboundHandlerAdapter{
         private final String heartBeatPwd;
+        private final GlobalGatewayContainer gatewayContainer;
+        private final static int DEAD_THRESHOLD = 5;
+        private final Map<ChannelId, GatewayHeartBeatInfo> heartBeatInfoMap;
 
-        public DefaultHeartBeatServerHandler(String heartBeatPwd) {
+        public DefaultHeartBeatServerHandler(String heartBeatPwd, GlobalGatewayContainer gatewayContainer) {
             this.heartBeatPwd = heartBeatPwd;
+            this.gatewayContainer = gatewayContainer;
+            this.heartBeatInfoMap = new ConcurrentHashMap<>();
         }
 
         @Override
@@ -80,8 +91,12 @@ public class DefaultNettyHeartBeatServer implements HeartBeatServer {
             Gateway gateway;
 
             if (validateHeartBeatMsg(heartBeatMsg)){
-                // TODO 如果是新网关，保存网关信息
                 gateway = JsonUtils.string2Object(heartBeatPwd, Gateway.class);
+                if (!gatewayContainer.contains(gateway.getId())){
+                    // 首次收到心跳包
+                    gatewayContainer.put(gateway);
+                    heartBeatInfoMap.put(ctx.channel().id(), new GatewayHeartBeatInfo(gateway.getId(), 0));
+                }
             }else{
                 ctx.close();
             }
@@ -95,18 +110,17 @@ public class DefaultNettyHeartBeatServer implements HeartBeatServer {
 
         @Override
         public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
-            // TODO 从网关容器中拿出网关信息，将其中的心跳断连属性+1，如果发现满足断开条件，则删除该条网关信息
-            int currHeartBeatTime = 1;
+            Channel channel = ctx.channel();
+            ChannelId channelId = channel.id();
+            GatewayHeartBeatInfo heartBeatInfo = heartBeatInfoMap.get(channelId);
+            int looseBeatTimes = heartBeatInfo.getLoseBeatTimes() + 1;
 
-            if (evt instanceof IdleStateEvent){
-                IdleStateEvent event = (IdleStateEvent)evt;
-                if (event.state()== IdleState.WRITER_IDLE && currHeartBeatTime < 5){
-                    System.out.println("heart beat:  "+new Date());
-                    ctx.writeAndFlush("booooop~ *" + ++currHeartBeatTime);
-                    return;
-                }
-                TimeUnit.SECONDS.sleep(1000);
+            if (looseBeatTimes >= DEAD_THRESHOLD){
+                gatewayContainer.remove(heartBeatInfo.getGatewayId());
+                heartBeatInfoMap.remove(channelId);
+                channel.close();
             }
+            super.userEventTriggered(ctx, evt);
         }
     }
 }

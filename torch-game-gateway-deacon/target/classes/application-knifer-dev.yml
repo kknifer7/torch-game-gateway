@@ -21,3 +21,4 @@ torch:
         fuse-class: xit.gateway.deacon.fuse.impl.DefaultFuse
       cluster:
         heart-beat-idle-timeout: 10
+        heart-beat-server-port: 9099
