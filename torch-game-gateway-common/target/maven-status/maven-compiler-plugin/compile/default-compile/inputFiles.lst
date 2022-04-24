@@ -13,6 +13,7 @@ E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\api\container\request\RequesterContainer.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\pojo\Gateway.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\api\service\ConfigService.java
+E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\pojo\GatewayHeartBeatInfo.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\utils\RouteUtils.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\api\request\recordwatchdog\RecordWatchdog.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\api\fuse\Fuse.java
@@ -32,6 +33,7 @@ E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\constant\ValueEnum.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\exception\valve\ValveException.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\pojo\ResultInfo.java
+E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\api\cluster\heartbeatclient\HeartBeatClient.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\api\container\request\RoutesContainer.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\api\valve\AbstractValve.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\constant\RedisKey.java

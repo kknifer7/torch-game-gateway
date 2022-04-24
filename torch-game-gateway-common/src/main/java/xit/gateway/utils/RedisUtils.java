@@ -32,6 +32,10 @@ public class RedisUtils {
         redisTemplate.opsForValue().set(key, value, timeout, timeUnit);
     }
 
+    public static<T> void set(RedisKey key, T value){
+        set(key.getValue(), value, key.getLifetime(), key.getTimeUnit());
+    }
+
     public static<T> T get(String key, Class<T> valueClazz){
         return (T) redisTemplate.opsForValue().get(key);
     }

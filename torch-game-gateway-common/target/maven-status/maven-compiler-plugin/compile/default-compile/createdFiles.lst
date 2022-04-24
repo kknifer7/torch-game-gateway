@@ -37,12 +37,14 @@ xit\gateway\api\valve\ProcessCoreValve.class
 xit\gateway\api\container\SingleContainer.class
 xit\gateway\api\request\recordwatchdog\RecordWatchdog.class
 xit\gateway\exception\route\RouteNotFoundException.class
+xit\gateway\pojo\GatewayHeartBeatInfo.class
 xit\gateway\utils\JsonUtils.class
 xit\gateway\constant\RedisKey.class
 xit\gateway\api\fuse\Fuse.class
 xit\gateway\api\container\request\RoutesContainer.class
 xit\gateway\utils\RIUtils.class
 xit\gateway\api\valve\Pipeline.class
+xit\gateway\api\cluster\heartbeatclient\HeartBeatClient.class
 xit\gateway\constant\ResultCode.class
 xit\gateway\api\request\context\RouteRequestContext.class
 xit\gateway\api\cluster\heartbeatserver\HeartBeatServer.class

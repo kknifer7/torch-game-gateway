@@ -34,6 +34,11 @@ public class GlobalRequesterContainer implements RequesterContainer {
     }
 
     @Override
+    public Requester remove(String key) {
+        return requesterMap.remove(key);
+    }
+
+    @Override
     public boolean contains(String primaryKey) {
         return requesterMap.containsKey(primaryKey);
     }

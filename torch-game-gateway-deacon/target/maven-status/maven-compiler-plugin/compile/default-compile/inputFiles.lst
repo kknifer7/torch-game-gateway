@@ -4,6 +4,7 @@ E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-deacon\src\main\java\xit
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-deacon\src\main\java\xit\gateway\deacon\service\impl\ConfigServiceImpl.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-deacon\src\main\java\xit\gateway\deacon\dao\ConfigDAO.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-deacon\src\main\java\xit\gateway\deacon\service\impl\CallRecordServiceImpl.java
+E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-deacon\src\main\java\xit\gateway\deacon\cluster\gateway\container\impl\GlobalGatewayContainer.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-deacon\src\main\java\xit\gateway\deacon\config\redis\RedisConfig.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-deacon\src\main\java\xit\gateway\deacon\fuse\impl\DefaultFuse.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-deacon\src\main\java\xit\gateway\deacon\cluster\heartbeatserver\impl\DefaultNettyHeartBeatServer.java

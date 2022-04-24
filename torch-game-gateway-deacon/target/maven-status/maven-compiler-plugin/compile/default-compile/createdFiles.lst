@@ -3,6 +3,7 @@ xit\gateway\deacon\service\impl\ConfigServiceImpl.class
 xit\gateway\deacon\dao\CallRecordDAO.class
 xit\gateway\deacon\fuse\impl\DefaultFuse.class
 xit\gateway\deacon\cluster\heartbeatserver\impl\DefaultNettyHeartBeatServer.class
+xit\gateway\deacon\cluster\gateway\container\impl\GlobalGatewayContainer.class
 xit\gateway\deacon\config\redis\RedisConfig.class
 xit\gateway\deacon\TorchGameGatewayDeaconApplication.class
 xit\gateway\deacon\cluster\heartbeatserver\impl\DefaultNettyHeartBeatServer$1.class
