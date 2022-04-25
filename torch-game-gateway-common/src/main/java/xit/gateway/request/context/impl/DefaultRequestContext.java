@@ -1,13 +1,13 @@
-package xit.gateway.core.request.requester.context.impl;
+package xit.gateway.request.context.impl;
 
-import xit.gateway.api.request.context.RouteRequestContext;
+import xit.gateway.api.request.context.RequestContext;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class DefaultRouteRequestContext implements RouteRequestContext {
+public class DefaultRequestContext implements RequestContext {
     private final AtomicInteger lastCalledIndex;
 
-    public DefaultRouteRequestContext() {
+    public DefaultRequestContext() {
         this.lastCalledIndex = new AtomicInteger(0);
     }
 

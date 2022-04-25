@@ -30,6 +30,8 @@ public class DefaultNettyHeartBeatClient implements HeartBeatClient {
     private final String serverHost;
     private final int serverPort;
     private final String serverPwd;
+    private final boolean gatewayBackup;
+    private final boolean gatewayUseSSL;
     private final int gatewayPort;
     private final Logger logger = LoggerFactory.getLogger(DefaultNettyHeartBeatClient.class);
 
@@ -40,12 +42,19 @@ public class DefaultNettyHeartBeatClient implements HeartBeatClient {
             int serverPort,
             @Value("${torch.gateway.call-trace.deacon.password}")
             String serverPwd,
+            @Value("${torch.gateway.call-trace.deacon.heart-beat.backup}")
+            boolean gatewayBackup,
+            @Value("${torch.gateway.call-trace.deacon.heart-beat.use-ssl}")
+            boolean gatewayUseSSL,
             @Value("${server.port}")
             int gatewayPort
     ){
         this.serverHost = serverHost;
         this.serverPort = serverPort;
         this.serverPwd = serverPwd;
+        this.gatewayBackup = gatewayBackup;
+        this.gatewayUseSSL = gatewayUseSSL;
+
         this.gatewayPort = gatewayPort;
     }
 
@@ -65,7 +74,7 @@ public class DefaultNettyHeartBeatClient implements HeartBeatClient {
                                         TimeUnit.SECONDS
                                 ))
                                 .addLast(new StringEncoder())
-                                .addLast(new DefaultHeatBeatClientHandler(serverPwd, gatewayPort));
+                                .addLast(new DefaultHeatBeatClientHandler(serverPwd, gatewayPort, gatewayUseSSL, gatewayBackup));
                     }
                 })
                 .remoteAddress(new InetSocketAddress(serverHost, serverPort))
@@ -84,13 +93,19 @@ public class DefaultNettyHeartBeatClient implements HeartBeatClient {
     private static class DefaultHeatBeatClientHandler extends ChannelInboundHandlerAdapter{
         private final String heartBeatPackage;
 
-        public DefaultHeatBeatClientHandler(String serverPwd, int gatewayPort) throws UnknownHostException {
+        public DefaultHeatBeatClientHandler(String serverPwd, int gatewayPort, boolean gatewayUseSSL, boolean gatewayBackup) throws UnknownHostException {
             String id = UUIDUtils.getRandom();
 
-            this.heartBeatPackage = serverPwd + ":" +JsonUtils.object2String(new Gateway(
+            this.heartBeatPackage = serverPwd + ":" + JsonUtils.object2String(new Gateway(
                     id, "Gateway|" + id,
                     InetAddress.getLocalHost().getHostAddress(),
-                    gatewayPort
+                    gatewayPort,
+                    gatewayUseSSL,
+                    gatewayBackup,
+                    false,
+                    // TODO 网关实例性能数据
+                    0, 0, 0, 0,
+                    null
             ));
         }
 

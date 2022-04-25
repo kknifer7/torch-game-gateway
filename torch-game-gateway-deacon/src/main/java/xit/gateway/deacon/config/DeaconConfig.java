@@ -8,8 +8,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import xit.gateway.api.cluster.heartbeatserver.HeartBeatServer;
 import xit.gateway.api.fuse.Fuse;
+import xit.gateway.api.request.container.RequestContextContainer;
+import xit.gateway.api.route.loadbalancer.Loadbalancer;
 import xit.gateway.deacon.fuse.impl.DefaultFuse;
 import xit.gateway.api.service.ConfigService;
+import xit.gateway.loadbalancer.impl.NoLoadbalancer;
+import xit.gateway.request.container.impl.GlobalRequestContextContainer;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -37,5 +41,25 @@ public class DeaconConfig {
         }
 
         return fuse;
+    }
+
+    @Bean
+    public Loadbalancer loadbalancer(
+            @Value("${torch.gateway.deacon.loadbalance.loadbalancer-class}")
+                    String className
+    ){
+        try {
+            return (Loadbalancer) Class.forName(className).getConstructor().newInstance();
+        } catch (Exception e) {
+            logger.error(e.getLocalizedMessage());
+            logger.warn("failed to create loadbalancer, working without loadbalancer~");
+        }
+
+        return new NoLoadbalancer();
+    }
+
+    @Bean
+    public RequestContextContainer requestContextContainer(){
+        return new GlobalRequestContextContainer();
     }
 }

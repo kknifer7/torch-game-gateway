@@ -5,6 +5,7 @@ xit\gateway\deacon\fuse\impl\DefaultFuse.class
 xit\gateway\deacon\cluster\heartbeatserver\impl\DefaultNettyHeartBeatServer.class
 xit\gateway\deacon\cluster\gateway\container\impl\GlobalGatewayContainer.class
 xit\gateway\deacon\config\redis\RedisConfig.class
+xit\gateway\deacon\gatewayagent\impl\DefaultGatewayAgent.class
 xit\gateway\deacon\TorchGameGatewayDeaconApplication.class
 xit\gateway\deacon\cluster\heartbeatserver\impl\DefaultNettyHeartBeatServer$1.class
 xit\gateway\deacon\service\impl\CallRecordServiceImpl.class

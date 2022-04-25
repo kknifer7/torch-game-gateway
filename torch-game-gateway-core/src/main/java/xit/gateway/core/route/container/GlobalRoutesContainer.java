@@ -1,7 +1,7 @@
 package xit.gateway.core.route.container;
 
 import org.springframework.stereotype.Component;
-import xit.gateway.api.container.request.RoutesContainer;
+import xit.gateway.api.request.container.RoutesContainer;
 import xit.gateway.pojo.Route;
 
 import java.util.List;

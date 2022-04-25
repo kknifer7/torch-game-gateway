@@ -1,10 +1,11 @@
-package xit.gateway.core.route.loadbalancer.impl;
+package xit.gateway.loadbalancer.impl;
 
+import org.assertj.core.util.Lists;
+import xit.gateway.api.loadbalancer.Loadbalanceable;
+import xit.gateway.api.request.context.RequestContext;
 import xit.gateway.api.route.loadbalancer.Loadbalancer;
-import xit.gateway.api.request.context.RouteRequestContext;
-import xit.gateway.pojo.Route;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -15,8 +16,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class RoundRobinLoadbalancer implements Loadbalancer {
 
     @Override
-    public Route choose(List<Route> routes, RouteRequestContext requesterContext) {
-        int size = routes.size();
+    public Loadbalanceable choose(Collection<? extends Loadbalanceable> list, RequestContext requesterContext) {
+        int size = list.size();
         AtomicInteger lastIdx = requesterContext.lastCalledIndex();
         int curr,next;
 
@@ -26,7 +27,7 @@ public class RoundRobinLoadbalancer implements Loadbalancer {
             curr = lastIdx.get();
             next = (curr + 1) % size;
             if (lastIdx.compareAndSet(curr, next)) {
-                return routes.get(next);
+                return Lists.newArrayList(list).get(next);
             }
         }
     }

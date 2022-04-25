@@ -1,8 +1,8 @@
 package xit.gateway.api.context;
 
-import xit.gateway.api.container.request.RequesterContainer;
-import xit.gateway.api.container.request.RouteRequestContextContainer;
-import xit.gateway.api.container.request.RoutesContainer;
+import xit.gateway.api.request.container.RequesterContainer;
+import xit.gateway.api.request.container.RequestContextContainer;
+import xit.gateway.api.request.container.RoutesContainer;
 
 /**
  * @author Knifer
@@ -11,6 +11,6 @@ import xit.gateway.api.container.request.RoutesContainer;
  */
 public interface GatewayContext {
     RequesterContainer requesterContainer();
-    RouteRequestContextContainer routeRequestContextContainer();
+    RequestContextContainer routeRequestContextContainer();
     RoutesContainer routesContainer();
 }

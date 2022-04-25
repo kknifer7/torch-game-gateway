@@ -6,7 +6,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import xit.gateway.api.route.loadbalancer.Loadbalancer;
-import xit.gateway.core.route.loadbalancer.impl.NoLoadbalancer;
+import xit.gateway.loadbalancer.impl.NoLoadbalancer;
+import xit.gateway.request.container.impl.GlobalRequestContextContainer;
 
 @Configuration
 public class GatewayConfig {
@@ -25,5 +26,10 @@ public class GatewayConfig {
         }
 
         return new NoLoadbalancer();
+    }
+
+    @Bean
+    public GlobalRequestContextContainer requestContextContainer(){
+        return new GlobalRequestContextContainer();
     }
 }

@@ -44,7 +44,7 @@ public class DefaultHttpRequester extends AbstractRequester implements HttpReque
     @Override
     public RequesterProxyResult invoke(ServerWebExchange exchange) {
         if (route.getDisabled()){
-            throw new RouteDisabledException("路由暂不可用", exchange.getRequest().getPath().value());
+            throw new RouteDisabledException("服务暂不可用", exchange.getRequest().getPath().value());
         }
 
         Mono<Void> result;
@@ -74,7 +74,6 @@ public class DefaultHttpRequester extends AbstractRequester implements HttpReque
                     headers.add("HOST", route.getHost());
                 })
                 .body(BodyInserters.fromDataBuffers(request.getBody()));
-
         transformCookiesToSpec(request, spec);
 
         // 调用、处理响应结果或异常

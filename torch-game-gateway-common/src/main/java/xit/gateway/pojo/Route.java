@@ -3,6 +3,7 @@ package xit.gateway.pojo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
+import xit.gateway.api.loadbalancer.Loadbalanceable;
 import xit.gateway.constant.ProtocolType;
 
 import java.time.LocalDateTime;
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
  * Description: 路由信息类
  * Date: 2022/03/25
  */
-public class Route {
+public class Route implements Loadbalanceable {
     protected String id;
     protected String name;
     protected String desc;

@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
-import xit.gateway.api.container.request.RequesterContainer;
-import xit.gateway.api.container.request.RouteRequestContextContainer;
-import xit.gateway.api.container.request.RoutesContainer;
+import xit.gateway.api.request.container.RequesterContainer;
+import xit.gateway.api.request.container.RequestContextContainer;
+import xit.gateway.api.request.container.RoutesContainer;
 import xit.gateway.api.context.GatewayContext;
 import xit.gateway.pojo.Route;
 import xit.gateway.api.request.recordwatchdog.RecordWatchdog;
@@ -29,7 +29,7 @@ import java.net.UnknownHostException;
 public class RoutingController {
     private final RequesterContainer requesterContainer;
     private final RoutesContainer routesContainer;
-    private final RouteRequestContextContainer routeRequestContextContainer;
+    private final RequestContextContainer routeRequestContextContainer;
     private final RecordWatchdog recordWatchdog;
     private final Loadbalancer loadbalancer;
     @Autowired
@@ -44,10 +44,10 @@ public class RoutingController {
         this.loadbalancer = loadbalancer;
     }
 
-    @RequestMapping("/before/{serviceId}/**")
+    @RequestMapping("/{serviceId}/**")
     public Mono<?> all(@PathVariable("serviceId") String serviceId, ServerWebExchange exchange) throws UnknownHostException {
         // 负载均衡
-        Route route = loadbalancer.choose(routesContainer.get(serviceId), routeRequestContextContainer.get(serviceId));
+        Route route = ((Route) loadbalancer.choose(routesContainer.get(serviceId), routeRequestContextContainer.get(serviceId)));
         Requester requester;
         RequesterProxyResult result;
 

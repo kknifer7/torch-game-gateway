@@ -23,3 +23,5 @@ torch:
       heart-beat:
         idle-timeout: 10
         server-port: 9099
+      loadbalance:
+        loadbalancer-class: xit.gateway.loadbalancer.impl.RoundRobinLoadbalancer

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import xit.gateway.api.context.GatewayContext;
 import xit.gateway.core.request.container.GlobalRequesterContainer;
-import xit.gateway.core.request.container.GlobalRouteRequestContextContainer;
+import xit.gateway.request.container.impl.GlobalRequestContextContainer;
 import xit.gateway.core.route.container.GlobalRoutesContainer;
 
 /**
@@ -14,12 +14,12 @@ import xit.gateway.core.route.container.GlobalRoutesContainer;
  */
 @Component
 public class DefaultGatewayContext implements GatewayContext {
-    private final GlobalRouteRequestContextContainer routeRequestContextContainer;
+    private final GlobalRequestContextContainer routeRequestContextContainer;
     private final GlobalRequesterContainer requesterContainer;
     private final GlobalRoutesContainer serviceRoutesContainer;
 
     @Autowired
-    public DefaultGatewayContext(GlobalRouteRequestContextContainer routeRequestContextContainer, GlobalRequesterContainer requesterContainer, GlobalRoutesContainer serviceRoutesContainer){
+    public DefaultGatewayContext(GlobalRequestContextContainer routeRequestContextContainer, GlobalRequesterContainer requesterContainer, GlobalRoutesContainer serviceRoutesContainer){
         this.routeRequestContextContainer = routeRequestContextContainer;
         this.requesterContainer = requesterContainer;
         this.serviceRoutesContainer = serviceRoutesContainer;
@@ -31,7 +31,7 @@ public class DefaultGatewayContext implements GatewayContext {
     }
 
     @Override
-    public GlobalRouteRequestContextContainer routeRequestContextContainer() {
+    public GlobalRequestContextContainer routeRequestContextContainer() {
         return routeRequestContextContainer;
     }
 

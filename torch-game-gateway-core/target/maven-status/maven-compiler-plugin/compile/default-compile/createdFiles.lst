@@ -7,7 +7,6 @@ xit\gateway\core\route\container\GlobalRoutesContainer.class
 xit\gateway\core\cluster\heartbeatclient\impl\DefaultNettyHeartBeatClient.class
 xit\gateway\core\route\container\RouteGroup.class
 xit\gateway\core\valve\impl\RouteInitializationLoadingValve.class
-xit\gateway\core\route\loadbalancer\impl\NoLoadbalancer.class
 xit\gateway\core\controller\ActionController.class
 xit\gateway\core\route\accessor\impl\DefaultRouteAccessor.class
 xit\gateway\core\cluster\heartbeatclient\impl\DefaultNettyHeartBeatClient$DefaultHeatBeatClientHandler.class
@@ -21,13 +20,9 @@ xit\gateway\core\service\impl\GatewayUserService.class
 xit\gateway\core\TorchGameGatewayApplication.class
 xit\gateway\core\valve\impl\GatewayPipeline.class
 xit\gateway\core\valve\impl\GatewayPipeline$1.class
-xit\gateway\core\request\container\GlobalRouteRequestContextContainer.class
 xit\gateway\core\cluster\heartbeatclient\impl\DefaultNettyHeartBeatClient$1.class
-xit\gateway\core\request\requester\context\impl\DefaultRouteRequestContext.class
-xit\gateway\core\route\loadbalancer\impl\RoundRobinLoadbalancer.class
 xit\gateway\core\dao\GatewayUserDAO.class
 xit\gateway\core\route\reader\impl\DefaultRouteReader.class
-xit\gateway\core\route\loadbalancer\impl\RandomLoadbalancer.class
 xit\gateway\core\route\reader\impl\DefaultRouteReader$1.class
 xit\gateway\core\config\GatewayConfig.class
 xit\gateway\core\request\requester\impl\DefaultRpcRequester$DefaultRpcClientHandler.class

@@ -1,9 +1,10 @@
 package xit.gateway.core.request.container;
 
 import org.springframework.stereotype.Component;
-import xit.gateway.api.container.request.RequesterContainer;
+import xit.gateway.api.request.container.RequesterContainer;
 import xit.gateway.api.request.requester.Requester;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -36,6 +37,11 @@ public class GlobalRequesterContainer implements RequesterContainer {
     @Override
     public Requester remove(String key) {
         return requesterMap.remove(key);
+    }
+
+    @Override
+    public Collection<Requester> getAll() {
+        return requesterMap.values();
     }
 
     @Override

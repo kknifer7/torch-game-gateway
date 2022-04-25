@@ -4,11 +4,11 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
-import xit.gateway.api.container.request.RequesterContainer;
-import xit.gateway.api.container.request.RouteRequestContextContainer;
-import xit.gateway.api.container.request.RoutesContainer;
+import xit.gateway.api.request.container.RequesterContainer;
+import xit.gateway.api.request.container.RequestContextContainer;
+import xit.gateway.api.request.container.RoutesContainer;
 import xit.gateway.api.context.GatewayContext;
-import xit.gateway.core.request.requester.context.impl.DefaultRouteRequestContext;
+import xit.gateway.request.context.impl.DefaultRequestContext;
 import xit.gateway.api.route.accessor.RouteAccessor;
 import xit.gateway.core.request.requester.factory.RequesterFactory;
 import xit.gateway.exception.system.SystemException;
@@ -20,7 +20,7 @@ import java.util.List;
 public class DefaultRouteAccessor implements RouteAccessor {
     private final RequesterContainer globalRequesterContainer;
     private final RoutesContainer globalRoutesContainer;
-    private final RouteRequestContextContainer globalRouteRequestContextContainer;
+    private final RequestContextContainer globalRouteRequestContextContainer;
 
     @Autowired
     public DefaultRouteAccessor(GatewayContext context) {
@@ -34,7 +34,7 @@ public class DefaultRouteAccessor implements RouteAccessor {
         routeList.forEach(route -> {
             globalRoutesContainer.put(route);
             globalRequesterContainer.put(RequesterFactory.get(route));
-            globalRouteRequestContextContainer.put(route.getName(), new DefaultRouteRequestContext());
+            globalRouteRequestContextContainer.put(route.getName(), new DefaultRequestContext());
         });
     }
 

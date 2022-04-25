@@ -1,4 +1,4 @@
-package xit.gateway.api.container.request;
+package xit.gateway.api.request.container;
 
 import xit.gateway.api.container.MultiContainer;
 import xit.gateway.pojo.Route;
