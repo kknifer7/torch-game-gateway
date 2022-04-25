@@ -1,4 +1,4 @@
-package xit.gateway.api.gatewayagent;
+package xit.gateway.api.cluster.gateway.agent;
 
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;

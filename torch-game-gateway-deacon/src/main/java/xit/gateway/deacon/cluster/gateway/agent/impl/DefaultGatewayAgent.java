@@ -1,4 +1,4 @@
-package xit.gateway.deacon.gatewayagent.impl;
+package xit.gateway.deacon.cluster.gateway.agent.impl;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.io.buffer.DataBuffer;
@@ -13,7 +13,7 @@ import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
-import xit.gateway.api.gatewayagent.GatewayAgent;
+import xit.gateway.api.cluster.gateway.agent.GatewayAgent;
 import xit.gateway.pojo.Gateway;
 
 import java.util.List;

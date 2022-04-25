@@ -27,7 +27,6 @@ public class DefaultRecordWatchdog implements RecordWatchdog {
     @Override
     public void watchAndSend(RequesterProxyResult proxyResult) {
         executor.execute(() -> {
-            // TODO 如有时间，优化这里的循环
             while (true){
                 if (proxyResult.isCompleted()){
                     webClient.put()

@@ -11,9 +11,9 @@ E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\g
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\core\valve\impl\HeartBeatServiceValve.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\core\request\requester\factory\RequesterFactory.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\core\request\container\GlobalRequesterContainer.java
+E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\core\TorchGameGatewayCoreApplication.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\core\controller\ActionController.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\core\request\recordwatchdog\impl\DefaultRecordWatchdog.java
-E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\core\TorchGameGatewayApplication.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\core\request\requester\impl\DefaultRpcRequester.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\core\dao\GatewayUserDAO.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\core\route\limiter\impl\DefaultRouteLimiter.java

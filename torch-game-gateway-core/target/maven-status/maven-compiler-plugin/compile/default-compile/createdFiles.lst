@@ -16,8 +16,8 @@ xit\gateway\core\request\container\GlobalRequesterContainer.class
 xit\gateway\core\config\redis\RedisConfig.class
 xit\gateway\core\request\requester\factory\RequesterFactory$1.class
 xit\gateway\core\request\requester\factory\RequesterFactory.class
+xit\gateway\core\TorchGameGatewayCoreApplication.class
 xit\gateway\core\service\impl\GatewayUserService.class
-xit\gateway\core\TorchGameGatewayApplication.class
 xit\gateway\core\valve\impl\GatewayPipeline.class
 xit\gateway\core\valve\impl\GatewayPipeline$1.class
 xit\gateway\core\cluster\heartbeatclient\impl\DefaultNettyHeartBeatClient$1.class

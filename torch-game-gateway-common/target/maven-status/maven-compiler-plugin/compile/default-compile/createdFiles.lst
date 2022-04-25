@@ -21,12 +21,14 @@ xit\gateway\exception\valve\ValveException.class
 xit\gateway\api\request\container\RequesterContainer.class
 xit\gateway\api\request\requester\RpcRequester.class
 xit\gateway\pojo\Site.class
+xit\gateway\api\cluster\gateway\selector\GatewaySelector.class
 xit\gateway\request\container\impl\GlobalRequestContextContainer.class
 xit\gateway\pojo\CallRecord$Builder.class
 xit\gateway\constant\ValueEnum.class
 xit\gateway\exception\route\RouteResolvingException.class
 xit\gateway\api\context\GatewayContext.class
 xit\gateway\pojo\ResultInfo.class
+xit\gateway\api\cluster\gateway\agent\GatewayAgent.class
 xit\gateway\pojo\Gateway.class
 xit\gateway\exception\route\RouteLoadingException.class
 xit\gateway\api\request\container\RoutesContainer.class
@@ -61,7 +63,6 @@ xit\gateway\api\service\ConfigService.class
 xit\gateway\exception\GlobalExceptionResolver.class
 xit\gateway\api\route\limiter\AbstractRouteLimiter.class
 xit\gateway\pojo\CallRecord.class
-xit\gateway\api\gatewayagent\GatewayAgent.class
 xit\gateway\api\route\limiter\RouteLimiter.class
 xit\gateway\exception\requester\RequesterException.class
 xit\gateway\pojo\CalledRoute.class

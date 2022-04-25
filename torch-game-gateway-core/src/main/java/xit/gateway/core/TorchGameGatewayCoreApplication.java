@@ -6,9 +6,9 @@ import org.springframework.context.ConfigurableApplicationContext;
 import xit.gateway.core.starter.GatewayStarter;
 
 @SpringBootApplication
-public class TorchGameGatewayApplication {
+public class TorchGameGatewayCoreApplication {
     public static void main(String[] args) {
-        ConfigurableApplicationContext ac = SpringApplication.run(TorchGameGatewayApplication.class);
+        ConfigurableApplicationContext ac = SpringApplication.run(TorchGameGatewayCoreApplication.class);
         GatewayStarter gatewayStarter = (GatewayStarter) ac.getBean("gatewayStarter");
 
         gatewayStarter.start();
