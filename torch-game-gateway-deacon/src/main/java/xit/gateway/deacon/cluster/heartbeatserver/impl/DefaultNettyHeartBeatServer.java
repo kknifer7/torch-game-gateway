@@ -18,6 +18,8 @@ import xit.gateway.pojo.Gateway;
 import xit.gateway.pojo.GatewayHeartBeatInfo;
 import xit.gateway.utils.JsonUtils;
 
+import java.net.InetSocketAddress;
+import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
@@ -33,9 +35,9 @@ public class DefaultNettyHeartBeatServer implements HeartBeatServer {
 
     @Autowired
     public DefaultNettyHeartBeatServer(
-            @Value("${torch.gateway.deacon.cluster.heart-beat-idle-timeout}")
+            @Value("${torch.gateway.deacon.heart-beat.idle-timeout}")
                     int heartBeatIdleTimeout,
-            @Value("${torch.gateway.deacon.cluster.heart-beat-server-port}")
+            @Value("${torch.gateway.deacon.heart-beat.server-port}")
                     int heartBeatServerPort,
             @Value("${torch.gateway.deacon.password}")
                     String password,
@@ -87,15 +89,21 @@ public class DefaultNettyHeartBeatServer implements HeartBeatServer {
         @Override
         public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
             // password:gatewayInfo
-            String[] heartBeatMsg = StringUtils.split(((String) msg), ':');
+            String[] heartBeatMsg = StringUtils.split(((String) msg), ":", 2);
+            Channel clientChannel;
+            InetSocketAddress clientAddress;
             Gateway gateway;
 
             if (validateHeartBeatMsg(heartBeatMsg)){
-                gateway = JsonUtils.string2Object(heartBeatPwd, Gateway.class);
+                gateway = JsonUtils.string2Object(heartBeatMsg[1], Gateway.class);
                 if (!gatewayContainer.contains(gateway.getId())){
                     // 首次收到心跳包
+                    clientChannel = ctx.channel();
+                    clientAddress = ((InetSocketAddress) clientChannel.remoteAddress());
+                    gateway.setHost(clientAddress.getHostName());
+                    gateway.setCreateAt(LocalDateTime.now());
                     gatewayContainer.put(gateway);
-                    heartBeatInfoMap.put(ctx.channel().id(), new GatewayHeartBeatInfo(gateway.getId(), 0));
+                    heartBeatInfoMap.put(clientChannel.id(), new GatewayHeartBeatInfo(gateway.getId(), 0));
                 }
             }else{
                 ctx.close();
@@ -116,11 +124,24 @@ public class DefaultNettyHeartBeatServer implements HeartBeatServer {
             int looseBeatTimes = heartBeatInfo.getLoseBeatTimes() + 1;
 
             if (looseBeatTimes >= DEAD_THRESHOLD){
-                gatewayContainer.remove(heartBeatInfo.getGatewayId());
-                heartBeatInfoMap.remove(channelId);
+                setGatewayDead(channelId, heartBeatInfo.getGatewayId());
                 channel.close();
             }
+            heartBeatInfo.setLoseBeatTimes(looseBeatTimes);
             super.userEventTriggered(ctx, evt);
+        }
+
+        @Override
+        public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
+            ChannelId channelId = ctx.channel().id();
+
+            setGatewayDead(channelId, heartBeatInfoMap.get(channelId).getGatewayId());
+            super.handlerRemoved(ctx);
+        }
+
+        private void setGatewayDead(ChannelId channelId, String gatewayId){
+            gatewayContainer.remove(gatewayId);
+            heartBeatInfoMap.remove(channelId);
         }
     }
 }

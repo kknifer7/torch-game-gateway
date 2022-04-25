@@ -14,6 +14,8 @@ import xit.gateway.pojo.ResultInfo;
 @RequestMapping("/action")
 public class ActionController {
 
+
+
     @PostMapping("/sync-route/{serviceName}/{routeId}")
     public Mono<ResultInfo<Void>> syncRoute(
             @PathVariable("serviceName") String serviceName,

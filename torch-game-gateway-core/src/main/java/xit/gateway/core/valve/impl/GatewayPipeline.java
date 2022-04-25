@@ -2,9 +2,7 @@ package xit.gateway.core.valve.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import xit.gateway.api.valve.AbstractValve;
-import xit.gateway.api.valve.Pipeline;
-import xit.gateway.api.valve.Valve;
+import xit.gateway.api.valve.*;
 
 /**
  * @author Knifer
@@ -17,10 +15,12 @@ public class GatewayPipeline implements Pipeline {
     private Valve last;
 
     @Autowired
-    private GatewayPipeline(RouteInitializationLoadingValve routeLoadingValve){
-        // TODO 初始化管道流
-        first = routeLoadingValve;
-        last = null;
+    private GatewayPipeline(RouteInitializationLoadingValve routeLoadingValve, HeartBeatServiceValve heartBeatServiceValve){
+        first = new ProcessCoreValve() {@Override protected void work() {}};
+        last = new ProcessCoreValve() {@Override protected void work() {}};
+        this.addLast(routeLoadingValve)
+            .addLast(heartBeatServiceValve);
+        this.first.run();
     }
 
     @Override

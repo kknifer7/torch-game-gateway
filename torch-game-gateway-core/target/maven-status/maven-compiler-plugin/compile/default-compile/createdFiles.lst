@@ -1,13 +1,16 @@
 xit\gateway\core\starter\GatewayStarter.class
+xit\gateway\core\valve\impl\HeartBeatServiceValve.class
 xit\gateway\core\request\recordwatchdog\impl\DefaultRecordWatchdog.class
 xit\gateway\core\request\requester\impl\DefaultRpcRequester$1.class
 xit\gateway\core\request\requester\impl\DefaultRpcRequester.class
 xit\gateway\core\route\container\GlobalRoutesContainer.class
+xit\gateway\core\cluster\heartbeatclient\impl\DefaultNettyHeartBeatClient.class
 xit\gateway\core\route\container\RouteGroup.class
 xit\gateway\core\valve\impl\RouteInitializationLoadingValve.class
 xit\gateway\core\route\loadbalancer\impl\NoLoadbalancer.class
 xit\gateway\core\controller\ActionController.class
 xit\gateway\core\route\accessor\impl\DefaultRouteAccessor.class
+xit\gateway\core\cluster\heartbeatclient\impl\DefaultNettyHeartBeatClient$DefaultHeatBeatClientHandler.class
 xit\gateway\core\controller\RoutingController.class
 xit\gateway\core\context\impl\DefaultGatewayContext.class
 xit\gateway\core\request\container\GlobalRequesterContainer.class
@@ -17,7 +20,9 @@ xit\gateway\core\request\requester\factory\RequesterFactory.class
 xit\gateway\core\service\impl\GatewayUserService.class
 xit\gateway\core\TorchGameGatewayApplication.class
 xit\gateway\core\valve\impl\GatewayPipeline.class
+xit\gateway\core\valve\impl\GatewayPipeline$1.class
 xit\gateway\core\request\container\GlobalRouteRequestContextContainer.class
+xit\gateway\core\cluster\heartbeatclient\impl\DefaultNettyHeartBeatClient$1.class
 xit\gateway\core\request\requester\context\impl\DefaultRouteRequestContext.class
 xit\gateway\core\route\loadbalancer\impl\RoundRobinLoadbalancer.class
 xit\gateway\core\dao\GatewayUserDAO.class
@@ -29,3 +34,4 @@ xit\gateway\core\request\requester\impl\DefaultRpcRequester$DefaultRpcClientHand
 xit\gateway\core\request\requester\impl\DefaultHttpRequester.class
 xit\gateway\core\config\security\WebSecurityConfig.class
 xit\gateway\core\route\limiter\impl\DefaultRouteLimiter.class
+xit\gateway\core\valve\impl\GatewayPipeline$2.class

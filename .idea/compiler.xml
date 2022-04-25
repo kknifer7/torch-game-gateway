@@ -10,7 +10,6 @@
         <module name="torch-game-gateway-waf" />
         <module name="torch-game-gateway-core" />
         <module name="torch-game-gateway-deacon" />
-        <module name="torch-game-gateway-common" />
         <module name="torch-game-gateway-admin" />
       </profile>
     </annotationProcessing>

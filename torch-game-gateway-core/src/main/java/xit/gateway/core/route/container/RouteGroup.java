@@ -99,7 +99,6 @@ public class RouteGroup implements MultiContainer<Route> {
             throw new RouteResolvingException("unknown route type");
         }
 
-        // TODO 这里不应该是routeId，应该是serviceId
         routes = routeMap.get(route.getId());
         if (routes == null){
             routes = new CopyOnWriteArrayList<>();

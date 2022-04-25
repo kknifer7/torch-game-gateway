@@ -16,7 +16,6 @@ public class GlobalExceptionResolver {
     @ExceptionHandler(RequestFailedException.class)
     public ResultInfo<String> handleException(RequestFailedException e){
         logger.error(e.getMessage(), e);
-        // TODO 向Deacon提交调用失败信息
         return new ResultInfo<>(ResultCode.REQUEST_FAILED.getValue(), e.getMessage(), e.getRequestPath());
     }
 

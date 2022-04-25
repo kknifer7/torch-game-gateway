@@ -17,7 +17,6 @@ public class RandomLoadbalancer implements Loadbalancer {
     public Route choose(List<Route> routes, RouteRequestContext requesterContext) {
         int size = routes.size();
 
-        // TODO 处理一下null值情况
         return size == 0 ? null : routes.get(RandomUtils.nextInt(0, size));
     }
 }

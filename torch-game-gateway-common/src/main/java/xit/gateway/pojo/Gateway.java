@@ -53,4 +53,23 @@ public class Gateway {
     public void setPort(int port) {
         this.port = port;
     }
+
+    public LocalDateTime getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(LocalDateTime createAt) {
+        this.createAt = createAt;
+    }
+
+    @Override
+    public String toString() {
+        return "Gateway{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", host='" + host + '\'' +
+                ", port=" + port +
+                ", createAt=" + createAt +
+                '}';
+    }
 }

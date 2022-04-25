@@ -17,8 +17,9 @@ server:
 torch:
   gateway:
     deacon:
+      password: 123456
       fuse:
         fuse-class: xit.gateway.deacon.fuse.impl.DefaultFuse
-      cluster:
-        heart-beat-idle-timeout: 10
-        heart-beat-server-port: 9099
+      heart-beat:
+        idle-timeout: 10
+        server-port: 9099

@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import xit.gateway.api.container.SingleContainer;
 import xit.gateway.pojo.Gateway;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -44,5 +45,9 @@ public class GlobalGatewayContainer implements SingleContainer<Gateway> {
     @Override
     public Gateway remove(String key) {
         return map.remove(key);
+    }
+
+    public Collection<Gateway> getAll() {
+        return map.values();
     }
 }

@@ -28,3 +28,7 @@ torch:
       record-threads: 2
       deacon:
         address: http://localhost:8082/record-visit
+        password: 123456
+        heart-beat:
+          host: localhost
+          port: 9099
