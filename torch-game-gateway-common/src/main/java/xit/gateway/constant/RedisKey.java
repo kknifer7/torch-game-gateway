@@ -4,7 +4,9 @@ import java.util.concurrent.TimeUnit;
 
 public enum RedisKey implements ValueEnum<String>{
     // hash
-    FUSE_COUNT("fuse_count", -1, null);
+    FUSE_COUNT("fuse_count", -1, null),
+    // keys
+    ROUTE("route:", -1, null);
 
     private final String value;
     // 过期时间，-1表示永不过期
@@ -28,5 +30,9 @@ public enum RedisKey implements ValueEnum<String>{
     @Override
     public String getValue() {
         return value;
+    }
+
+    public String extend(String suffix){
+        return value + suffix;
     }
 }

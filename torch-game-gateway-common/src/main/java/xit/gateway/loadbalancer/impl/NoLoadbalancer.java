@@ -1,5 +1,6 @@
 package xit.gateway.loadbalancer.impl;
 
+import org.springframework.util.CollectionUtils;
 import xit.gateway.api.loadbalancer.Loadbalanceable;
 import xit.gateway.api.request.context.RequestContext;
 import xit.gateway.api.route.loadbalancer.Loadbalancer;
@@ -14,6 +15,6 @@ import java.util.Collection;
 public class NoLoadbalancer implements Loadbalancer {
     @Override
     public Loadbalanceable choose(Collection<? extends Loadbalanceable> lists, RequestContext requesterContext) {
-        return lists.size() == 0 ? null : lists.iterator().next();
+        return CollectionUtils.isEmpty(lists) ? null : lists.iterator().next();
     }
 }

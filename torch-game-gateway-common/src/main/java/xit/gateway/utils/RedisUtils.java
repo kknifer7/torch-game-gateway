@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import xit.gateway.constant.RedisKey;
 
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -42,6 +43,14 @@ public class RedisUtils {
 
     public static<T> T get(RedisKey key, Class<T> valueClazz){
         return get(key.getValue(), valueClazz);
+    }
+
+    public static<T> Set<T> keys(String key, Class<T> valueClazz){
+        return redisTemplate.opsForValue().getOperations().keys(key);
+    }
+
+    public static void publish(String channel, Object obj){
+        redisTemplate.convertAndSend(channel, obj);
     }
 
     public static boolean isExist(String key){

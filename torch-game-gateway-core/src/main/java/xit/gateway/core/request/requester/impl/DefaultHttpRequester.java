@@ -43,7 +43,7 @@ public class DefaultHttpRequester extends AbstractRequester implements HttpReque
 
     @Override
     public RequesterProxyResult invoke(ServerWebExchange exchange) {
-        if (route.getDisabled()){
+        if (route.getStatus()){
             throw new RouteDisabledException("服务暂不可用", exchange.getRequest().getPath().value());
         }
 

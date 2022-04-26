@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import xit.gateway.api.context.GatewayContext;
 import xit.gateway.core.request.container.GlobalRequesterContainer;
 import xit.gateway.request.container.impl.GlobalRequestContextContainer;
-import xit.gateway.core.route.container.GlobalRoutesContainer;
+import xit.gateway.core.route.container.impl.GlobalRoutesContainer;
 
 /**
  * @author Knifer

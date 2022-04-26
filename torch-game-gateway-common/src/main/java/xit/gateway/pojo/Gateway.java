@@ -12,7 +12,7 @@ public class Gateway implements Loadbalanceable {
     private int port;
     private boolean useSSL;
     private boolean backup;
-    private boolean disabled;
+    private boolean status;
     private int cpuCores;
     private double cpuSys;
     private double totalMemory;
@@ -23,14 +23,14 @@ public class Gateway implements Loadbalanceable {
     public Gateway() {
     }
 
-    public Gateway(String id, String name, String host, int port, boolean useSSL, boolean backup, boolean disabled, int cpuCores, double cpuSys, double totalMemory, double freeMemory, LocalDateTime createAt) {
+    public Gateway(String id, String name, String host, int port, boolean useSSL, boolean backup, boolean status, int cpuCores, double cpuSys, double totalMemory, double freeMemory, LocalDateTime createAt) {
         this.id = id;
         this.name = name;
         this.host = host;
         this.port = port;
         this.useSSL = useSSL;
         this.backup = backup;
-        this.disabled = disabled;
+        this.status = status;
         this.cpuCores = cpuCores;
         this.cpuSys = cpuSys;
         this.totalMemory = totalMemory;
@@ -86,12 +86,12 @@ public class Gateway implements Loadbalanceable {
         this.backup = backup;
     }
 
-    public boolean getDisabled() {
-        return disabled;
+    public boolean getStatus() {
+        return status;
     }
 
-    public void setDisabled(boolean disabled) {
-        this.disabled = disabled;
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     public int getCpuCores() {
@@ -143,7 +143,7 @@ public class Gateway implements Loadbalanceable {
                 ", port=" + port +
                 ", useSSL=" + useSSL +
                 ", backup=" + backup +
-                ", disabled=" + disabled +
+                ", disabled=" + status +
                 ", createAt=" + createAt +
                 '}';
     }

@@ -3,12 +3,12 @@ xit\gateway\core\valve\impl\HeartBeatServiceValve.class
 xit\gateway\core\request\recordwatchdog\impl\DefaultRecordWatchdog.class
 xit\gateway\core\request\requester\impl\DefaultRpcRequester$1.class
 xit\gateway\core\request\requester\impl\DefaultRpcRequester.class
-xit\gateway\core\route\container\GlobalRoutesContainer.class
+xit\gateway\core\service\impl\RouteServiceImpl.class
 xit\gateway\core\cluster\heartbeatclient\impl\DefaultNettyHeartBeatClient.class
-xit\gateway\core\route\container\RouteGroup.class
 xit\gateway\core\valve\impl\RouteInitializationLoadingValve.class
 xit\gateway\core\controller\ActionController.class
 xit\gateway\core\route\accessor\impl\DefaultRouteAccessor.class
+xit\gateway\core\route\container\impl\GlobalRoutesContainer.class
 xit\gateway\core\cluster\heartbeatclient\impl\DefaultNettyHeartBeatClient$DefaultHeatBeatClientHandler.class
 xit\gateway\core\controller\RoutingController.class
 xit\gateway\core\context\impl\DefaultGatewayContext.class

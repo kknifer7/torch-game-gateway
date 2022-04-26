@@ -2,7 +2,7 @@ package xit.gateway.api.route.accessor;
 
 import xit.gateway.pojo.Route;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * @author Knifer
@@ -14,7 +14,7 @@ public interface RouteAccessor {
      * 将路由挂载到项目中使其生效
      * @param routes 路由列表
      */
-    void loadRoutes(List<Route> routes);
+    void loadRoutes(Collection<Route> routes);
 
     /**
      * 更新路由

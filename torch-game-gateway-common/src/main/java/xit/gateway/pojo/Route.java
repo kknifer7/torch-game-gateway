@@ -21,7 +21,7 @@ public class Route implements Loadbalanceable {
     protected String host;
     protected int port;
     protected String url;
-    protected boolean disabled;
+    protected boolean status;
 
     @JsonSerialize(using = LocalTimeSerializer.class)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -36,7 +36,7 @@ public class Route implements Loadbalanceable {
     public Route() {
     }
 
-    public Route(String id, String name, String desc, ProtocolType protocol, String host, int port, String url, boolean disabled, LocalDateTime creationDatetime, LocalDateTime updateDatetime, Object extra) {
+    public Route(String id, String name, String desc, ProtocolType protocol, String host, int port, String url, boolean status, LocalDateTime creationDatetime, LocalDateTime updateDatetime, Object extra) {
         this.id = id;
         this.name = name;
         this.desc = desc;
@@ -44,7 +44,7 @@ public class Route implements Loadbalanceable {
         this.host = host;
         this.port = port;
         this.url = url;
-        this.disabled = disabled;
+        this.status = status;
         this.creationDatetime = creationDatetime;
         this.updateDatetime = updateDatetime;
         this.extra = extra;
@@ -106,12 +106,12 @@ public class Route implements Loadbalanceable {
         this.url = url;
     }
 
-    public boolean getDisabled() {
-        return disabled;
+    public boolean getStatus() {
+        return status;
     }
 
-    public void setDisabled(boolean disabled) {
-        this.disabled = disabled;
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     public LocalDateTime getCreationDatetime() {
@@ -148,7 +148,7 @@ public class Route implements Loadbalanceable {
                 ", host='" + host + '\'' +
                 ", port=" + port +
                 ", url='" + url + '\'' +
-                ", disabled=" + disabled +
+                ", disabled=" + status +
                 ", creationDatetime=" + creationDatetime +
                 ", updateDatetime=" + updateDatetime +
                 ", extra=" + extra +

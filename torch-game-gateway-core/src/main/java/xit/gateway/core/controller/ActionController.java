@@ -1,8 +1,11 @@
 package xit.gateway.core.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
+import xit.gateway.api.service.RouteService;
 import xit.gateway.pojo.ResultInfo;
+import xit.gateway.utils.RIUtils;
 
 /**
  * @author Knifer
@@ -14,16 +17,26 @@ import xit.gateway.pojo.ResultInfo;
 @RequestMapping("/action")
 public class ActionController {
 
+    private final RouteService routeService;
 
+    @Autowired
+    public ActionController(RouteService routeService) {
+        this.routeService = routeService;
+    }
+
+    @PostMapping("/add-service/{serviceName}")
+    public Mono<ResultInfo<Void>> addService(@PathVariable("serviceName") String serviceName){
+        routeService.addRoutesFromRedis(serviceName);
+        return RIUtils.createOK();
+    }
 
     @PostMapping("/sync-route/{serviceName}/{routeId}")
     public Mono<ResultInfo<Void>> syncRoute(
             @PathVariable("serviceName") String serviceName,
             @PathVariable("routeId") String routeId
     ){
-        // TODO 如果发现项目中已有该路由，则修改该路由条目
-        // TODO 如果发现项目中没有该路由，则挂载该路由条目
         // 从Redis中获取要同步的路由条目
+
         return null;
     }
 

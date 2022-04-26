@@ -72,6 +72,7 @@ public class DefaultGatewayAgent implements GatewayAgent {
                 gateway.getHost() +
                 ":" +
                 gateway.getPort() +
+                "/service" +
                 StringUtils.substring(path, StringUtils.indexOf(path, "service") + 7) +
                 (
                         queryParamList.size() == 0 ?

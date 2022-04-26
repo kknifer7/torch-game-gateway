@@ -1,4 +1,4 @@
-package xit.gateway.core.route.container;
+package xit.gateway.core.route.container.impl;
 
 import org.springframework.stereotype.Component;
 import xit.gateway.api.request.container.RoutesContainer;

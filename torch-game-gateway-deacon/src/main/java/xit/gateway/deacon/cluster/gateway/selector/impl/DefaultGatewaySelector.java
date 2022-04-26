@@ -29,26 +29,23 @@ public class DefaultGatewaySelector implements GatewaySelector {
     public Collection<Gateway> select() {
         // 当前使用的非备用网关数目小于等于阈值，则启用备用网关
         boolean enableBackup = getEnabledGatewayStream()
-                .filter(gateway -> !gateway.getBackup() && !gateway.getDisabled())
+                .filter(gateway -> !gateway.getBackup() && !gateway.getStatus())
                 .count() <= backupEnableThreshold;
 
         return getEnabledGatewayStream()
-                .filter(gateway -> (!gateway.getBackup() || enableBackup) && !gateway.getDisabled())
+                .filter(gateway -> (!gateway.getBackup() || enableBackup) && !gateway.getStatus())
                 .collect(Collectors.toList());
     }
 
     private Stream<Gateway> getEnabledGatewayStream(){
-        return gatewayContainer.getAll().stream().filter(gateway -> !gateway.getDisabled());
+        return gatewayContainer.getAll().stream().filter(gateway -> !gateway.getStatus());
     }
 
     @Override
     public void refresh() {
         String backupEnableThresholdStr = configService.get("backup_enable_threshold").block();
 
-        if (StringUtils.isBlank(backupEnableThresholdStr)){
-            backupEnableThreshold = 5;
-        }else{
-            backupEnableThreshold = Integer.parseInt(backupEnableThresholdStr);
-        }
+        backupEnableThreshold =
+                StringUtils.isBlank(backupEnableThresholdStr) ? 5 : Integer.parseInt(backupEnableThresholdStr);
     }
 }

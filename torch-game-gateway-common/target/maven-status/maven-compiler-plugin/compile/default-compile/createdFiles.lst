@@ -30,6 +30,7 @@ xit\gateway\api\context\GatewayContext.class
 xit\gateway\pojo\ResultInfo.class
 xit\gateway\api\cluster\gateway\agent\GatewayAgent.class
 xit\gateway\pojo\Gateway.class
+xit\gateway\api\service\RouteService.class
 xit\gateway\exception\route\RouteLoadingException.class
 xit\gateway\api\request\container\RoutesContainer.class
 xit\gateway\pojo\Config.class

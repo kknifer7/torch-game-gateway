@@ -1,11 +1,13 @@
 package xit.gateway.request.container.impl;
 
+import org.springframework.stereotype.Component;
 import xit.gateway.api.request.container.RequestContextContainer;
 import xit.gateway.api.request.context.RequestContext;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Component
 public class GlobalRequestContextContainer implements RequestContextContainer {
     private final Map<String, RequestContext> map = new ConcurrentHashMap<>();
 

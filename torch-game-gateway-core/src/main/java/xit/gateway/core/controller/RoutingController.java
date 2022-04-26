@@ -44,7 +44,7 @@ public class RoutingController {
         this.loadbalancer = loadbalancer;
     }
 
-    @RequestMapping("/{serviceId}/**")
+    @RequestMapping("/service/{serviceId}/**")
     public Mono<?> all(@PathVariable("serviceId") String serviceId, ServerWebExchange exchange) throws UnknownHostException {
         // 负载均衡
         Route route = ((Route) loadbalancer.choose(routesContainer.get(serviceId), routeRequestContextContainer.get(serviceId)));
