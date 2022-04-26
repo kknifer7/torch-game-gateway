@@ -22,7 +22,7 @@ export function checkStatus(
 
   switch (status) {
     case 400:
-      errMessage = `${msg}`;
+      errMessage = `${msg}` || '请求错误,请联系管理员';
       break;
     // 401: Not logged in
     // Jump to the login page if not logged in, and carry the path of the current page

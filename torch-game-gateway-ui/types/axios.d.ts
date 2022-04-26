@@ -18,6 +18,8 @@ export interface RequestOptions {
   urlPrefix?: string;
   // Error message prompt type
   errorMessageMode?: ErrorMessageMode;
+  // Success message
+  successMsg?: string;
   // Whether to add a timestamp
   joinTime?: boolean;
   ignoreCancelToken?: boolean;

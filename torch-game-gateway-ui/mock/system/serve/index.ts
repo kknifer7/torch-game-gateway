@@ -40,7 +40,7 @@ const serveStat = (() => {
 
 export default [
   {
-    url: '/basic-api/system/serve/stat',
+    url: '/api/serve/stat',
     timeout: 100,
     method: 'get',
     response: ({}) => {

@@ -46,7 +46,7 @@ const fakeCodeList: any = {
 export default [
   // mock user login
   {
-    url: '/basic-api/login',
+    url: '/api/auth/login',
     timeout: 200,
     method: 'post',
     response: ({ body }) => {
@@ -69,7 +69,7 @@ export default [
     },
   },
   {
-    url: '/basic-api/getUserInfo',
+    url: '/api/auth/info',
     method: 'get',
     response: (request: requestParams) => {
       const token = getRequestToken(request);
@@ -82,7 +82,7 @@ export default [
     },
   },
   {
-    url: '/basic-api/getPermCode',
+    url: '/api/getPermCode',
     timeout: 200,
     method: 'get',
     response: (request: requestParams) => {
@@ -98,7 +98,7 @@ export default [
     },
   },
   {
-    url: '/basic-api/logout',
+    url: '/api/logout',
     timeout: 200,
     method: 'get',
     response: (request: requestParams) => {
@@ -108,15 +108,7 @@ export default [
       if (!checkUser) {
         return resultError('Invalid token!');
       }
-      return resultSuccess(undefined, { message: 'Token has been destroyed' });
-    },
-  },
-  {
-    url: '/basic-api/testRetry',
-    statusCode: 405,
-    method: 'get',
-    response: () => {
-      return resultError('Error!');
+      return resultSuccess(undefined, { msg: 'Token has been destroyed' });
     },
   },
 ] as MockMethod[];

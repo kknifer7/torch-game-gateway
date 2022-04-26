@@ -22,7 +22,7 @@ const roleList = (() => {
 
 export default [
   {
-    url: '/basic-api/system/role/list',
+    url: '/api/role/list',
     timeout: 100,
     method: 'get',
     response: () => {
@@ -30,7 +30,7 @@ export default [
     },
   },
   {
-    url: '/basic-api/system/role/page',
+    url: '/api/role/page',
     timeout: 100,
     method: 'get',
     response: ({ query }) => {

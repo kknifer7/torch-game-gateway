@@ -2,7 +2,7 @@ import { MockMethod } from 'vite-plugin-mock';
 import * as Mock from 'mockjs';
 import { resultPageSuccess, resultSuccess } from '../_util';
 
-const serviceList = (() => {
+const routeList = (() => {
   const result: any[] = [
     {
       id: '1',
@@ -63,7 +63,7 @@ const serviceList = (() => {
   return result;
 })();
 
-const serviceInfo = (() => {
+const routeInfo = (() => {
   const result: any[] = [];
   for (let index = 0; index < 10; index++) {
     result.push({
@@ -87,13 +87,7 @@ const serviceInfo = (() => {
   };
 })();
 
-const routerList = (() => {
-  const result: any[] = [];
-
-  return result;
-})();
-
-const serviceLogList = (() => {
+const routeLogList = (() => {
   const result: any[] = [];
   for (let index = 0; index < 10; index++) {
     result.push({
@@ -114,46 +108,37 @@ const serviceLogList = (() => {
 
 export default [
   {
-    url: '/basic-api/service/page',
+    url: '/api/route/page',
     timeout: 100,
     method: 'get',
     response: ({ query }) => {
       const { page = 1, pageSize = 10 } = query;
-      return resultPageSuccess(page, pageSize, serviceList);
+      return resultPageSuccess(page, pageSize, routeList);
     },
   },
   {
-    url: '/basic-api/service/list',
+    url: '/api/route/list',
     timeout: 100,
     method: 'get',
     response: ({}) => {
-      return resultSuccess(serviceList);
+      return resultSuccess(routeList);
     },
   },
   {
-    url: '/basic-api/service/info',
+    url: '/api/route/info',
     timeout: 100,
     method: 'post',
     response: ({}) => {
-      return resultSuccess(serviceInfo);
+      return resultSuccess(routeInfo);
     },
   },
   {
-    url: '/basic-api/service/log/list',
+    url: '/api/route/log/list',
     timeout: 100,
     method: 'get',
     response: ({ query }) => {
       const { page = 1, pageSize = 10 } = query;
-      return resultPageSuccess(page, pageSize, serviceLogList);
-    },
-  },
-  {
-    url: '/basic-api/service/router/list',
-    timeout: 100,
-    method: 'get',
-    response: ({ query }) => {
-      const { page = 1, pageSize = 10 } = query;
-      return resultPageSuccess(page, pageSize, routerList);
+      return resultPageSuccess(page, pageSize, routeLogList);
     },
   },
 ] as MockMethod[];

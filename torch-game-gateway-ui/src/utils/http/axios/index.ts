@@ -55,6 +55,9 @@ const transform: AxiosTransform = {
     // 这里逻辑可以根据项目进行修改
     const hasSuccess = data && Reflect.has(data, 'code') && code === ResultEnum.SUCCESS;
     if (hasSuccess) {
+      if (options.successMsg) {
+        createMessage.success(options.successMsg);
+      }
       return result;
     }
 

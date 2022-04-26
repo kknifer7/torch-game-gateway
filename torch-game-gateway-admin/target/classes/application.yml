@@ -1,0 +1,19 @@
+server:
+  port: 8090
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  profiles:
+    active: dev
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: true
+    show-sql: true
+    database: MYSQL
+
+logging:
+  level:
+    org.hibernate.type.descriptor.sql.BasicBinder: trace
+

@@ -6,7 +6,7 @@ const system: AppRouteModule = {
   path: '/system',
   name: 'System',
   component: LAYOUT,
-  redirect: '/system/account',
+  redirect: '/system/user',
   meta: {
     orderNo: 40,
     icon: 'ant-design:setting-outlined',
@@ -14,14 +14,14 @@ const system: AppRouteModule = {
   },
   children: [
     {
-      path: 'account',
-      name: 'AccountManagement',
+      path: 'user',
+      name: 'UserManagement',
       meta: {
         icon: 'ant-design:user-outlined',
         title: '用户管理',
         ignoreKeepAlive: false,
       },
-      component: () => import('/@/views/system/account/index.vue'),
+      component: () => import('/@/views/system/user/index.vue'),
     },
     {
       path: 'monit',
