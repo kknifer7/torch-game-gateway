@@ -6,10 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import xit.gateway.api.cluster.gateway.agent.GatewayAgent;
 import xit.gateway.api.cluster.heartbeatserver.HeartBeatServer;
 import xit.gateway.api.fuse.Fuse;
 import xit.gateway.api.request.container.RequestContextContainer;
 import xit.gateway.api.route.loadbalancer.Loadbalancer;
+import xit.gateway.deacon.cluster.gateway.container.impl.GlobalGatewayContainer;
 import xit.gateway.deacon.fuse.impl.DefaultFuse;
 import xit.gateway.api.service.ConfigService;
 import xit.gateway.loadbalancer.impl.NoLoadbalancer;
@@ -21,10 +23,14 @@ import java.lang.reflect.InvocationTargetException;
 public class DeaconConfig {
     private final Logger logger = LoggerFactory.getLogger(DeaconConfig.class);
     private final ConfigService configService;
+    private final GlobalGatewayContainer gatewayContainer;
+    private final GatewayAgent gatewayAgent;
 
     @Autowired
-    public DeaconConfig(ConfigService configService, HeartBeatServer heartBeatServer) {
+    public DeaconConfig(HeartBeatServer heartBeatServer, ConfigService configService, GlobalGatewayContainer gatewayContainer, GatewayAgent gatewayAgent) {
         this.configService = configService;
+        this.gatewayContainer = gatewayContainer;
+        this.gatewayAgent = gatewayAgent;
         heartBeatServer.start();
     }
 
@@ -33,11 +39,13 @@ public class DeaconConfig {
         Fuse fuse;
 
         try {
-            fuse = (Fuse) Class.forName(fuseClass).getConstructor(ConfigService.class).newInstance(configService);
+            fuse = (Fuse) Class.forName(fuseClass)
+                    .getConstructor(ConfigService.class, GlobalGatewayContainer.class, GatewayAgent.class)
+                    .newInstance(configService, gatewayContainer, gatewayAgent);
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | ClassNotFoundException e) {
             e.printStackTrace();
             logger.error("failed to create fuse, use default.");
-            fuse = new DefaultFuse(configService);
+            fuse = new DefaultFuse(configService, gatewayContainer, gatewayAgent);
         }
 
         return fuse;

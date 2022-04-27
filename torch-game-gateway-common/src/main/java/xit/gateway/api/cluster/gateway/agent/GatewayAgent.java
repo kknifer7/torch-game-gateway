@@ -10,5 +10,6 @@ import xit.gateway.pojo.Gateway;
  * Date: 2020/04/25
  */
 public interface GatewayAgent {
-    Mono<?> invoke(String serviceId, Gateway gateway, ServerWebExchange exchange);
+    Mono<?> proxy(String serviceId, Gateway gateway, ServerWebExchange exchange);
+    void disableRoute(Gateway gateway, String serviceId, String routeId);
 }

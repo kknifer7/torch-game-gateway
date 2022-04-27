@@ -71,7 +71,7 @@ public class DefaultRouteAccessor implements RouteAccessor {
                 .findFirst()
                 .orElseThrow(() -> new SystemException("route doesn't exist"));
         synchronized (this){
-            oldRoute.setStatus(true);
+            oldRoute.setStatus(false);
         }
     }
 }

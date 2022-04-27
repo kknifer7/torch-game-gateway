@@ -18,10 +18,7 @@ import reactor.core.publisher.Mono;
 import xit.gateway.exception.route.RouteDisabledException;
 import xit.gateway.api.request.requester.AbstractRequester;
 import xit.gateway.api.request.requester.HttpRequester;
-import xit.gateway.pojo.CallRecord;
-import xit.gateway.pojo.CalledRoute;
-import xit.gateway.pojo.RequesterProxyResult;
-import xit.gateway.pojo.Route;
+import xit.gateway.pojo.*;
 
 import java.util.List;
 import java.util.Map;
@@ -43,7 +40,7 @@ public class DefaultHttpRequester extends AbstractRequester implements HttpReque
 
     @Override
     public RequesterProxyResult invoke(ServerWebExchange exchange) {
-        if (route.getStatus()){
+        if (!route.getStatus()){
             throw new RouteDisabledException("服务暂不可用", exchange.getRequest().getPath().value());
         }
 

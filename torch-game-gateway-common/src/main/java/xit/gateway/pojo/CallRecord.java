@@ -10,6 +10,7 @@ import java.util.function.Supplier;
 public class CallRecord {
     @Id
     private String id;
+    private String gatewayId;
     private String gatewayHost;
     private String gatewayPort;
     private String gatewayUri;
@@ -28,8 +29,9 @@ public class CallRecord {
     public CallRecord() {
     }
 
-    public CallRecord(String id, String gatewayHost, String gatewayPort, String gatewayUri, String routeId, String routeDesc, String routeHost, int routePort, String routeUrl, LocalDateTime routeCreationDatetime, LocalDateTime routeUpdateDatetime, String serviceId, boolean success, long timestamp, long callTime) {
+    public CallRecord(String id, String gatewayId, String gatewayHost, String gatewayPort, String gatewayUri, String routeId, String routeDesc, String routeHost, int routePort, String routeUrl, LocalDateTime routeCreationDatetime, LocalDateTime routeUpdateDatetime, String serviceId, boolean success, long timestamp, long callTime) {
         this.id = id;
+        this.gatewayId = gatewayId;
         this.gatewayHost = gatewayHost;
         this.gatewayPort = gatewayPort;
         this.gatewayUri = gatewayUri;
@@ -52,6 +54,14 @@ public class CallRecord {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getGatewayId() {
+        return gatewayId;
+    }
+
+    public void setGatewayId(String gatewayId) {
+        this.gatewayId = gatewayId;
     }
 
     public String getGatewayHost() {
@@ -177,6 +187,11 @@ public class CallRecord {
             this.callRecord = new CallRecord();
         }
 
+        public Builder gatewayId(String id){
+            this.callRecord.setGatewayId(id);
+            return this;
+        }
+
         public Builder gatewayHost(String host){
             this.callRecord.setGatewayHost(host);
             return this;
@@ -236,6 +251,7 @@ public class CallRecord {
     public String toString() {
         return "CallRecord{" +
                 "id='" + id + '\'' +
+                ", gatewayId='" + gatewayId + '\'' +
                 ", gatewayHost='" + gatewayHost + '\'' +
                 ", gatewayPort='" + gatewayPort + '\'' +
                 ", gatewayUri='" + gatewayUri + '\'' +

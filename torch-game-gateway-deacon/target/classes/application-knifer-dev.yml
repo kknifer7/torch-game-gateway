@@ -16,6 +16,8 @@ server:
   port: 8082
 torch:
   gateway:
+    core:
+      password: 123456
     deacon:
       password: 123456
       fuse:

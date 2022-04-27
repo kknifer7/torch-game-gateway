@@ -1,11 +1,17 @@
 package xit.gateway.core.context.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import xit.gateway.api.context.GatewayContext;
 import xit.gateway.core.request.container.GlobalRequesterContainer;
+import xit.gateway.pojo.Gateway;
 import xit.gateway.request.container.impl.GlobalRequestContextContainer;
 import xit.gateway.core.route.container.impl.GlobalRoutesContainer;
+import xit.gateway.utils.UUIDUtils;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 /**
  * @author Knifer
@@ -17,12 +23,41 @@ public class DefaultGatewayContext implements GatewayContext {
     private final GlobalRequestContextContainer routeRequestContextContainer;
     private final GlobalRequesterContainer requesterContainer;
     private final GlobalRoutesContainer serviceRoutesContainer;
+    private Gateway gateway;
 
     @Autowired
-    public DefaultGatewayContext(GlobalRequestContextContainer routeRequestContextContainer, GlobalRequesterContainer requesterContainer, GlobalRoutesContainer serviceRoutesContainer){
+    public DefaultGatewayContext(
+            GlobalRequestContextContainer routeRequestContextContainer,
+            GlobalRequesterContainer requesterContainer,
+            GlobalRoutesContainer serviceRoutesContainer,
+            @Value("${torch.gateway.call-trace.deacon.heart-beat.backup}")
+                    boolean gatewayBackup,
+            @Value("${torch.gateway.call-trace.deacon.heart-beat.use-ssl}")
+                    boolean gatewayUseSSL,
+            @Value("${server.port}")
+                    int gatewayPort
+    ){
+        String id;
+
         this.routeRequestContextContainer = routeRequestContextContainer;
         this.requesterContainer = requesterContainer;
         this.serviceRoutesContainer = serviceRoutesContainer;
+        id = UUIDUtils.getRandom();
+        try {
+            this.gateway = new Gateway(
+                    id, "Gateway|" + id,
+                    InetAddress.getLocalHost().getHostAddress(),
+                    gatewayPort,
+                    gatewayUseSSL,
+                    gatewayBackup,
+                    true,
+                    // TODO 网关实例性能数据
+                    0, 0, 0, 0,
+                    null
+            );
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -38,5 +73,10 @@ public class DefaultGatewayContext implements GatewayContext {
     @Override
     public GlobalRoutesContainer routesContainer() {
         return serviceRoutesContainer;
+    }
+
+    @Override
+    public Gateway gateway() {
+        return gateway;
     }
 }

@@ -27,7 +27,6 @@ E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\api\route\loadbalancer\Loadbalancer.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\exception\requester\RequesterDuplicatedException.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\pojo\Config.java
-E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\pojo\CalledGateway.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\api\request\requester\HttpRequester.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\utils\JsonUtils.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\utils\UUIDUtils.java

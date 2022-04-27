@@ -75,6 +75,6 @@ public class DeaconController {
         }
         logger.info("网关调用: {}", gateway.getName());
 
-        return gatewayAgent.invoke(serviceId, gateway, exchange);
+        return gatewayAgent.proxy(serviceId, gateway, exchange);
     }
 }

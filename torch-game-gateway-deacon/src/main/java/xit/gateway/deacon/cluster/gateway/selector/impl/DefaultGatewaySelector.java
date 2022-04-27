@@ -29,16 +29,16 @@ public class DefaultGatewaySelector implements GatewaySelector {
     public Collection<Gateway> select() {
         // 当前使用的非备用网关数目小于等于阈值，则启用备用网关
         boolean enableBackup = getEnabledGatewayStream()
-                .filter(gateway -> !gateway.getBackup() && !gateway.getStatus())
+                .filter(gateway -> !gateway.getBackup() && gateway.getStatus())
                 .count() <= backupEnableThreshold;
 
         return getEnabledGatewayStream()
-                .filter(gateway -> (!gateway.getBackup() || enableBackup) && !gateway.getStatus())
+                .filter(gateway -> (!gateway.getBackup() || enableBackup) && gateway.getStatus())
                 .collect(Collectors.toList());
     }
 
     private Stream<Gateway> getEnabledGatewayStream(){
-        return gatewayContainer.getAll().stream().filter(gateway -> !gateway.getStatus());
+        return gatewayContainer.getAll().stream().filter(Gateway::getStatus);
     }
 
     @Override

@@ -25,4 +25,9 @@ public class RouteServiceImpl implements RouteService {
 
         accessor.loadRoutes(routes);
     }
+
+    @Override
+    public void disableRoute(String serviceId, String routeId) {
+        accessor.disableRoute(serviceId, routeId);
+    }
 }

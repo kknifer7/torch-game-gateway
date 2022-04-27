@@ -16,13 +16,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import xit.gateway.api.cluster.heartbeatclient.HeartBeatClient;
+import xit.gateway.api.context.GatewayContext;
 import xit.gateway.pojo.Gateway;
 import xit.gateway.utils.JsonUtils;
-import xit.gateway.utils.UUIDUtils;
 
-import java.net.InetAddress;
 import java.net.InetSocketAddress;
-import java.net.UnknownHostException;
 import java.util.concurrent.TimeUnit;
 
 @Component
@@ -30,32 +28,22 @@ public class DefaultNettyHeartBeatClient implements HeartBeatClient {
     private final String serverHost;
     private final int serverPort;
     private final String serverPwd;
-    private final boolean gatewayBackup;
-    private final boolean gatewayUseSSL;
-    private final int gatewayPort;
+    private final Gateway gateway;
     private final Logger logger = LoggerFactory.getLogger(DefaultNettyHeartBeatClient.class);
 
     public DefaultNettyHeartBeatClient(
+            GatewayContext gatewayContext,
             @Value("${torch.gateway.call-trace.deacon.heart-beat.host}")
             String serverHost,
             @Value("${torch.gateway.call-trace.deacon.heart-beat.port}")
             int serverPort,
             @Value("${torch.gateway.call-trace.deacon.password}")
-            String serverPwd,
-            @Value("${torch.gateway.call-trace.deacon.heart-beat.backup}")
-            boolean gatewayBackup,
-            @Value("${torch.gateway.call-trace.deacon.heart-beat.use-ssl}")
-            boolean gatewayUseSSL,
-            @Value("${server.port}")
-            int gatewayPort
+            String serverPwd
     ){
         this.serverHost = serverHost;
         this.serverPort = serverPort;
         this.serverPwd = serverPwd;
-        this.gatewayBackup = gatewayBackup;
-        this.gatewayUseSSL = gatewayUseSSL;
-
-        this.gatewayPort = gatewayPort;
+        this.gateway = gatewayContext.gateway();
     }
 
     @Override
@@ -67,14 +55,14 @@ public class DefaultNettyHeartBeatClient implements HeartBeatClient {
                 .channel(NioSocketChannel.class)
                 .handler(new ChannelInitializer<NioSocketChannel>() {
                     @Override
-                    protected void initChannel(NioSocketChannel channel) throws Exception {
+                    protected void initChannel(NioSocketChannel channel) {
                         channel.pipeline()
                                 .addLast(new IdleStateHandler(
                                         0, 5, 0,
                                         TimeUnit.SECONDS
                                 ))
                                 .addLast(new StringEncoder())
-                                .addLast(new DefaultHeatBeatClientHandler(serverPwd, gatewayPort, gatewayUseSSL, gatewayBackup));
+                                .addLast(new DefaultHeatBeatClientHandler(serverPwd, gateway));
                     }
                 })
                 .remoteAddress(new InetSocketAddress(serverHost, serverPort))
@@ -93,20 +81,8 @@ public class DefaultNettyHeartBeatClient implements HeartBeatClient {
     private static class DefaultHeatBeatClientHandler extends ChannelInboundHandlerAdapter{
         private final String heartBeatPackage;
 
-        public DefaultHeatBeatClientHandler(String serverPwd, int gatewayPort, boolean gatewayUseSSL, boolean gatewayBackup) throws UnknownHostException {
-            String id = UUIDUtils.getRandom();
-
-            this.heartBeatPackage = serverPwd + ":" + JsonUtils.object2String(new Gateway(
-                    id, "Gateway|" + id,
-                    InetAddress.getLocalHost().getHostAddress(),
-                    gatewayPort,
-                    gatewayUseSSL,
-                    gatewayBackup,
-                    false,
-                    // TODO 网关实例性能数据
-                    0, 0, 0, 0,
-                    null
-            ));
+        public DefaultHeatBeatClientHandler(String serverPwd, Gateway gateway){
+            this.heartBeatPackage = serverPwd + ":" + JsonUtils.object2String(gateway);
         }
 
         @Override

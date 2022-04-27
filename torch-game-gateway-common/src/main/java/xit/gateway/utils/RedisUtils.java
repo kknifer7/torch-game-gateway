@@ -74,7 +74,9 @@ public class RedisUtils {
     }
 
     public static<T> T hGet(String key, String hashKey, Class<T> valueClazz){
-        return (T) redisTemplate.opsForHash().get(key, hashKey);
+        Object result = redisTemplate.opsForHash().get(key, hashKey);
+
+        return result == null ? null : (T) result;
     }
 
     public static<T> T hGet(RedisKey key, String hashKey, Class<T> valueClazz){

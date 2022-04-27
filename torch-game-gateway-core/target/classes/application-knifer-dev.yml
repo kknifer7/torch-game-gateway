@@ -16,6 +16,7 @@ server:
   port: 8081
 torch:
   gateway:
+    password: 123456
     init:
       routes-json-path: test-data/routes.json
     loadbalance:

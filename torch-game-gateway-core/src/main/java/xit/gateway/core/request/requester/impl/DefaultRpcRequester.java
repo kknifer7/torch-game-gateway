@@ -80,8 +80,8 @@ public class DefaultRpcRequester extends AbstractRequester implements RpcRequest
 
     @Override
     public RequesterProxyResult invoke(ServerWebExchange exchange) {
-        if (route.getStatus() || channel == null){
-            throw new RequestFailedException("路由暂不可用", exchange.getRequest().getPath().value());
+        if (!route.getStatus() || channel == null){
+            throw new RequestFailedException("服务暂不可用", exchange.getRequest().getPath().value());
         }
         ServerHttpRequest request = exchange.getRequest();
         ServerHttpResponse response = exchange.getResponse();

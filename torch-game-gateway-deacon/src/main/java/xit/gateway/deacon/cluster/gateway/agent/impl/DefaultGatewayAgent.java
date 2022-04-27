@@ -1,6 +1,9 @@
 package xit.gateway.deacon.cluster.gateway.agent.impl;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpCookie;
 import org.springframework.http.HttpStatus;
@@ -14,7 +17,9 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 import xit.gateway.api.cluster.gateway.agent.GatewayAgent;
+import xit.gateway.constant.ResultCode;
 import xit.gateway.pojo.Gateway;
+import xit.gateway.pojo.ResultInfo;
 
 import java.util.List;
 import java.util.Map;
@@ -23,14 +28,17 @@ import java.util.stream.Collectors;
 @Component
 public class DefaultGatewayAgent implements GatewayAgent {
     private final WebClient webClient;
+    private final String password;
+    private final Logger logger = LoggerFactory.getLogger(DefaultGatewayAgent.class);
 
-    public DefaultGatewayAgent(){
-        webClient = WebClient.create();
+    public DefaultGatewayAgent(@Value("${torch.gateway.core.password}") String password){
+        this.webClient = WebClient.create();
+        this.password = password;
     }
 
     // 这一部分的注释详见DefaultHttpRequester类，都是类似的
     @Override
-    public Mono<?> invoke(String serviceId, Gateway gateway, ServerWebExchange exchange) {
+    public Mono<?> proxy(String serviceId, Gateway gateway, ServerWebExchange exchange) {
         Mono<Void> result;
         WebClient.RequestHeadersSpec<?> spec;
         ServerHttpRequest request = exchange.getRequest();
@@ -100,5 +108,28 @@ public class DefaultGatewayAgent implements GatewayAgent {
         response.getHeaders().putAll(proxyResponse.headers().asHttpHeaders());
         response.getCookies().putAll(proxyResponse.cookies());
         response.setStatusCode(proxyResponse.statusCode());
+    }
+
+    @Override
+    public void disableRoute(Gateway gateway, String serviceId, String routeId) {
+        String url = (gateway.getUseSSL() ? "https" : "http") +
+                "://" +
+                gateway.getHost() +
+                ":" +
+                gateway.getPort() +
+                "/action/disable-route/" +
+                serviceId + "/" + routeId + "/" +
+                password;
+
+        webClient.post()
+                .uri(url)
+                .exchangeToMono(response -> response.bodyToMono(ResultInfo.class)
+                        .map(resultInfo -> {
+                            if (!ResultCode.OK.getValue().equals(resultInfo.getCode())){
+                                logger.warn("fuse failed, serviceId: {}, routeId: {}", serviceId, routeId);
+                            }
+
+                            return resultInfo;
+                        })).subscribe();
     }
 }

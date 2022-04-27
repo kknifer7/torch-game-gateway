@@ -67,5 +67,4 @@ xit\gateway\pojo\CallRecord.class
 xit\gateway\api\route\limiter\RouteLimiter.class
 xit\gateway\exception\requester\RequesterException.class
 xit\gateway\pojo\CalledRoute.class
-xit\gateway\pojo\CalledGateway.class
 xit\gateway\api\request\requester\Requester.class
