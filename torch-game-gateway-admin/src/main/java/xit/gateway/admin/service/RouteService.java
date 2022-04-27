@@ -1,6 +1,6 @@
 package xit.gateway.admin.service;
 
-import xit.gateway.pojo.Route;
+import xit.gateway.admin.domain.Route;
 
 import java.util.List;
 import java.util.Set;
@@ -14,5 +14,5 @@ public interface RouteService {
 
     void update(Route resources);
 
-    void delete(Set<Long> ids);
+    void delete(Set<String> ids);
 }

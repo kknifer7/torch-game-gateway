@@ -3,7 +3,7 @@ package xit.gateway.admin.controller;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 import xit.gateway.admin.service.GatewayUserService;
-import xit.gateway.pojo.GatewayUser;
+import xit.gateway.admin.domain.GatewayUser;
 import xit.gateway.pojo.ResultInfo;
 import xit.gateway.utils.RIUtils;
 
@@ -37,7 +37,7 @@ public class GatewayUserController {
     }
 
     @PostMapping("delete")
-    public Mono<ResultInfo<Object>> delete(@RequestBody Set<Long> ids) {
+    public Mono<ResultInfo<Object>> delete(@RequestBody Set<String> ids) {
         gatewayUserService.delete(ids);
         return RIUtils.createOK();
     }

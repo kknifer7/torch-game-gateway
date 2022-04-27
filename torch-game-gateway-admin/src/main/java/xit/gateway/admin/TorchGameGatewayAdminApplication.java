@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SpringBootApplication(scanBasePackages = "xit.gateway")
 @EnableTransactionManagement
 @EnableJpaRepositories
-@EntityScan("xit.gateway.pojo")
+@EntityScan("xit.gateway.admin.domain")
 public class TorchGameGatewayAdminApplication {
     public static void main(String[] args) {
         SpringApplication.run(TorchGameGatewayAdminApplication.class);

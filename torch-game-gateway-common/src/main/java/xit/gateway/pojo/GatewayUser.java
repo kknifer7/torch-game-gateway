@@ -1,43 +1,77 @@
 package xit.gateway.pojo;
 
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
 
-import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Set;
 
-@Entity
-@Getter
-@Setter
-@Table(name = "gateway_user")
-public class GatewayUser implements Serializable {
+@Table
+public class GatewayUser {
     @Id
-    @Column(name = "id", nullable = false)
-    @GeneratedValue
-    private Long id;
-
-    @Column()
+    private String id;
     private String username;
-
-    @Column()
     private String pwd;
-
-    @Column()
-    @CreatedDate
+    private String authorities;
     private LocalDateTime createdAt;
-
-    @Column()
-    @LastModifiedDate
     private LocalDateTime updatedAt;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "gateway_user_route",
-            joinColumns = {@JoinColumn(name = "user_id",referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "route_id",referencedColumnName = "id")})
-    private Set<Route> routes;
+    public GatewayUser() {
+    }
 
+    public GatewayUser(String id, String username, String pwd, String authorities, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.id = id;
+        this.username = username;
+        this.pwd = pwd;
+        this.authorities = authorities;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPwd() {
+        return pwd;
+    }
+
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
+    }
+
+    public String getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(String authorities) {
+        this.authorities = authorities;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
 }

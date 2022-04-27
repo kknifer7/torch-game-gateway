@@ -1,7 +1,8 @@
 package xit.gateway.admin.service;
 
 
-import xit.gateway.pojo.GatewayUser;
+import org.springframework.transaction.annotation.Transactional;
+import xit.gateway.admin.domain.GatewayUser;
 
 import java.util.List;
 import java.util.Set;
@@ -15,5 +16,6 @@ public interface GatewayUserService {
 
     void update(GatewayUser resources);
 
-    void delete(Set<Long> ids);
+    void delete(Set<String> ids);
+
 }

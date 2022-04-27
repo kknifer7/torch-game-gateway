@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 import xit.gateway.admin.service.RouteService;
 import xit.gateway.pojo.ResultInfo;
-import xit.gateway.pojo.Route;
+import xit.gateway.admin.domain.Route;
 import xit.gateway.utils.RIUtils;
 
 import javax.annotation.Resource;
@@ -37,7 +37,7 @@ public class RouteController {
     }
 
     @PostMapping("delete")
-    public Mono<ResultInfo<Object>> delete(@RequestBody Set<Long> ids) {
+    public Mono<ResultInfo<Object>> delete(@RequestBody Set<String> ids) {
         routeService.delete(ids);
         return RIUtils.createOK();
     }
