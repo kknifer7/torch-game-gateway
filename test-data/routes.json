@@ -2,7 +2,7 @@
   {
     "id": "123",
     "name": "service-99",
-    "desc": "中国移动-用户协议获取服务",
+    "remark": "中国移动-用户协议获取服务",
     "protocol": "http",
     "host": "www.10086.cn",
     "port": 80,
@@ -14,7 +14,7 @@
   },{
     "id": "1223",
     "name": "service-01",
-    "desc": "本地测试服务-http",
+    "remark": "本地测试服务-http",
     "protocol": "http",
     "host": "localhost",
     "port": 8080,
@@ -26,7 +26,7 @@
   },{
     "id": "333",
     "name": "service-02",
-    "desc": "本地测试服务-rpc",
+    "remark": "本地测试服务-rpc",
     "protocol": "rpc",
     "host": "localhost",
     "port": 9000,

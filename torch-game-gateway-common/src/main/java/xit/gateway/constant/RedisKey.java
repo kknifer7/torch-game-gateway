@@ -3,8 +3,8 @@ package xit.gateway.constant;
 import java.util.concurrent.TimeUnit;
 
 public enum RedisKey implements ValueEnum<String>{
-    // hash
-    FUSE_COUNT("fuse_count", -1, null),
+    // normal（fuse_count:routeId），为了能灵活配置，这个过期时间让deacon的熔断器去数据库中获取
+    FUSE_COUNT("fuse_count:", -1, null),
     // keys
     ROUTE("route:", -1, null);
 

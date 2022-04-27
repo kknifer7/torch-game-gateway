@@ -62,7 +62,7 @@ public class DefaultHttpRequester extends AbstractRequester implements HttpReque
 
                     return calledRoute;
                 });
-        logger.info("调用服务：" + route.getDesc());
+        logger.info("调用服务：" + route.getRemark());
         spec = webClient.method(request.getMethod())
                 .uri(resolveServiceUri(request))
                 .headers((headers) -> {

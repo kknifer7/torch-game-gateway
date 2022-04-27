@@ -1,2 +1,13 @@
-E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-admin\src\main\java\xit\gateway\TorchGameGatewayAdminApplication.java
-E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-admin\src\main\java\xit\gateway\admin\controller\TestController.java
+E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-admin\src\main\java\xit\gateway\admin\utils\MyIdGenerator.java
+E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-admin\src\main\java\xit\gateway\admin\service\GatewayUserService.java
+E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-admin\src\main\java\xit\gateway\admin\TorchGameGatewayAdminApplication.java
+E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-admin\src\main\java\xit\gateway\admin\controller\GatewayUserController.java
+E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-admin\src\main\java\xit\gateway\admin\service\impl\RouteServiceImpl.java
+E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-admin\src\main\java\xit\gateway\admin\service\RouteService.java
+E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-admin\src\main\java\xit\gateway\admin\repository\RouteRepository.java
+E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-admin\src\main\java\xit\gateway\admin\service\impl\GatewayUserServiceImpl.java
+E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-admin\src\main\java\xit\gateway\admin\domain\Route.java
+E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-admin\src\main\java\xit\gateway\admin\repository\GatewayUserRepository.java
+E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-admin\src\main\java\xit\gateway\admin\controller\RouteController.java
+E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-admin\src\main\java\xit\gateway\admin\controller\AuthController.java
+E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-admin\src\main\java\xit\gateway\admin\domain\GatewayUser.java

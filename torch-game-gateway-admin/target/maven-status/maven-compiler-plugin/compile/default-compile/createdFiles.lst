@@ -1,2 +1,15 @@
-xit\gateway\TorchGameGatewayAdminApplication.class
-xit\gateway\admin\controller\TestController.class
+xit\gateway\admin\controller\RouteController.class
+xit\gateway\admin\service\GatewayUserService.class
+xit\gateway\admin\service\RouteService.class
+xit\gateway\admin\controller\GatewayUserController.class
+xit\gateway\admin\domain\Route.class
+xit\gateway\admin\utils\MyIdGenerator.class
+xit\gateway\admin\service\impl\GatewayUserServiceImpl.class
+xit\gateway\admin\controller\AuthController$2.class
+xit\gateway\admin\controller\AuthController$1.class
+xit\gateway\admin\repository\GatewayUserRepository.class
+xit\gateway\admin\domain\GatewayUser.class
+xit\gateway\admin\service\impl\RouteServiceImpl.class
+xit\gateway\admin\TorchGameGatewayAdminApplication.class
+xit\gateway\admin\repository\RouteRepository.class
+xit\gateway\admin\controller\AuthController.class

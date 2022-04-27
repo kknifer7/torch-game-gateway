@@ -65,7 +65,7 @@ public class DefaultRpcRequester extends AbstractRequester implements RpcRequest
         // TODO 待开发：断开重连机制
         bootstrap.connect().addListener(future -> {
             if (!future.isSuccess()){
-                logger.warn("RPC服务：{}，连接失败", route.getDesc());
+                logger.warn("RPC服务：{}，连接失败", route.getRemark());
                 reconnect(group);
             }
         });
@@ -73,7 +73,7 @@ public class DefaultRpcRequester extends AbstractRequester implements RpcRequest
 
     private void reconnect(EventLoopGroup group){
         group.schedule(() -> {
-            logger.info("RPC服务：{}，尝试重连", route.getDesc());
+            logger.info("RPC服务：{}，尝试重连", route.getRemark());
             connectService();
         }, 5, TimeUnit.SECONDS);
     }
@@ -133,7 +133,7 @@ public class DefaultRpcRequester extends AbstractRequester implements RpcRequest
     private class DefaultRpcClientHandler extends ChannelInboundHandlerAdapter{
         @Override
         public void channelActive(ChannelHandlerContext ctx) throws Exception {
-            logger.info("RPC服务：{}，连接成功", route.getDesc());
+            logger.info("RPC服务：{}，连接成功", route.getRemark());
             channel = ctx.channel();
             super.channelActive(ctx);
         }

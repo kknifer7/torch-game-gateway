@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 public class Route implements Loadbalanceable {
     protected String id;
     protected String name;
-    protected String desc;
+    protected String remark;
     protected ProtocolType protocol;
     protected String host;
     protected int port;
@@ -36,10 +36,10 @@ public class Route implements Loadbalanceable {
     public Route() {
     }
 
-    public Route(String id, String name, String desc, ProtocolType protocol, String host, int port, String url, boolean status, LocalDateTime creationDatetime, LocalDateTime updateDatetime, Object extra) {
+    public Route(String id, String name, String remark, ProtocolType protocol, String host, int port, String url, boolean status, LocalDateTime creationDatetime, LocalDateTime updateDatetime, Object extra) {
         this.id = id;
         this.name = name;
-        this.desc = desc;
+        this.remark = remark;
         this.protocol = protocol;
         this.host = host;
         this.port = port;
@@ -66,12 +66,12 @@ public class Route implements Loadbalanceable {
         this.name = name;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getRemark() {
+        return remark;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     public ProtocolType getProtocol() {
@@ -143,7 +143,7 @@ public class Route implements Loadbalanceable {
         return "Route{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
-                ", desc='" + desc + '\'' +
+                ", desc='" + remark + '\'' +
                 ", protocol=" + protocol +
                 ", host='" + host + '\'' +
                 ", port=" + port +

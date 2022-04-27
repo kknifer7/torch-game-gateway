@@ -19,6 +19,7 @@ xit\gateway\api\request\requester\AbstractRequester.class
 xit\gateway\loadbalancer\impl\NoLoadbalancer.class
 xit\gateway\exception\valve\ValveException.class
 xit\gateway\api\request\container\RequesterContainer.class
+xit\gateway\exception\requester\BadRequestException.class
 xit\gateway\api\request\requester\RpcRequester.class
 xit\gateway\pojo\Site.class
 xit\gateway\api\cluster\gateway\selector\GatewaySelector.class

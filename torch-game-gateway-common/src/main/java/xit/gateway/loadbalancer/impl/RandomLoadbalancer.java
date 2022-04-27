@@ -1,7 +1,7 @@
 package xit.gateway.loadbalancer.impl;
 
+import com.google.common.collect.Lists;
 import org.apache.commons.lang3.RandomUtils;
-import org.assertj.core.util.Lists;
 import xit.gateway.api.loadbalancer.Loadbalanceable;
 import xit.gateway.api.request.context.RequestContext;
 import xit.gateway.api.route.loadbalancer.Loadbalancer;

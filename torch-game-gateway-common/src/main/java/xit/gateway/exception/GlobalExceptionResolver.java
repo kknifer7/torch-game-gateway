@@ -8,6 +8,7 @@ import xit.gateway.constant.ResultCode;
 import xit.gateway.exception.requester.BadRequestException;
 import xit.gateway.exception.requester.RequestFailedException;
 import xit.gateway.exception.route.RouteDisabledException;
+import xit.gateway.exception.route.RouteNotFoundException;
 import xit.gateway.pojo.ResultInfo;
 
 @RestControllerAdvice
@@ -21,7 +22,7 @@ public class GlobalExceptionResolver {
     }
 
     @ExceptionHandler(RouteDisabledException.class)
-    public ResultInfo<String> handlerException(RouteDisabledException e) {
+    public ResultInfo<String> handleException(RouteDisabledException e) {
         logger.error(e.getMessage(), e);
         return new ResultInfo<>(ResultCode.ROUTE_DISABLED.getValue(), e.getMessage(), e.getRequestPath());
     }
@@ -30,5 +31,11 @@ public class GlobalExceptionResolver {
     public ResultInfo<Object> badRequestException(BadRequestException e) {
         logger.error(e.getMessage(), e);
         return new ResultInfo<>(ResultCode.BAD_REQUEST.getValue(), e.getMessage(), null);
+    }
+
+    @ExceptionHandler(RouteNotFoundException.class)
+    public ResultInfo<String> handleException(RouteNotFoundException e){
+        logger.error(e.getMessage(), e);
+        return new ResultInfo<>(ResultCode.REQUESTER_NOT_FOUND.getValue(), e.getMessage(), e.getRequestPath());
     }
 }

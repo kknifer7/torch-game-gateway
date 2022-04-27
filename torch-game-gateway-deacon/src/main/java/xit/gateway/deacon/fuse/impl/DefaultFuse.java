@@ -14,11 +14,14 @@ import xit.gateway.pojo.CallRecord;
 import xit.gateway.utils.RedisUtils;
 
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Component
 public class DefaultFuse implements Fuse {
     private final AtomicInteger FUSING_THRESHOLD;
+    private final AtomicInteger FUSING_TIMEOUT;
+    private TimeUnit FUSING_TIMEUNIT;
     private final ConfigService configService;
     private final GlobalGatewayContainer gatewayContainer;
     private final GatewayAgent gatewayAgent;
@@ -30,6 +33,7 @@ public class DefaultFuse implements Fuse {
         this.gatewayContainer = gatewayContainer;
         this.gatewayAgent = gatewayAgent;
         this.FUSING_THRESHOLD = new AtomicInteger(-1);
+        this.FUSING_TIMEOUT = new AtomicInteger(-1);
         flush();
     }
 
@@ -42,7 +46,7 @@ public class DefaultFuse implements Fuse {
         String routeId = record.getRouteId();
         Integer fuseCount;
 
-        fuseCount = RedisUtils.hGet(RedisKey.FUSE_COUNT, routeId, Integer.class);
+        fuseCount = RedisUtils.get(RedisKey.FUSE_COUNT.extend(routeId), Integer.class);
         fuseCount = fuseCount == null ? 1 : fuseCount + 1;
         if (fuseCount >= FUSING_THRESHOLD.get()){
             // TODO 下达熔断通知
@@ -53,16 +57,26 @@ public class DefaultFuse implements Fuse {
                             record.getServiceId(), record.getRouteId()
                     ));
         }
-        RedisUtils.hSet(RedisKey.FUSE_COUNT, routeId, fuseCount);
+        RedisUtils.set(RedisKey.FUSE_COUNT.extend(routeId), fuseCount, FUSING_TIMEOUT.get(), FUSING_TIMEUNIT);
     }
 
     @Override
     public void flush() {
         String fusingThresholdStr = configService.get("fusing_threshold").block();
         int fusingThreshold = StringUtils.isBlank(fusingThresholdStr) ? 5 : Integer.parseInt(fusingThresholdStr);
+        String fusingTimeoutStr = configService.get("fusing_timeout").block();
+        int fusingTimeout = StringUtils.isBlank(fusingTimeoutStr) ? 5 : Integer.parseInt(fusingTimeoutStr);
+        String fusingTimeUnitStr = configService.get("fusing_timeunit").block();
 
+        FUSING_TIMEUNIT = StringUtils.isBlank(fusingTimeUnitStr) ? TimeUnit.SECONDS : TimeUnit.valueOf(fusingTimeUnitStr);
+        setAtomicInteger(fusingThreshold, FUSING_THRESHOLD);
+        setAtomicInteger(fusingTimeout, FUSING_TIMEOUT);
+
+    }
+
+    private void setAtomicInteger(int val, AtomicInteger target){
         while (true){
-            if (FUSING_THRESHOLD.compareAndSet(FUSING_THRESHOLD.get(), fusingThreshold)){
+            if (target.compareAndSet(target.get(), val)){
                 break;
             }
         }

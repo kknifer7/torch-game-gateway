@@ -29,8 +29,12 @@ public class RedisUtils {
         redisTemplate.opsForValue().set(key, value);
     }
 
-    public static<T> void set(String key, T value, long timeout, TimeUnit timeUnit){
-        redisTemplate.opsForValue().set(key, value, timeout, timeUnit);
+    public static<T> void set(String key, T value, long lifeTime, TimeUnit timeUnit){
+        redisTemplate.opsForValue().set(key, value, lifeTime, timeUnit);
+    }
+
+    public static<T> void set(RedisKey key, T value, long lifeTime, TimeUnit timeUnit){
+        set(key.getValue(), value, lifeTime, timeUnit);
     }
 
     public static<T> void set(RedisKey key, T value){
