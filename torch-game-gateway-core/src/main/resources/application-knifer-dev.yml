@@ -28,7 +28,7 @@ torch:
     call-trace:
       record-threads: 2
       deacon:
-        address: http://localhost:8082/record-visit
+        address: http://localhost:8082/internal/record-visit
         password: 123456
         heart-beat:
           host: localhost

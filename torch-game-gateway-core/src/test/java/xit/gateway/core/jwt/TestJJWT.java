@@ -1,4 +1,4 @@
-package xit.gateway.deacon.jwt;
+package xit.gateway.core.jwt;
 
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;

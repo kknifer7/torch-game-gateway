@@ -3,6 +3,7 @@ xit\gateway\api\service\CallRecordService.class
 xit\gateway\loadbalancer\impl\RandomLoadbalancer.class
 xit\gateway\exception\route\RouteDisabledException.class
 xit\gateway\api\route\reader\RouteReader.class
+xit\gateway\exception\user\AccessForbiddenException.class
 xit\gateway\api\request\requester\HttpRequester.class
 xit\gateway\api\request\container\RequestContextContainer.class
 xit\gateway\exception\system\SystemException.class

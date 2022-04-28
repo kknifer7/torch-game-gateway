@@ -1,6 +1,7 @@
 package xit.gateway.exception;
 
 import io.jsonwebtoken.InvalidClaimException;
+import io.jsonwebtoken.security.SignatureException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -10,6 +11,7 @@ import xit.gateway.exception.requester.BadRequestException;
 import xit.gateway.exception.requester.RequestFailedException;
 import xit.gateway.exception.route.RouteDisabledException;
 import xit.gateway.exception.route.RouteNotFoundException;
+import xit.gateway.exception.user.AccessForbiddenException;
 import xit.gateway.exception.user.UserVerificationFailedException;
 import xit.gateway.pojo.ResultInfo;
 
@@ -47,9 +49,21 @@ public class GlobalExceptionResolver {
         return new ResultInfo<>(ResultCode.VERIFICATION_FAILED.getValue(), "账号或密码错误", null);
     }
 
-    @ExceptionHandler(InvalidClaimException.class)
-    public ResultInfo<Void> handlerException(InvalidClaimException e){
+    @ExceptionHandler({InvalidClaimException.class, SignatureException.class})
+    public ResultInfo<Void> handleException(InvalidClaimException e){
         logger.warn(e.getMessage(), e);
         return new ResultInfo<>(ResultCode.FORBIDDEN.getValue(), "Token不合法", null);
+    }
+
+    @ExceptionHandler(AccessForbiddenException.class)
+    public ResultInfo<Void> handleException(AccessForbiddenException e){
+        logger.warn(e.getMessage(), e);
+        return new ResultInfo<>(ResultCode.FORBIDDEN.getValue(), "请登录", null);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResultInfo<Void> handleException(Exception e){
+        logger.warn(e.getMessage(), e);
+        return new ResultInfo<>(ResultCode.SYSTEM_ERROR.getValue(), "系统异常", null);
     }
 }

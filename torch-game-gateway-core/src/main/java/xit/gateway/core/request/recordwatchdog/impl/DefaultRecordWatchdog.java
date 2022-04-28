@@ -24,11 +24,23 @@ public class DefaultRecordWatchdog implements RecordWatchdog {
             @Value("${torch.gateway.call-trace.record-threads}")
             Integer threads,
             @Value("${torch.gateway.call-trace.deacon.address}")
-            String deaconAddress
+            String deaconAddress,
+            @Value("${torch.gateway.call-trace.deacon.password}")
+            String password
     ){
         this.executor = Executors.newFixedThreadPool(threads);
         this.gatewayId = gatewayContext.gateway().getId();
-        this.webClient = WebClient.create(deaconAddress);
+        this.webClient = WebClient.create(concatDeaconAddressAndPassword(deaconAddress, password));
+    }
+
+    private String concatDeaconAddressAndPassword(String deaconAddress, String password){
+        if (deaconAddress.charAt(deaconAddress.length() - 1) == '/'){
+            deaconAddress += password;
+        }else{
+            deaconAddress += ("/" + password);
+        }
+
+        return deaconAddress;
     }
 
     @Override

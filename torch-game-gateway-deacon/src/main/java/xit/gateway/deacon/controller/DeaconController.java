@@ -1,8 +1,10 @@
 package xit.gateway.deacon.controller;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
@@ -14,6 +16,7 @@ import xit.gateway.api.route.loadbalancer.Loadbalancer;
 import xit.gateway.api.service.CallRecordService;
 import xit.gateway.constant.ResultCode;
 import xit.gateway.deacon.cluster.gateway.container.impl.GlobalGatewayContainer;
+import xit.gateway.exception.user.AccessForbiddenException;
 import xit.gateway.pojo.CallRecord;
 import xit.gateway.pojo.Gateway;
 import xit.gateway.pojo.ResultInfo;
@@ -31,10 +34,19 @@ public class DeaconController {
     private final Loadbalancer loadbalancer;
     private final RequestContext requestContext;
     private final GatewayAgent gatewayAgent;
+    private final String deaconPassword;
     private final Logger logger = LoggerFactory.getLogger(DeaconController.class);
 
     @Autowired
-    public DeaconController(Fuse fuse, CallRecordService callRecordService, GatewaySelector gatewaySelector, GlobalGatewayContainer gatewayContainer, Loadbalancer loadbalancer, GatewayAgent gatewayAgent) {
+    public DeaconController(
+            Fuse fuse,
+            CallRecordService callRecordService,
+            GatewaySelector gatewaySelector,
+            GlobalGatewayContainer gatewayContainer,
+            Loadbalancer loadbalancer,
+            GatewayAgent gatewayAgent,
+            @Value("${torch.gateway.deacon.password}") String deaconPassword
+    ) {
         this.fuse = fuse;
         this.callRecordService = callRecordService;
         this.gatewayContainer = gatewayContainer;
@@ -42,16 +54,24 @@ public class DeaconController {
         this.loadbalancer = loadbalancer;
         this.requestContext = new DefaultRequestContext();
         this.gatewayAgent = gatewayAgent;
+        this.deaconPassword = deaconPassword;
     }
 
-    @PutMapping("/record-visit")
-    public Mono<ResultInfo<Void>> recordVisit(@RequestBody CallRecord record){
+    @PutMapping("/internal/record-visit/{password}")
+    public Mono<ResultInfo<Void>> recordVisit(@RequestBody CallRecord record, @PathVariable("password") String password){
+        validateIntervalCall(password);
         // 设置调用记录
         callRecordService.add(record);
         // 必要则熔断
         fuse.fuseIfNecessary(record);
 
         return RIUtils.createOK();
+    }
+
+    private void validateIntervalCall(String password){
+        if (!StringUtils.equals(password, deaconPassword)){
+            throw new AccessForbiddenException("内部调用失败，口令错误");
+        }
     }
 
     @PutMapping("/flush-fuse")

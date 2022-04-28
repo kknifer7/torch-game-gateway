@@ -1,4 +1,4 @@
-package xit.gateway.deacon.dao;
+package xit.gateway.core.dao;
 
 import org.springframework.data.r2dbc.repository.Query;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;

@@ -1,9 +1,9 @@
-package xit.gateway.deacon.service;
+package xit.gateway.core.service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import xit.gateway.deacon.service.impl.UserServiceImpl;
+import xit.gateway.core.service.impl.UserServiceImpl;
 
 @SpringBootTest
 public class TestUserServiceImpl {
@@ -12,6 +12,6 @@ public class TestUserServiceImpl {
 
     @Test
     void test(){
-        System.out.println(gatewayUserService.findUserWithAuthsByName("zeyu12").block());
+        System.out.println(gatewayUserService.findUserWithAuthsByUsername("zeyu12").block());
     }
 }

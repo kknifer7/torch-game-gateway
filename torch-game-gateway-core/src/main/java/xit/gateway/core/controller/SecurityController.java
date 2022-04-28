@@ -1,4 +1,4 @@
-package xit.gateway.deacon.controller;
+package xit.gateway.core.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

@@ -10,5 +10,5 @@ public interface UserService {
      */
     Mono<String> login(String username, String pwd);
 
-    Mono<UserWithAuths> findUserWithAuthsByName(String username);
+    Mono<UserWithAuths> findUserWithAuthsByUsername(String username);
 }

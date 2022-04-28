@@ -1,14 +1,17 @@
-package xit.gateway.deacon.service.impl;
+package xit.gateway.core.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 import xit.gateway.api.jwt.AuthTokenHandler;
 import xit.gateway.api.service.UserService;
 import xit.gateway.constant.RedisKey;
-import xit.gateway.deacon.dao.UserAuthDAO;
-import xit.gateway.deacon.dao.UserDAO;
+import xit.gateway.core.dao.UserAuthDAO;
+import xit.gateway.core.dao.UserDAO;
 import xit.gateway.exception.user.UserNotFoundException;
 import xit.gateway.exception.user.UserVerificationFailedException;
 import xit.gateway.pojo.UserAuth;
@@ -19,7 +22,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, ReactiveUserDetailsService {
     private final UserDAO userDAO;
     private final UserAuthDAO userAuthDAO;
     private final AuthTokenHandler tokenCreator;
@@ -31,7 +34,8 @@ public class UserServiceImpl implements UserService {
         this.tokenCreator = tokenCreator;
     }
 
-    /*public Mono<UserDetails> findByUsername(String username) {
+    @Override
+    public Mono<UserDetails> findByUsername(String username) {
         return userDAO.findByUsername(username)
                 .flatMap(user -> userAuthDAO.findByUserId(user.getId())
                         .collectList()
@@ -45,11 +49,11 @@ public class UserServiceImpl implements UserService {
                                 .build()
                         )
                 );
-    }*/
+    }
 
     @Override
     public Mono<String> login(String username, String pwd) {
-        return Optional.ofNullable(findUserWithAuthsByName(username))
+        return Optional.ofNullable(findUserWithAuthsByUsername(username))
                 .orElseThrow(UserNotFoundException::new)
                 .map(user -> {
                     if (BCrypt.checkpw(pwd, user.getPwd())) {
@@ -65,7 +69,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Mono<UserWithAuths> findUserWithAuthsByName(String username) {
+    public Mono<UserWithAuths> findUserWithAuthsByUsername(String username) {
         return userDAO.findByUsername(username)
                 .flatMap(user -> userAuthDAO.findByUserId(user.getId())
                         .collectList()
