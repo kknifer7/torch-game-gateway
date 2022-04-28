@@ -1,5 +1,6 @@
 package xit.gateway.exception;
 
+import io.jsonwebtoken.InvalidClaimException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -44,5 +45,11 @@ public class GlobalExceptionResolver {
     public ResultInfo<Void> handleException(UserVerificationFailedException e){
         logger.warn(e.getMessage(), e);
         return new ResultInfo<>(ResultCode.VERIFICATION_FAILED.getValue(), "账号或密码错误", null);
+    }
+
+    @ExceptionHandler(InvalidClaimException.class)
+    public ResultInfo<Void> handlerException(InvalidClaimException e){
+        logger.warn(e.getMessage(), e);
+        return new ResultInfo<>(ResultCode.FORBIDDEN.getValue(), "Token不合法", null);
     }
 }
