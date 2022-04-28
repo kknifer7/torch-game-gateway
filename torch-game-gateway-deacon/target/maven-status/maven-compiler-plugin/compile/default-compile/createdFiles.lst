@@ -1,6 +1,10 @@
 xit\gateway\deacon\controller\DeaconController.class
 xit\gateway\deacon\service\impl\ConfigServiceImpl.class
 xit\gateway\deacon\dao\CallRecordDAO.class
+xit\gateway\deacon\dao\UserDAO.class
+xit\gateway\deacon\config\security\WebSecurityConfig.class
+xit\gateway\deacon\service\impl\UserServiceImpl.class
+xit\gateway\deacon\controller\SecurityController.class
 xit\gateway\deacon\fuse\impl\DefaultFuse.class
 xit\gateway\deacon\cluster\heartbeatserver\impl\DefaultNettyHeartBeatServer.class
 xit\gateway\deacon\cluster\gateway\container\impl\GlobalGatewayContainer.class
@@ -8,6 +12,7 @@ xit\gateway\deacon\config\redis\RedisConfig.class
 xit\gateway\deacon\TorchGameGatewayDeaconApplication.class
 xit\gateway\deacon\cluster\gateway\selector\impl\DefaultGatewaySelector.class
 xit\gateway\deacon\cluster\heartbeatserver\impl\DefaultNettyHeartBeatServer$1.class
+xit\gateway\deacon\dao\UserAuthDAO.class
 xit\gateway\deacon\cluster\gateway\agent\impl\DefaultGatewayAgent.class
 xit\gateway\deacon\service\impl\CallRecordServiceImpl.class
 xit\gateway\deacon\config\DeaconConfig.class

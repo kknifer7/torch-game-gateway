@@ -9,6 +9,7 @@ import xit.gateway.exception.requester.BadRequestException;
 import xit.gateway.exception.requester.RequestFailedException;
 import xit.gateway.exception.route.RouteDisabledException;
 import xit.gateway.exception.route.RouteNotFoundException;
+import xit.gateway.exception.user.UserVerificationFailedException;
 import xit.gateway.pojo.ResultInfo;
 
 @RestControllerAdvice
@@ -37,5 +38,11 @@ public class GlobalExceptionResolver {
     public ResultInfo<String> handleException(RouteNotFoundException e){
         logger.error(e.getMessage(), e);
         return new ResultInfo<>(ResultCode.REQUESTER_NOT_FOUND.getValue(), e.getMessage(), e.getRequestPath());
+    }
+
+    @ExceptionHandler(UserVerificationFailedException.class)
+    public ResultInfo<Void> handleException(UserVerificationFailedException e){
+        logger.warn(e.getMessage(), e);
+        return new ResultInfo<>(ResultCode.VERIFICATION_FAILED.getValue(), "账号或密码错误", null);
     }
 }

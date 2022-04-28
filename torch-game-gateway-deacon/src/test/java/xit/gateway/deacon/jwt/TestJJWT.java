@@ -1,4 +1,4 @@
-package xit.gateway.core.jwt;
+package xit.gateway.deacon.jwt;
 
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
@@ -7,13 +7,19 @@ import io.jsonwebtoken.security.Keys;
 import org.assertj.core.util.Maps;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import xit.gateway.api.jwt.AuthTokenHandler;
 
 import java.util.Date;
 import java.util.UUID;
 
 @SpringBootTest
 public class TestJJWT {
+    @Autowired
+    private AuthTokenHandler handler;
+
     @Test
     void test(){
         // 创建JwtBuilder对象
@@ -35,5 +41,16 @@ public class TestJJWT {
                 /* 将三部分拼接为token */
                 .compact();
         Assertions.assertNotEquals(null, jwtToken);
+    }
+
+    @Test
+    void getBcryptPwdForTest(){
+        System.out.println(BCrypt.hashpw("123456", BCrypt.gensalt()));
+    }
+
+    @Test
+    void testTokenParse(){
+        String token = handler.newToken(112233L);
+        System.out.println(handler.parse(token));
     }
 }

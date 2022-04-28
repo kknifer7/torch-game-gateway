@@ -1,4 +1,4 @@
-package xit.gateway.core.config.security;
+package xit.gateway.deacon.config.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

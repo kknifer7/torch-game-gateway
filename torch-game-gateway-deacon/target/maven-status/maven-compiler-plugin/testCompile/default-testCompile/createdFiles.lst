@@ -1,1 +1,3 @@
 xit\gateway\deacon\cluster\heartbeatserver\TestDefaultNettyHeartBeatServer.class
+xit\gateway\deacon\jwt\TestJJWT.class
+xit\gateway\deacon\service\TestUserServiceImpl.class

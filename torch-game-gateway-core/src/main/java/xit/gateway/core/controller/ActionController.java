@@ -10,12 +10,12 @@ import xit.gateway.constant.ResultCode;
 import xit.gateway.pojo.ResultInfo;
 import xit.gateway.utils.RIUtils;
 
+
 /**
  * @author Knifer
  * Description: 负责处理当前实例的变更任务
  * Date: 2022/04/13
  */
-// TODO 待完成：配置文件中的密文验证
 @RestController
 @RequestMapping("/action")
 public class ActionController {
@@ -35,23 +35,29 @@ public class ActionController {
     @PostMapping("/admin/add-service/{serviceId}")
     public Mono<ResultInfo<Void>> addService(@PathVariable("serviceId") String serviceId){
         routeService.addRoutesFromRedis(serviceId);
+
         return RIUtils.createOK();
     }
 
 
-    @PostMapping("/admin/sync-route/{serviceId}/{routeId}")
-    public Mono<ResultInfo<Void>> syncRoute(
+    @PostMapping("/admin/add-route/{serviceId}/{routeId}")
+    public Mono<ResultInfo<Void>> addRoute(
             @PathVariable("serviceId") String serviceId,
             @PathVariable("routeId") String routeId
     ){
-        // 从Redis中获取要同步的路由条目
+        routeService.addRouteFromRedis(serviceId, routeId);
 
-        return null;
+        return RIUtils.createOK();
     }
 
-    @PostMapping("/admin/sync-route-group/{routeGroupId}")
-    public Mono<ResultInfo<Void>> syncRouteGroup(){
-        return null;
+    @PostMapping("/admin/update-route/{serviceId}/{routeId}")
+    public Mono<ResultInfo<Void>> updateRoute(
+            @PathVariable("serviceId") String serviceId,
+            @PathVariable("routeId") String routeId
+    ){
+        routeService.updateRouteFromRedis(serviceId, routeId);
+
+        return RIUtils.createOK();
     }
 
     @PostMapping("/disable-route/{serviceId}/{routeId}/{auth}")
@@ -61,7 +67,6 @@ public class ActionController {
             @PathVariable("auth") String auth
     ){
         // （内部接口）简单校验一下password
-        System.out.println("熔断路由！！！！！！！");
         if (StringUtils.equals(auth, password)){
             routeService.disableRoute(serviceId, routeId);
             return RIUtils.createOK();

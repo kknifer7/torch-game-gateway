@@ -8,6 +8,7 @@ import xit.gateway.constant.RedisKey;
 import xit.gateway.pojo.Route;
 import xit.gateway.utils.RedisUtils;
 
+import java.util.Collections;
 import java.util.Set;
 
 @Service
@@ -24,6 +25,20 @@ public class RouteServiceImpl implements RouteService {
         Set<Route> routes = RedisUtils.keys(RedisKey.ROUTE.extend(serviceId), Route.class);
 
         accessor.loadRoutes(routes);
+    }
+
+    @Override
+    public void addRouteFromRedis(String serviceId, String routeId) {
+        Route route = RedisUtils.get(RedisKey.ROUTE.extend(serviceId), Route.class);
+
+        accessor.loadRoutes(Collections.singletonList(route));
+    }
+
+    @Override
+    public void updateRouteFromRedis(String serviceId, String routeId) {
+        Route route = RedisUtils.get(RedisKey.ROUTE.extend(serviceId), Route.class);
+
+        accessor.updateRoute(route);
     }
 
     @Override

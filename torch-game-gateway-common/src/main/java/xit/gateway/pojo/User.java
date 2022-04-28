@@ -5,33 +5,31 @@ import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
 
-@Table
-public class GatewayUser {
+@Table("gateway_user")
+public class User {
     @Id
-    private String id;
+    private Long id;
     private String username;
     private String pwd;
-    private String authorities;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public GatewayUser() {
+    public User() {
     }
 
-    public GatewayUser(String id, String username, String pwd, String authorities, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public User(Long id, String username, String pwd, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.username = username;
         this.pwd = pwd;
-        this.authorities = authorities;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -49,14 +47,6 @@ public class GatewayUser {
 
     public void setPwd(String pwd) {
         this.pwd = pwd;
-    }
-
-    public String getAuthorities() {
-        return authorities;
-    }
-
-    public void setAuthorities(String authorities) {
-        this.authorities = authorities;
     }
 
     public LocalDateTime getCreatedAt() {

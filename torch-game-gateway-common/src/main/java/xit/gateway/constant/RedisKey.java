@@ -1,12 +1,16 @@
 package xit.gateway.constant;
 
+import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
 
 public enum RedisKey implements ValueEnum<String>{
-    // normal（fuse_count:routeId），为了能灵活配置，这个过期时间让deacon的熔断器去数据库中获取
+    // normal（fuse_count:routeId -> long），为了能灵活配置，这个过期时间让deacon的熔断器去数据库中获取
     FUSE_COUNT("fuse_count:", -1, null),
-    // keys
-    ROUTE("route:", -1, null);
+    // normal（route:serviceId -> routeList）
+    ROUTE("route:", -1, null),
+    // normal（user:userId -> userWithAuths）
+    USER("user:", 1, TimeUnit.DAYS);
+
 
     private final String value;
     // 过期时间，-1表示永不过期
@@ -32,7 +36,7 @@ public enum RedisKey implements ValueEnum<String>{
         return value;
     }
 
-    public String extend(String suffix){
+    public String extend(Serializable suffix){
         return value + suffix;
     }
 }

@@ -5,6 +5,7 @@ public enum ResultCode implements ValueEnum<Integer>{
     BAD_REQUEST(400),
     ROUTE_DISABLED(401),
     FORBIDDEN(403),
+    VERIFICATION_FAILED(501),
     REQUEST_FAILED(500),
     REQUESTER_NOT_FOUND(404);
 
