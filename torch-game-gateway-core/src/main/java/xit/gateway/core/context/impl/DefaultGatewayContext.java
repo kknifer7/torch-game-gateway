@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import xit.gateway.api.context.GatewayContext;
+import xit.gateway.api.route.limiter.manager.LimiterManager;
+import xit.gateway.core.limiter.container.impl.GlobalLimiterContainer;
 import xit.gateway.core.request.container.GlobalRequesterContainer;
 import xit.gateway.pojo.Gateway;
 import xit.gateway.request.container.impl.GlobalRequestContextContainer;
@@ -23,6 +25,8 @@ public class DefaultGatewayContext implements GatewayContext {
     private final GlobalRequestContextContainer routeRequestContextContainer;
     private final GlobalRequesterContainer requesterContainer;
     private final GlobalRoutesContainer serviceRoutesContainer;
+    private final GlobalLimiterContainer limiterContainer;
+    private final LimiterManager limiterManager;
     private Gateway gateway;
 
     @Autowired
@@ -30,6 +34,8 @@ public class DefaultGatewayContext implements GatewayContext {
             GlobalRequestContextContainer routeRequestContextContainer,
             GlobalRequesterContainer requesterContainer,
             GlobalRoutesContainer serviceRoutesContainer,
+            GlobalLimiterContainer limiterContainer,
+            LimiterManager limiterManager,
             @Value("${torch.gateway.call-trace.deacon.heart-beat.backup}")
                     boolean gatewayBackup,
             @Value("${torch.gateway.call-trace.deacon.heart-beat.use-ssl}")
@@ -42,6 +48,8 @@ public class DefaultGatewayContext implements GatewayContext {
         this.routeRequestContextContainer = routeRequestContextContainer;
         this.requesterContainer = requesterContainer;
         this.serviceRoutesContainer = serviceRoutesContainer;
+        this.limiterContainer = limiterContainer;
+        this.limiterManager = limiterManager;
         id = UUIDUtils.getRandom();
         try {
             this.gateway = new Gateway(
@@ -73,6 +81,16 @@ public class DefaultGatewayContext implements GatewayContext {
     @Override
     public GlobalRoutesContainer routesContainer() {
         return serviceRoutesContainer;
+    }
+
+    @Override
+    public GlobalLimiterContainer limiterContainer() {
+        return limiterContainer;
+    }
+
+    @Override
+    public LimiterManager limiterManager() {
+        return limiterManager;
     }
 
     @Override

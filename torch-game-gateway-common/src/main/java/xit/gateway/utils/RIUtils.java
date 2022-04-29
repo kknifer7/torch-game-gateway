@@ -25,11 +25,9 @@ public class RIUtils {
     }
 
     public static<T> Mono<Void> send(ServerHttpResponse response, ResultCode code, String msg, T data){
-        response.bufferFactory()
+        return response.writeWith(Mono.just(response.bufferFactory()
                 .wrap(JsonUtils.object2String(new ResultInfo<>(code.getValue(), msg, data))
                         .getBytes(StandardCharsets.UTF_8)
-                );
-
-        return response.setComplete();
+                )));
     }
 }

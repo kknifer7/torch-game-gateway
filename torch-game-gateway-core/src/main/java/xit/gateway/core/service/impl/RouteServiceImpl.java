@@ -22,21 +22,22 @@ public class RouteServiceImpl implements RouteService {
 
     @Override
     public void addRoutesFromRedis(String serviceId) {
-        Set<Route> routes = RedisUtils.keys(RedisKey.ROUTE.extend(serviceId), Route.class);
+        Set<Route> routes = RedisUtils.keys(RedisKey.ROUTE_LIST.extend(serviceId), Route.class);
 
         accessor.loadRoutes(routes);
     }
 
     @Override
-    public void addRouteFromRedis(String serviceId, String routeId) {
-        Route route = RedisUtils.get(RedisKey.ROUTE.extend(serviceId), Route.class);
+    public void addRouteFromRedis(String routeId) {
+        // TODO 获取最新Route
+        Route route = RedisUtils.get(RedisKey.ROUTE.extend(routeId), Route.class);
 
         accessor.loadRoutes(Collections.singletonList(route));
     }
 
     @Override
-    public void updateRouteFromRedis(String serviceId, String routeId) {
-        Route route = RedisUtils.get(RedisKey.ROUTE.extend(serviceId), Route.class);
+    public void updateRouteFromRedis(String routeId) {
+        Route route = RedisUtils.get(RedisKey.ROUTE.extend(routeId), Route.class);
 
         accessor.updateRoute(route);
     }

@@ -1,7 +1,7 @@
 [
   {
     "id": "123",
-    "name": "service-99",
+    "serviceName": "service-99",
     "remark": "中国移动-用户协议获取服务",
     "protocol": "http",
     "host": "www.10086.cn",
@@ -13,7 +13,7 @@
     "extra": 111
   },{
     "id": "1223",
-    "name": "service-01",
+    "serviceName": "service-01",
     "remark": "本地测试服务-http",
     "protocol": "http",
     "host": "localhost",
@@ -25,12 +25,24 @@
     "extra": 111
   },{
     "id": "333",
-    "name": "service-02",
+    "serviceName": "service-02",
     "remark": "本地测试服务-rpc",
     "protocol": "rpc",
     "host": "localhost",
     "port": 9000,
     "url": null,
+    "status": true,
+    "creationDatetime": "2022-02-02 19:10:10",
+    "updateDatetime": "2022-02-02 19:10:10",
+    "extra": 111
+  },{
+    "id": "83",
+    "serviceName": "service-05",
+    "remark": "远程服务-http",
+    "protocol": "http",
+    "host": "218.62.100.7",
+    "port": 8000,
+    "url": "http://218.62.100.7:8000/",
     "status": true,
     "creationDatetime": "2022-02-02 19:10:10",
     "updateDatetime": "2022-02-02 19:10:10",

@@ -10,7 +10,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table("gateway_user_auth")
+@Table("user_auth")
 public class UserAuth {
     private Long userId;
     private String auth;

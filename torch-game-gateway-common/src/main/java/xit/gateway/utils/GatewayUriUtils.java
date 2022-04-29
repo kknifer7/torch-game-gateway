@@ -15,7 +15,7 @@ public class GatewayUriUtils {
     private static final String SERVICE_URI_WITH_NEXT_SEPARATOR = "/service/";
 
     public static boolean matchLogin(String path){
-        return !StringUtils.equals(path, LOGIN_URI);
+        return StringUtils.equals(path, LOGIN_URI);
     }
 
 

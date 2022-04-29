@@ -4,6 +4,7 @@ E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\g
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\core\context\impl\DefaultGatewayContext.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\core\service\impl\ConfigServiceImpl.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\core\valve\impl\HeartBeatServiceValve.java
+E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\core\dto\AddLimiterForUserDTO.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\core\request\requester\factory\RequesterFactory.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\core\controller\ActionController.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\core\route\container\impl\GlobalRoutesContainer.java
@@ -20,7 +21,9 @@ E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\g
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\core\service\impl\UserServiceImpl.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\core\service\impl\RouteServiceImpl.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\core\request\container\GlobalRequesterContainer.java
+E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\core\limiter\container\impl\GlobalLimiterContainer.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\core\TorchGameGatewayCoreApplication.java
+E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\core\limiter\manager\impl\DefaultLimiterManager.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\core\dao\ConfigDAO.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\core\dao\UserAuthDAO.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\core\request\recordwatchdog\impl\DefaultRecordWatchdog.java

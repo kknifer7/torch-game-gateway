@@ -5,10 +5,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
+import xit.gateway.api.request.container.RoutesContainer;
+import xit.gateway.api.route.limiter.manager.LimiterManager;
 import xit.gateway.api.service.RouteService;
 import xit.gateway.constant.ResultCode;
+import xit.gateway.core.dto.AddLimiterForUserDTO;
 import xit.gateway.pojo.ResultInfo;
+import xit.gateway.pojo.Route;
 import xit.gateway.utils.RIUtils;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 
 /**
@@ -21,15 +30,21 @@ import xit.gateway.utils.RIUtils;
 public class ActionController {
 
     private final RouteService routeService;
+    private final RoutesContainer routesContainer;
+    private final LimiterManager limiterManager;
     private final String password;
 
     @Autowired
     public ActionController(
             RouteService routeService,
+            RoutesContainer routesContainer,
+            LimiterManager limiterManager,
             @Value("${torch.gateway.password}") String password
     ) {
         this.routeService = routeService;
+        this.routesContainer = routesContainer;
         this.password = password;
+        this.limiterManager = limiterManager;
     }
 
     @PostMapping("/admin/add-service/{serviceId}")
@@ -40,22 +55,42 @@ public class ActionController {
     }
 
 
-    @PostMapping("/admin/add-route/{serviceId}/{routeId}")
+    @PostMapping("/admin/add-route/{routeId}")
     public Mono<ResultInfo<Void>> addRoute(
-            @PathVariable("serviceId") String serviceId,
             @PathVariable("routeId") String routeId
     ){
-        routeService.addRouteFromRedis(serviceId, routeId);
+        routeService.addRouteFromRedis(routeId);
 
         return RIUtils.createOK();
     }
 
-    @PostMapping("/admin/update-route/{serviceId}/{routeId}")
+    @PostMapping("/admin/update-route/{routeId}")
     public Mono<ResultInfo<Void>> updateRoute(
-            @PathVariable("serviceId") String serviceId,
             @PathVariable("routeId") String routeId
     ){
-        routeService.updateRouteFromRedis(serviceId, routeId);
+        routeService.updateRouteFromRedis(routeId);
+
+        return RIUtils.createOK();
+    }
+
+    @PostMapping("/admin/list-routes")
+    public Mono<ResultInfo<List<Route>>> listRoutes(){
+        return RIUtils.createOK(routesContainer.entrySet()
+                .stream()
+                .map(Map.Entry::getValue)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList())
+        );
+    }
+
+    @PostMapping("/admin/add-limiter-for-user")
+    public Mono<ResultInfo<Void>> addLimiterForUser(@RequestBody AddLimiterForUserDTO dto){
+        limiterManager.addLimiter(
+                dto.getUserId(),
+                dto.getLimit(),
+                dto.getLimitingTimeout(),
+                dto.getLimitingTimeUnit()
+        );
 
         return RIUtils.createOK();
     }

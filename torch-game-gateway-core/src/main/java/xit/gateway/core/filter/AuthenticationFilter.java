@@ -35,7 +35,7 @@ public class AuthenticationFilter implements WebFilter {
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
         String path = exchange.getRequest().getPath().toString();
 
-        if (!GatewayUriUtils.matchLogin(path)){
+        if (GatewayUriUtils.matchLogin(path)){
             return chain.filter(exchange);
         }
 

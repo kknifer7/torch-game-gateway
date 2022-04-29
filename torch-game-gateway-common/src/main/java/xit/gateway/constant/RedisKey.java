@@ -6,7 +6,9 @@ import java.util.concurrent.TimeUnit;
 public enum RedisKey implements ValueEnum<String>{
     // normal（fuse_count:routeId -> long），为了能灵活配置，这个过期时间让deacon的熔断器去数据库中获取
     FUSE_COUNT("fuse_count:", -1, null),
-    // normal（route:serviceId -> routeList）
+    // normal（route_list:serviceId -> routeList）
+    ROUTE_LIST("route_list:", -1, null),
+    // normal （route:routeId -> route）
     ROUTE("route:", -1, null),
     // normal（user:userId -> userWithAuths）
     USER("user:", 1, TimeUnit.DAYS);

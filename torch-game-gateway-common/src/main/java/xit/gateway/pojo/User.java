@@ -5,7 +5,7 @@ import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
 
-@Table("gateway_user")
+@Table("user")
 public class User {
     @Id
     private Long id;

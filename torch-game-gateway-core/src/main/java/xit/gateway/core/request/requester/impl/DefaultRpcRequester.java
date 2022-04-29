@@ -92,7 +92,7 @@ public class DefaultRpcRequester extends AbstractRequester implements RpcRequest
                 .gatewayHost(request.getLocalAddress().getHostName())
                 .gatewayPort(String.valueOf(request.getLocalAddress().getPort()))
                 .gatewayUri(request.getPath().value())
-                .serviceId(route.getName())
+                .serviceId(route.getServiceName())
                 .timestamp(System.currentTimeMillis())
                 .route(() -> {
                     CalledRoute calledRoute = new CalledRoute();

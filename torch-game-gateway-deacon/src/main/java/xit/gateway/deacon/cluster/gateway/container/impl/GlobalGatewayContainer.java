@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import xit.gateway.api.container.SingleContainer;
 import xit.gateway.pojo.Gateway;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +29,7 @@ public class GlobalGatewayContainer implements SingleContainer<Gateway> {
     }
 
     @Override
-    public boolean contains(String key) {
+    public boolean contains(Serializable key) {
         return map.containsKey(key);
     }
 
@@ -38,12 +39,12 @@ public class GlobalGatewayContainer implements SingleContainer<Gateway> {
     }
 
     @Override
-    public Gateway get(String key) {
+    public Gateway get(Serializable key) {
         return map.get(key);
     }
 
     @Override
-    public Gateway remove(String key) {
+    public Gateway remove(Serializable key) {
         return map.remove(key);
     }
 

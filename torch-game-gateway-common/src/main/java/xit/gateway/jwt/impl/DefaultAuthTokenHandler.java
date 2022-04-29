@@ -44,7 +44,7 @@ public class DefaultAuthTokenHandler implements AuthTokenHandler {
                 .setAudience(TOKEN_AUDIENCE)
                 .setIssuer(TOKEN_ISSUER)
                 .setSubject(TOKEN_SUBJECT)
-                .setExpiration(new Date(System.currentTimeMillis() + 1000*60*60))
+                .setExpiration(new Date(System.currentTimeMillis() + 100000*60*60))
                 .compact();
     }
 

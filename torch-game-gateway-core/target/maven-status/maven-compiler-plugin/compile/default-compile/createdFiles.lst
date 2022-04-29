@@ -23,10 +23,13 @@ xit\gateway\core\TorchGameGatewayCoreApplication.class
 xit\gateway\core\dao\UserAuthDAO.class
 xit\gateway\core\controller\SecurityController.class
 xit\gateway\core\dao\UserDAO.class
+xit\gateway\core\dto\AddLimiterForUserDTO.class
+xit\gateway\core\limiter\manager\impl\DefaultLimiterManager.class
 xit\gateway\core\valve\impl\GatewayPipeline.class
 xit\gateway\core\valve\impl\GatewayPipeline$1.class
 xit\gateway\core\dao\ConfigDAO.class
 xit\gateway\core\cluster\heartbeatclient\impl\DefaultNettyHeartBeatClient$1.class
+xit\gateway\core\limiter\container\impl\GlobalLimiterContainer.class
 xit\gateway\core\route\reader\impl\DefaultRouteReader.class
 xit\gateway\core\route\reader\impl\DefaultRouteReader$1.class
 xit\gateway\core\config\GatewayConfig.class

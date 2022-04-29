@@ -9,6 +9,7 @@ import xit.gateway.api.request.container.RequesterContainer;
 import xit.gateway.api.request.container.RequestContextContainer;
 import xit.gateway.api.request.container.RoutesContainer;
 import xit.gateway.api.context.GatewayContext;
+import xit.gateway.api.route.limiter.manager.LimiterManager;
 import xit.gateway.request.context.impl.DefaultRequestContext;
 import xit.gateway.api.route.accessor.RouteAccessor;
 import xit.gateway.core.request.requester.factory.RequesterFactory;
@@ -23,12 +24,14 @@ public class DefaultRouteAccessor implements RouteAccessor {
     private final RequesterContainer globalRequesterContainer;
     private final RoutesContainer globalRoutesContainer;
     private final RequestContextContainer globalRouteRequestContextContainer;
+    private final LimiterManager limiterManager;
 
     @Autowired
     public DefaultRouteAccessor(GatewayContext context) {
         this.globalRequesterContainer = context.requesterContainer();
         this.globalRoutesContainer = context.routesContainer();
         this.globalRouteRequestContextContainer = context.routeRequestContextContainer();
+        this.limiterManager = context.limiterManager();
     }
 
     @Override
@@ -36,13 +39,14 @@ public class DefaultRouteAccessor implements RouteAccessor {
         routeList.forEach(route -> {
             globalRoutesContainer.put(route);
             globalRequesterContainer.put(RequesterFactory.get(route));
-            globalRouteRequestContextContainer.put(route.getName(), new DefaultRequestContext());
+            globalRouteRequestContextContainer.put(route.getServiceName(), new DefaultRequestContext());
+            limiterManager.addLimiter(route.getId());
         });
     }
 
     @Override
     public void updateRoute(Route route) {
-        List<Route> routes = globalRoutesContainer.get(route.getName());
+        List<Route> routes = globalRoutesContainer.get(route.getServiceName());
         Route oldRoute;
 
         if (CollectionUtils.isEmpty(routes)){
@@ -73,5 +77,25 @@ public class DefaultRouteAccessor implements RouteAccessor {
         synchronized (this){
             oldRoute.setStatus(false);
         }
+    }
+
+    @Override
+    public void removeRoute(String serviceId, String routeId) {
+        List<Route> routes = globalRoutesContainer.get(serviceId);
+
+        routes.removeIf(route -> StringUtils.equals(route.getId(), routeId));
+
+        // TODO 移除单个路由时，需要请求器对象中有路由id才能查找到目标请求器并加以删除（请求上下文也是差不多）
+        // globalRouteRequestContextContainer.remove(...)
+        // ...RequestContextContainer.remove(...)
+        limiterManager.removeLimiter(routeId);
+    }
+
+    @Override
+    public void removeAllRoute(String serviceId) {
+        globalRoutesContainer.remove(serviceId)
+                        .forEach(route -> limiterManager.removeLimiter(route.getId()));
+        globalRequesterContainer.remove(serviceId);
+        globalRouteRequestContextContainer.remove(serviceId);
     }
 }

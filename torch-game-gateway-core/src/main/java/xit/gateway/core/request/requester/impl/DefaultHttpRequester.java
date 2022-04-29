@@ -54,7 +54,7 @@ public class DefaultHttpRequester extends AbstractRequester implements HttpReque
                 .gatewayHost(request.getLocalAddress().getHostName())
                 .gatewayPort(String.valueOf(request.getLocalAddress().getPort()))
                 .gatewayUri(request.getPath().value())
-                .serviceId(route.getName())
+                .serviceId(route.getServiceName())
                 .timestamp(System.currentTimeMillis())
                 .route(() -> {
                     CalledRoute calledRoute = new CalledRoute();
@@ -108,7 +108,7 @@ public class DefaultHttpRequester extends AbstractRequester implements HttpReque
                         .map(entry -> entry.getKey() + "=" + StringUtils.join(entry.getValue(), ","))
                         .collect(Collectors.toList());
         String path = request.getPath().value();
-        String serviceId = route.getName();
+        String serviceId = route.getServiceName();
 
         return StringUtils.substring(path, StringUtils.indexOf(path, serviceId) + serviceId.length())
                 + "?" +

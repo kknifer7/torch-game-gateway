@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import xit.gateway.api.request.container.RequesterContainer;
 import xit.gateway.api.request.requester.Requester;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -30,12 +31,12 @@ public class GlobalRequesterContainer implements RequesterContainer {
     }
 
     @Override
-    public Requester get(String primary) {
+    public Requester get(Serializable primary) {
         return requesterMap.get(primary);
     }
 
     @Override
-    public Requester remove(String key) {
+    public Requester remove(Serializable key) {
         return requesterMap.remove(key);
     }
 
@@ -45,7 +46,7 @@ public class GlobalRequesterContainer implements RequesterContainer {
     }
 
     @Override
-    public boolean contains(String primaryKey) {
+    public boolean contains(Serializable primaryKey) {
         return requesterMap.containsKey(primaryKey);
     }
 

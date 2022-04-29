@@ -30,4 +30,9 @@ public class GlobalRequestContextContainer implements RequestContextContainer {
     public RequestContext get(String key) {
         return map.get(key);
     }
+
+    @Override
+    public RequestContext remove(String key) {
+        return map.remove(key);
+    }
 }

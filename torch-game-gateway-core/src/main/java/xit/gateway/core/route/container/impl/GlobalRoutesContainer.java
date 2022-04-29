@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import xit.gateway.api.request.container.RoutesContainer;
 import xit.gateway.pojo.Route;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -25,8 +26,8 @@ public class GlobalRoutesContainer implements RoutesContainer {
 
     @Override
     public void put(Route route) {
-        String serviceId = route.getName();
-        List<Route> routes = map.get(route.getName());
+        String serviceId = route.getServiceName();
+        List<Route> routes = map.get(route.getServiceName());
 
         if (routes != null){
             routes.add(route);
@@ -41,7 +42,7 @@ public class GlobalRoutesContainer implements RoutesContainer {
     }
 
     @Override
-    public boolean contains(String serviceId) {
+    public boolean contains(Serializable serviceId) {
         return map.containsKey(serviceId);
     }
 
@@ -51,8 +52,13 @@ public class GlobalRoutesContainer implements RoutesContainer {
     }
 
     @Override
-    public List<Route> get(String serviceId) {
+    public List<Route> get(Serializable serviceId) {
         return map.get(serviceId);
+    }
+
+    @Override
+    public List<Route> remove(Serializable key) {
+        return map.remove(key);
     }
 
     @Override

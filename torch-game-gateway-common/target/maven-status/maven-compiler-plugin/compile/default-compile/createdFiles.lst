@@ -2,6 +2,7 @@ xit\gateway\pojo\RpcRoute.class
 xit\gateway\api\service\CallRecordService.class
 xit\gateway\loadbalancer\impl\RandomLoadbalancer.class
 xit\gateway\exception\route\RouteDisabledException.class
+xit\gateway\api\route\limiter\manager\LimiterManager.class
 xit\gateway\api\route\reader\RouteReader.class
 xit\gateway\exception\user\AccessForbiddenException.class
 xit\gateway\api\request\requester\HttpRequester.class
@@ -20,6 +21,7 @@ xit\gateway\api\valve\OrdinaryValve.class
 xit\gateway\utils\UUIDUtils.class
 xit\gateway\exception\valve\IllegalValveOperationException.class
 xit\gateway\jwt\impl\DefaultAuthTokenHandler.class
+xit\gateway\api\route\limiter\container\LimiterContainer.class
 xit\gateway\api\request\requester\AbstractRequester.class
 xit\gateway\loadbalancer\impl\NoLoadbalancer.class
 xit\gateway\exception\valve\ValveException.class

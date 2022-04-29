@@ -28,4 +28,17 @@ public interface RouteAccessor {
      * @param routeId 路由ID
      */
     void disableRoute(String serviceId, String routeId);
+
+    /**
+     * 删除路由
+     * @param serviceId 服务名称
+     * @param routeId 路由ID
+     */
+    void removeRoute(String serviceId, String routeId);
+
+    /**
+     * 删除服务下的所有路由
+     * @param serviceId 服务名称
+     */
+    void removeAllRoute(String serviceId);
 }
