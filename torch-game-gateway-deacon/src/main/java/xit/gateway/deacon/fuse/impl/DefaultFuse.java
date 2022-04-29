@@ -49,7 +49,7 @@ public class DefaultFuse implements Fuse {
         fuseCount = RedisUtils.get(RedisKey.FUSE_COUNT.extend(routeId), Integer.class);
         fuseCount = fuseCount == null ? 1 : fuseCount + 1;
         if (fuseCount >= FUSING_THRESHOLD.get()){
-            // TODO 下达熔断通知
+            // 下达熔断通知
             logger.info("熔断路由：" + record.getRouteDesc());
             Optional.ofNullable(gatewayContainer.get(record.getGatewayId()))
                     .ifPresent(gateway -> gatewayAgent.disableRoute(

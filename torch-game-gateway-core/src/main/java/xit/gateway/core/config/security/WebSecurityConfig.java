@@ -51,6 +51,7 @@ public class WebSecurityConfig {
                 .authorizeExchange()
                 .pathMatchers("/login").permitAll()
                 .pathMatchers("/action/admin/**").hasAuthority("admin")
+                .pathMatchers("/service/**").hasAuthority("dynamic")
                 .and()
                 .authenticationManager(reactiveAuthenticationManager)
                 .csrf()

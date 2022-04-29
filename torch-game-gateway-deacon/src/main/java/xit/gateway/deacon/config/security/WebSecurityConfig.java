@@ -45,8 +45,8 @@ public class WebSecurityConfig {
         return http
                 .addFilterAt(authenticationFilter, SecurityWebFiltersOrder.HTTP_BASIC)
                 .authorizeExchange()
-                .pathMatchers("/login").permitAll()
-                .pathMatchers("/service/**").hasAuthority("dynamic")
+                .pathMatchers("/service/**").permitAll()
+                .pathMatchers("/internal/**").permitAll()
                 .pathMatchers("/**").hasAuthority("admin")
                 .and()
                 .authenticationManager(reactiveAuthenticationManager)

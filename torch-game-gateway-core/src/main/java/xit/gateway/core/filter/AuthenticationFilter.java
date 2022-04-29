@@ -51,7 +51,7 @@ public class AuthenticationFilter implements WebFilter {
         tokenStr = header.get(0);
         try{
             token = handler.parse(tokenStr);
-        }catch (JwtException e){
+        }catch (JwtException | IllegalArgumentException e){
             // token解析失败
             return chain.filter(exchange);
         }
