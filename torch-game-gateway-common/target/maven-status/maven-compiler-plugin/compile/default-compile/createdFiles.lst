@@ -1,6 +1,7 @@
 xit\gateway\pojo\RpcRoute.class
 xit\gateway\api\service\CallRecordService.class
 xit\gateway\loadbalancer\impl\RandomLoadbalancer.class
+xit\gateway\utils\OshiUtils.class
 xit\gateway\exception\route\RouteDisabledException.class
 xit\gateway\api\route\limiter\manager\LimiterManager.class
 xit\gateway\api\route\reader\RouteReader.class
@@ -13,6 +14,7 @@ xit\gateway\api\service\UserService.class
 xit\gateway\utils\RedisUtils.class
 xit\gateway\api\container\Container.class
 xit\gateway\exception\user\TokenExpirationException.class
+xit\gateway\utils\OshiUtils$SimpleCPUInfo.class
 xit\gateway\api\container\MultiContainer.class
 xit\gateway\request\context\impl\DefaultRequestContext.class
 xit\gateway\api\jwt\AuthTokenHandler.class
@@ -31,6 +33,7 @@ xit\gateway\api\request\requester\RpcRequester.class
 xit\gateway\pojo\Site.class
 xit\gateway\api\cluster\gateway\selector\GatewaySelector.class
 xit\gateway\request\container\impl\GlobalRequestContextContainer.class
+xit\gateway\utils\OshiUtils$SimpleMemoryInfo.class
 xit\gateway\exception\user\UserVerificationFailedException.class
 xit\gateway\pojo\CallRecord$Builder.class
 xit\gateway\constant\ValueEnum.class

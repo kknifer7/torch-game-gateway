@@ -19,8 +19,10 @@ import xit.gateway.api.cluster.heartbeatclient.HeartBeatClient;
 import xit.gateway.api.context.GatewayContext;
 import xit.gateway.pojo.Gateway;
 import xit.gateway.utils.JsonUtils;
+import xit.gateway.utils.OshiUtils;
 
 import java.net.InetSocketAddress;
+import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
 
 @Component
@@ -79,10 +81,12 @@ public class DefaultNettyHeartBeatClient implements HeartBeatClient {
     }
 
     private static class DefaultHeatBeatClientHandler extends ChannelInboundHandlerAdapter{
-        private final String heartBeatPackage;
+        private final String serverPwd;
+        private final Gateway gateway;
 
         public DefaultHeatBeatClientHandler(String serverPwd, Gateway gateway){
-            this.heartBeatPackage = serverPwd + ":" + JsonUtils.object2String(gateway);
+            this.serverPwd = serverPwd;
+            this.gateway = gateway;
         }
 
         @Override
@@ -90,10 +94,23 @@ public class DefaultNettyHeartBeatClient implements HeartBeatClient {
             if (evt instanceof IdleStateEvent){
                 IdleStateEvent event = (IdleStateEvent)evt;
                 if (event.state() == IdleState.WRITER_IDLE){
-                    ctx.writeAndFlush(heartBeatPackage);
+                    ctx.writeAndFlush(packageHeartBeatInfo());
                 }
             }
             super.userEventTriggered(ctx, evt);
+        }
+
+        private String packageHeartBeatInfo(){
+            OshiUtils.SimpleMemoryInfo simpleMemoryInfo = OshiUtils.getSimpleMemoryInfo();
+            OshiUtils.SimpleCPUInfo simpleCPUInfo = OshiUtils.getSimpleCPUInfo();
+
+            gateway.setCpuCores(simpleCPUInfo.getLogicalProcessorCount());
+            gateway.setCpuSys(simpleCPUInfo.getCpuUsed());
+            gateway.setTotalMemory(simpleMemoryInfo.getTotal());
+            gateway.setFreeMemory(simpleMemoryInfo.getAvailable());
+            gateway.setCreateAt(LocalDateTime.now());
+
+            return serverPwd + ":" + JsonUtils.object2String(gateway);
         }
     }
 }

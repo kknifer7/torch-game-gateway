@@ -1,4 +1,4 @@
-package xit.gateway.core.config.security;
+package xit.gateway.deacon.config.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -18,9 +18,8 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.context.NoOpServerSecurityContextRepository;
 import reactor.core.publisher.Mono;
 import xit.gateway.constant.ResultCode;
-import xit.gateway.core.filter.AuthenticationFilter;
-import xit.gateway.core.filter.LimitingFilter;
-import xit.gateway.core.service.impl.UserServiceImpl;
+import xit.gateway.deacon.filter.AuthenticationFilter;
+import xit.gateway.deacon.service.impl.UserServiceImpl;
 import xit.gateway.pojo.ResultInfo;
 import xit.gateway.utils.JsonUtils;
 
@@ -30,12 +29,10 @@ import java.nio.charset.StandardCharsets;
 @EnableWebFluxSecurity
 public class WebSecurityConfig {
     private final AuthenticationFilter authenticationFilter;
-    private final LimitingFilter limitingFilter;
 
     @Autowired
-    public WebSecurityConfig(AuthenticationFilter authenticationFilter, LimitingFilter limitingFilter) {
+    public WebSecurityConfig(AuthenticationFilter authenticationFilter) {
         this.authenticationFilter = authenticationFilter;
-        this.limitingFilter = limitingFilter;
     }
 
     @Bean
@@ -46,11 +43,11 @@ public class WebSecurityConfig {
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http, ReactiveAuthenticationManager reactiveAuthenticationManager){
         return http
-                .addFilterAt(limitingFilter, SecurityWebFiltersOrder.HTTP_BASIC)
-                .addFilterBefore(authenticationFilter, SecurityWebFiltersOrder.HTTP_BASIC)
+                .addFilterAt(authenticationFilter, SecurityWebFiltersOrder.HTTP_BASIC)
                 .authorizeExchange()
                 .pathMatchers("/login").permitAll()
-                .pathMatchers("/action/admin/**").hasAuthority("admin")
+                .pathMatchers("/service/**").hasAuthority("dynamic")
+                .pathMatchers("/**").hasAuthority("admin")
                 .and()
                 .authenticationManager(reactiveAuthenticationManager)
                 .csrf()

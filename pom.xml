@@ -27,6 +27,8 @@
         <skip-test>true</skip-test>
         <jjwt.version>0.11.2</jjwt.version>
         <guava.version>31.1-jre</guava.version>
+        <oshi.version>6.1.6</oshi.version>
+        <jna.version>5.11.0</jna.version>
     </properties>
 
     <build>

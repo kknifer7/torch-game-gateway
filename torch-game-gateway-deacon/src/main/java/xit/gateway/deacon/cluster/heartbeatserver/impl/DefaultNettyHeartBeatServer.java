@@ -19,7 +19,6 @@ import xit.gateway.pojo.GatewayHeartBeatInfo;
 import xit.gateway.utils.JsonUtils;
 
 import java.net.InetSocketAddress;
-import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
@@ -96,16 +95,16 @@ public class DefaultNettyHeartBeatServer implements HeartBeatServer {
 
             if (validateHeartBeatMsg(heartBeatMsg)){
                 gateway = JsonUtils.string2Object(heartBeatMsg[1], Gateway.class);
+                clientChannel = ctx.channel();
+                clientAddress = ((InetSocketAddress) clientChannel.remoteAddress());
+                gateway.setHost(clientAddress.getHostName());
+                gatewayContainer.put(gateway);
                 if (!gatewayContainer.contains(gateway.getId())){
-                    // 首次收到心跳包
-                    clientChannel = ctx.channel();
-                    clientAddress = ((InetSocketAddress) clientChannel.remoteAddress());
-                    gateway.setHost(clientAddress.getHostName());
-                    gateway.setCreateAt(LocalDateTime.now());
-                    gatewayContainer.put(gateway);
+                    // 首次收到心跳包，添加心跳统计信息用于记录失联次数
                     heartBeatInfoMap.put(clientChannel.id(), new GatewayHeartBeatInfo(gateway.getId(), 0));
                 }
             }else{
+
                 ctx.close();
             }
 

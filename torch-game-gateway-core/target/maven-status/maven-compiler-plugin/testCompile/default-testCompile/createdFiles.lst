@@ -1,4 +1,5 @@
 xit\gateway\core\valve\TestOrdinaryValve$7.class
+xit\gateway\core\utils\TestOshi.class
 xit\gateway\core\valve\TestRouteInitializationLoadingValve.class
 xit\gateway\core\request\TestDefaultHTTPRequester.class
 xit\gateway\core\service\TestUserServiceImpl.class

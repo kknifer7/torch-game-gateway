@@ -59,8 +59,7 @@ public class DefaultGatewayContext implements GatewayContext {
                     gatewayUseSSL,
                     gatewayBackup,
                     true,
-                    // TODO 网关实例性能数据
-                    0, 0, 0, 0,
+                    0, 0, 0, 0,  // 性能数据由心跳客户端填充
                     null
             );
         } catch (UnknownHostException e) {
