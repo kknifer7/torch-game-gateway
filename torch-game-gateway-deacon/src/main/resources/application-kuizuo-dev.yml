@@ -1,0 +1,29 @@
+spring:
+  config:
+    activate:
+      on-profile: kuizuo-dev
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 0
+    timeout: 5000ms
+    connect-timeout: 5000ms
+  r2dbc:
+    username: root
+    password: a123456
+    url: r2dbcs:mysql://127.0.0.1:3306/torch_game_gateway?SSL=false&sslMode=DISABLED
+server:
+  port: 8082
+torch:
+  gateway:
+    core:
+      password: 123456
+    deacon:
+      password: 123456
+      fuse:
+        fuse-class: xit.gateway.deacon.fuse.impl.DefaultFuse
+      heart-beat:
+        idle-timeout: 10
+        server-port: 9099
+      loadbalance:
+        loadbalancer-class: xit.gateway.loadbalancer.impl.RoundRobinLoadbalancer
