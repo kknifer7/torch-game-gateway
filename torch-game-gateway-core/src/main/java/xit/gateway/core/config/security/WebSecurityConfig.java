@@ -3,7 +3,9 @@ package xit.gateway.core.config.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.authentication.UserDetailsRepositoryReactiveAuthenticationManager;
@@ -17,6 +19,7 @@ import org.springframework.security.web.server.context.NoOpServerSecurityContext
 import reactor.core.publisher.Mono;
 import xit.gateway.constant.ResultCode;
 import xit.gateway.core.filter.AuthenticationFilter;
+import xit.gateway.core.filter.LimitingFilter;
 import xit.gateway.core.service.impl.UserServiceImpl;
 import xit.gateway.pojo.ResultInfo;
 import xit.gateway.utils.JsonUtils;
@@ -27,10 +30,12 @@ import java.nio.charset.StandardCharsets;
 @EnableWebFluxSecurity
 public class WebSecurityConfig {
     private final AuthenticationFilter authenticationFilter;
+    private final LimitingFilter limitingFilter;
 
     @Autowired
-    public WebSecurityConfig(AuthenticationFilter authenticationFilter) {
+    public WebSecurityConfig(AuthenticationFilter authenticationFilter, LimitingFilter limitingFilter) {
         this.authenticationFilter = authenticationFilter;
+        this.limitingFilter = limitingFilter;
     }
 
     @Bean
@@ -40,7 +45,9 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http, ReactiveAuthenticationManager reactiveAuthenticationManager){
-        return http.addFilterAt(authenticationFilter, SecurityWebFiltersOrder.FIRST)
+        return http
+                .addFilterAt(limitingFilter, SecurityWebFiltersOrder.HTTP_BASIC)
+                .addFilterBefore(authenticationFilter, SecurityWebFiltersOrder.HTTP_BASIC)
                 .authorizeExchange()
                 .pathMatchers("/login").permitAll()
                 .pathMatchers("/service/**").hasAuthority("dynamic")
@@ -54,8 +61,10 @@ public class WebSecurityConfig {
                 .exceptionHandling()
                 .accessDeniedHandler((exchange, denied) -> {
                     ServerHttpResponse response = exchange.getResponse();
+                    HttpHeaders headers = response.getHeaders();
 
                     response.setStatusCode(HttpStatus.FORBIDDEN);
+                    headers.setContentType(MediaType.APPLICATION_JSON);
 
                     return response.writeWith(
                             Mono.just(response.bufferFactory()
@@ -69,8 +78,10 @@ public class WebSecurityConfig {
                 })
                 .authenticationEntryPoint(((exchange, ex) -> {
                     ServerHttpResponse response = exchange.getResponse();
+                    HttpHeaders headers = response.getHeaders();
 
                     response.setStatusCode(HttpStatus.UNAUTHORIZED);
+                    headers.setContentType(MediaType.APPLICATION_JSON);
 
                     return response.writeWith(
                             Mono.just(response.bufferFactory()

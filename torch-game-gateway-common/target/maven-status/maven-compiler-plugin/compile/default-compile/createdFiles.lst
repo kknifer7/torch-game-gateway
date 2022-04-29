@@ -53,6 +53,7 @@ xit\gateway\utils\RouteUtils.class
 xit\gateway\constant\ProtocolType.class
 xit\gateway\loadbalancer\impl\RoundRobinLoadbalancer.class
 xit\gateway\api\valve\ProcessCoreValve.class
+xit\gateway\api\route\limiter\Limiter.class
 xit\gateway\api\container\SingleContainer.class
 xit\gateway\api\request\recordwatchdog\RecordWatchdog.class
 xit\gateway\exception\route\RouteNotFoundException.class
@@ -65,6 +66,7 @@ xit\gateway\api\valve\Pipeline.class
 xit\gateway\api\cluster\heartbeatclient\HeartBeatClient.class
 xit\gateway\constant\ResultCode.class
 xit\gateway\api\loadbalancer\Loadbalanceable.class
+xit\gateway\utils\GatewayUriUtils.class
 xit\gateway\api\cluster\heartbeatserver\HeartBeatServer.class
 xit\gateway\exception\user\UserNotFoundException.class
 xit\gateway\pojo\User.class
@@ -72,10 +74,8 @@ xit\gateway\exception\requester\RequesterDuplicatedException.class
 xit\gateway\api\service\ConfigService.class
 xit\gateway\pojo\UserWithAuths.class
 xit\gateway\exception\GlobalExceptionResolver.class
-xit\gateway\api\route\limiter\AbstractRouteLimiter.class
 xit\gateway\pojo\AuthToken.class
 xit\gateway\pojo\CallRecord.class
-xit\gateway\api\route\limiter\RouteLimiter.class
 xit\gateway\exception\requester\RequesterException.class
 xit\gateway\pojo\CalledRoute.class
 xit\gateway\api\request\requester\Requester.class

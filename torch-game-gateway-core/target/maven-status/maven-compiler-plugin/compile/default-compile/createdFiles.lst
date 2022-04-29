@@ -2,6 +2,7 @@ xit\gateway\core\starter\GatewayStarter.class
 xit\gateway\core\valve\impl\HeartBeatServiceValve.class
 xit\gateway\core\request\recordwatchdog\impl\DefaultRecordWatchdog.class
 xit\gateway\core\request\requester\impl\DefaultRpcRequester$1.class
+xit\gateway\core\limiter\impl\DefaultLimiter.class
 xit\gateway\core\request\requester\impl\DefaultRpcRequester.class
 xit\gateway\core\service\impl\RouteServiceImpl.class
 xit\gateway\core\cluster\heartbeatclient\impl\DefaultNettyHeartBeatClient.class
@@ -24,12 +25,14 @@ xit\gateway\core\controller\SecurityController.class
 xit\gateway\core\dao\UserDAO.class
 xit\gateway\core\valve\impl\GatewayPipeline.class
 xit\gateway\core\valve\impl\GatewayPipeline$1.class
+xit\gateway\core\dao\ConfigDAO.class
 xit\gateway\core\cluster\heartbeatclient\impl\DefaultNettyHeartBeatClient$1.class
 xit\gateway\core\route\reader\impl\DefaultRouteReader.class
 xit\gateway\core\route\reader\impl\DefaultRouteReader$1.class
 xit\gateway\core\config\GatewayConfig.class
 xit\gateway\core\request\requester\impl\DefaultRpcRequester$DefaultRpcClientHandler.class
+xit\gateway\core\service\impl\ConfigServiceImpl.class
 xit\gateway\core\request\requester\impl\DefaultHttpRequester.class
 xit\gateway\core\config\security\WebSecurityConfig.class
-xit\gateway\core\route\limiter\impl\DefaultRouteLimiter.class
+xit\gateway\core\filter\LimitingFilter.class
 xit\gateway\core\valve\impl\GatewayPipeline$2.class

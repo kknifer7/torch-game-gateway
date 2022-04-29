@@ -7,8 +7,6 @@ E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\exception\route\RouteDisabledException.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\api\cluster\gateway\selector\GatewaySelector.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\pojo\AuthToken.java
-E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\api\route\limiter\AbstractRouteLimiter.java
-E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\api\route\limiter\RouteLimiter.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\exception\GlobalExceptionResolver.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\api\cluster\heartbeatserver\HeartBeatServer.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\exception\route\RouteLoadingException.java
@@ -60,8 +58,10 @@ E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\pojo\Route.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\utils\RedisUtils.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\api\service\UserService.java
+E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\utils\GatewayUriUtils.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\api\valve\Valve.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\api\route\reader\RouteReader.java
+E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\api\route\limiter\Limiter.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\loadbalancer\impl\RoundRobinLoadbalancer.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\pojo\Site.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\request\context\impl\DefaultRequestContext.java
