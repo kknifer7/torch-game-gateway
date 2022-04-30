@@ -2,3 +2,36 @@ spring:
   config:
     activate:
       on-profile: kuizuo-dev
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 0
+    timeout: 5000ms
+    connect-timeout: 5000ms
+  r2dbc:
+    username: root
+    password: a123456
+    url: r2dbcs:mysql://127.0.0.1:3306/torch_game_gateway?SSL=false&sslMode=DISABLED
+server:
+  port: 8081
+torch:
+  gateway:
+    password: 123456
+    init:
+      routes-json-path: test-data/routes.json
+    loadbalance:
+      loadbalancer-class: xit.gateway.loadbalancer.impl.NoLoadbalancer
+    route-limiting:
+      time-unit: second
+      permits-per-unit: 2
+      limit: 10
+    call-trace:
+      record-threads: 2
+      deacon:
+        address: http://localhost:8082/internal/record-visit
+        password: 123456
+        heart-beat:
+          host: localhost
+          port: 9099
+          useSSL: false
+          backup: false

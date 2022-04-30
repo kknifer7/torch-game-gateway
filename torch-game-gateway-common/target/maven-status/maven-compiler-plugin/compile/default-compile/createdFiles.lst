@@ -37,6 +37,7 @@ xit\gateway\utils\OshiUtils$SimpleMemoryInfo.class
 xit\gateway\exception\user\UserVerificationFailedException.class
 xit\gateway\pojo\CallRecord$Builder.class
 xit\gateway\constant\ValueEnum.class
+xit\gateway\constant\RedisChannel.class
 xit\gateway\exception\route\RouteResolvingException.class
 xit\gateway\api\context\GatewayContext.class
 xit\gateway\pojo\ResultInfo.class

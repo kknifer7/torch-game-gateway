@@ -2,6 +2,7 @@ package xit.gateway.utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.stereotype.Component;
 import xit.gateway.constant.RedisKey;
 
@@ -55,6 +56,10 @@ public class RedisUtils {
 
     public static void publish(String channel, Object obj){
         redisTemplate.convertAndSend(channel, obj);
+    }
+
+    public static RedisSerializer stringSerializer(){
+        return redisTemplate.getStringSerializer();
     }
 
     public static boolean isExist(String key){

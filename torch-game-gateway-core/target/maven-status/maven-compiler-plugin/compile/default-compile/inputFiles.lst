@@ -3,6 +3,7 @@ E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\g
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\core\valve\impl\GatewayPipeline.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\core\context\impl\DefaultGatewayContext.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\core\service\impl\ConfigServiceImpl.java
+E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\core\config\redis\RedisSubscriber.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\core\valve\impl\HeartBeatServiceValve.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\core\dto\AddLimiterForUserDTO.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-core\src\main\java\xit\gateway\core\request\requester\factory\RequesterFactory.java

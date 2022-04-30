@@ -5,8 +5,6 @@ import reactor.core.publisher.Mono;
 import xit.gateway.constant.ResultCode;
 import xit.gateway.pojo.ResultInfo;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 import static xit.gateway.constant.ResultCode.OK;
@@ -32,13 +30,4 @@ public class RIUtils {
                         .getBytes(StandardCharsets.UTF_8)
                 )));
     }
-
-    public static<T> void send(HttpServletResponse response, ResultCode code, String msg, T data){
-        try {
-            response.getWriter().print(JsonUtils.object2String(new ResultInfo<>(code.getValue(), msg, data)));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
 }
