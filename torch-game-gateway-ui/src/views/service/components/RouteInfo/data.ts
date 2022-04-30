@@ -3,12 +3,12 @@ import { h } from 'vue';
 import { BasicColumn } from '/@/components/Table/src/types/table';
 
 export const columns: BasicColumn[] = [
-  {
-    title: 'ID',
-    dataIndex: 'id',
-    fixed: 'left',
-    width: 60,
-  },
+  // {
+  //   title: 'ID',
+  //   dataIndex: 'id',
+  //   fixed: 'left',
+  //   width: 60,
+  // },
   {
     title: '主机端口',
     dataIndex: 'host',
@@ -21,6 +21,11 @@ export const columns: BasicColumn[] = [
   {
     title: 'url',
     dataIndex: 'url',
+    width: 150,
+  },
+  {
+    title: 'extra',
+    dataIndex: 'extra',
     width: 150,
   },
   {

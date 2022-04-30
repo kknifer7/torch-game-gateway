@@ -3,12 +3,13 @@ package xit.gateway.admin.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import xit.gateway.admin.repository.RouteRepository;
-import xit.gateway.admin.service.RouteService;
 import xit.gateway.admin.domain.Route;
-import xit.gateway.exception.requester.BadRequestException;
+import xit.gateway.admin.repository.RouteRepository;
+import xit.gateway.admin.repository.ServiceRepository;
+import xit.gateway.admin.service.RouteService;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 
@@ -17,34 +18,49 @@ import java.util.Set;
 public class RouteServiceImpl implements RouteService {
 
     private final RouteRepository routeRepository;
+    private final ServiceRepository serviceRepository;
 
     @Override
     public List<Route> findAll() {
-        return routeRepository.findAll();
+//        xit.gateway.admin.domain.Service service = serviceRepository.findByName("service-01");
+//
+//        Route route = new Route();
+//        route.setService(service);
+//        Example<Route> routeExample = Example.of(route);
+        List<Route> all = routeRepository.findAll();
+
+        return all;
     }
 
 
     @Override
     public void create(Route resources) {
-        if (routeRepository.findByName(resources.getName()) != null) {
-            throw new BadRequestException("服务已存在");
+        Optional<xit.gateway.admin.domain.Service> service = serviceRepository.findById(resources.getService().getId());
+        if (service.isPresent()) {
+            resources.setServiceName(service.get().getName());
         }
 
         routeRepository.save(resources);
+        // TODO: 向deacon进行同步操作
     }
 
     @Override
     public void update(Route resources) {
-        Route route = routeRepository.findByName(resources.getName());
+        Route route = routeRepository.findById(resources.getId()).orElseGet(Route::new);
+        Optional<xit.gateway.admin.domain.Service> service = serviceRepository.findById(resources.getService().getId());
+        if (service.isPresent()) {
+            route.setServiceName(service.get().getName());
+        }
 
-        route.setName(resources.getName());
         route.setRemark(resources.getRemark());
         route.setProtocol(resources.getProtocol());
         route.setHost(resources.getHost());
         route.setPort(resources.getPort());
         route.setUrl(resources.getUrl());
         route.setExtra(resources.getExtra());
-        routeRepository.save(resources);
+        routeRepository.save(route);
+
+        // TODO: 向deacon进行同步操作
     }
 
     @Override

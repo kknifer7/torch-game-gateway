@@ -1,5 +1,6 @@
 package xit.gateway.core.controller;
 
+import io.jsonwebtoken.lang.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
@@ -21,9 +22,10 @@ public class SecurityController {
     }
 
     @PostMapping("/login")
-    public Mono<ResultInfo<String>> login(@RequestBody Map<String, String> usernameAndPassword){
+    public Mono<ResultInfo<Map<String,String>>> login(@RequestBody Map<String, String> usernameAndPassword){
+
         return userService.login(usernameAndPassword.get("username"), usernameAndPassword.get("pwd"))
-                .map(token -> new ResultInfo<>(ResultCode.OK.getValue(), null, token))
+                .flatMap(token -> Mono.just(new ResultInfo<>(ResultCode.OK.getValue(), "success", Maps.of("token", token).build())))
                 .switchIfEmpty(RIUtils.create(ResultCode.VERIFICATION_FAILED, "账号或密码错误", null));
     }
 }

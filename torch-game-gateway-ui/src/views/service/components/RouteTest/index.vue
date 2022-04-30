@@ -9,7 +9,7 @@
     </template>
   </BasicForm>
 </template>
-<script lang="ts" setup name="ServiceTest">
+<script lang="ts" setup name="RouteTest">
   import { BasicForm, useForm } from '/@/components/Form';
   import { FormItem } from 'ant-design-vue';
   import { ref } from 'vue';

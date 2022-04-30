@@ -3,7 +3,6 @@ package xit.gateway.admin.domain;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
@@ -14,20 +13,18 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@Table(name = "gateway_user")
-public class GatewayUser implements Serializable {
+@Table(name = "user")
+public class User implements Serializable {
     @Id
     @Column(name = "id", nullable = false)
-    @GenericGenerator(name = "my_id", strategy = "xit.gateway.admin.utils.MyIdGenerator")
-    @GeneratedValue(generator = "my_id")
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Column()
+    @Column(unique = true)
     private String username;
 
     @Column()
     private String pwd;
-
 
     @Column()
     @CreationTimestamp
@@ -38,9 +35,9 @@ public class GatewayUser implements Serializable {
     private Timestamp updateTime;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "gateway_user_route",
+    @JoinTable(name = "user_service",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "route_id", referencedColumnName = "id")})
-    private Set<Route> routes;
+            inverseJoinColumns = {@JoinColumn(name = "service_id", referencedColumnName = "id")})
+    private Set<Service> services;
 
 }

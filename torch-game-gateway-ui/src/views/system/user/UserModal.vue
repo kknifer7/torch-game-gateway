@@ -40,7 +40,7 @@
           ]);
           setFieldsValue({
             ...data.record,
-            routes: data.record?.routes.map((r) => r.id),
+            services: data.record?.services.map((r) => r.id),
             pwd: null,
           });
         } else {
@@ -66,7 +66,7 @@
           const data = {
             ...values,
             id: rowId.value,
-            routes: values.routes?.map((r) => ({ id: r })),
+            services: values.services?.map((r) => ({ id: r })),
           };
           if (!unref(isUpdate)) {
             await addUser(data);

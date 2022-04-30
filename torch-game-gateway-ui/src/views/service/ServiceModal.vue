@@ -7,12 +7,11 @@
   import { defineComponent, ref, computed, unref } from 'vue';
   import { BasicModal, useModalInner } from '/@/components/Modal';
   import { BasicForm, useForm } from '/@/components/Form/index';
-  import { formSchema } from './route.data';
-  import { addRoute, updateRoute } from '/@/api/route';
-  import { getServiceInfo } from '/@/api/service';
+  import { formSchema } from './service.data';
+  import { addService, updateService } from '/@/api/service';
 
   export default defineComponent({
-    name: 'RouteModal',
+    name: 'ServiceModal',
     components: { BasicModal, BasicForm },
     emits: ['success', 'register'],
     setup(_, { emit }) {
@@ -34,22 +33,13 @@
         isUpdate.value = !!data?.isUpdate;
         if (unref(isUpdate)) {
           rowId.value = data.record.id;
-
-          if (data.record.serviceName) {
-            const serviceData = await getServiceInfo(data.record.serviceName);
-            setFieldsValue({
-              ...data.record,
-              service: serviceData.id,
-            });
-          } else {
-            setFieldsValue({
-              ...data.record,
-            });
-          }
+          setFieldsValue({
+            ...data.record,
+          });
         }
       });
 
-      const getTitle = computed(() => (!unref(isUpdate) ? '新增路由' : '编辑路由'));
+      const getTitle = computed(() => (!unref(isUpdate) ? '新增服务' : '编辑服务'));
 
       async function handleSubmit() {
         try {
@@ -58,14 +48,13 @@
 
           const data = {
             ...values,
-            service: { id: values.service },
           };
 
           if (!unref(isUpdate)) {
-            await addRoute(data);
+            await addService(data);
           } else {
             data.id = rowId.value;
-            await updateRoute(data);
+            await updateService(data);
           }
 
           closeModal();

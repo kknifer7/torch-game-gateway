@@ -1,5 +1,6 @@
 package xit.gateway.admin.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -10,7 +11,6 @@ import xit.gateway.constant.ProtocolType;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -24,7 +24,8 @@ public class Route implements Serializable {
     private String id;
 
     @Column()
-    private String name;
+    private String serviceName;
+
     @Column()
     private String remark;
     @Column()
@@ -49,4 +50,9 @@ public class Route implements Serializable {
     @Column()
     @UpdateTimestamp
     private Timestamp updateTime;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "service_id")
+    @JsonBackReference
+    private Service service;
 }

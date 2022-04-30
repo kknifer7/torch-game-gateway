@@ -1,6 +1,6 @@
 import { Space, Tag } from 'ant-design-vue';
 import { h } from 'vue';
-import { getRouteList } from '/@/api/route';
+import { getServiceList } from '/@/api/service';
 import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
 import { formatToDateTime } from '/@/utils/dateUtil';
@@ -12,22 +12,22 @@ export const columns: BasicColumn[] = [
     width: 120,
   },
   {
-    title: '路由',
-    dataIndex: 'routes',
+    title: '服务',
+    dataIndex: 'services',
     customRender: ({ record }) => {
-      const routes = (record.routes as any[]).map((r) => r.name);
+      const services = (record.services as any[]).map((r) => r.name);
       return h(Space, {}, () =>
-        routes.map((r) => {
+        services.map((r) => {
           return h(Tag, { color: 'green' }, () => r);
         }),
       );
     },
   },
-  {
-    title: '状态',
-    dataIndex: 'status',
-    width: 120,
-  },
+  // {
+  //   title: '状态',
+  //   dataIndex: 'status',
+  //   width: 120,
+  // },
   {
     title: '创建时间',
     dataIndex: 'createAt',
@@ -46,8 +46,8 @@ export const searchFormSchema: FormSchema[] = [
     colProps: { span: 8 },
   },
   {
-    field: 'routes',
-    label: '路由',
+    field: 'services',
+    label: '服务',
     component: 'Input',
     colProps: { span: 8 },
   },
@@ -74,11 +74,11 @@ export const userFormSchema: FormSchema[] = [
     },
   },
   {
-    label: '路由',
-    field: 'routes',
+    label: '服务',
+    field: 'services',
     component: 'ApiSelect',
     componentProps: {
-      api: getRouteList,
+      api: getServiceList,
       labelField: 'name',
       valueField: 'id',
       mode: 'multiple',

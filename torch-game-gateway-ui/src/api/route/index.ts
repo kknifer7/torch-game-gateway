@@ -14,8 +14,6 @@ export const getRouteList = (params) => defHttp.get({ url: Api.List, params });
 
 export const getRouteLogList = (params) => defHttp.get({ url: Api.LogList, params });
 
-export const getRouteListByPage = (params) => defHttp.get({ url: Api.Page, params });
-
 export const getRouteInfo = (id) => defHttp.post({ url: Api.Info, params: { id } });
 
 export const addRoute = (params) =>

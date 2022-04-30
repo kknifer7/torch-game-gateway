@@ -8,20 +8,28 @@
     v-show="getShow"
     @keypress.enter="handleLogin"
   >
-    <FormItem name="account" class="enter-x">
+    <FormItem name="host" class="enter-x">
+      <Input size="large" v-model:value="formData.host">
+        <template #addonAfter>
+          <Input size="large" v-model:value="formData.port" placeholder="端口" />
+        </template>
+      </Input>
+    </FormItem>
+
+    <FormItem name="user" class="enter-x">
       <Input
         size="large"
-        v-model:value="formData.account"
+        v-model:value="formData.user"
         :placeholder="t('sys.login.userName')"
         class="fix-auto-fill"
       />
     </FormItem>
-    <FormItem name="password" class="enter-x">
+    <FormItem name="pwd" class="enter-x">
       <InputPassword
         size="large"
         visibilityToggle
-        v-model:value="formData.password"
-        :placeholder="t('sys.login.password')"
+        v-model:value="formData.pwd"
+        placeholder="密码"
       />
     </FormItem>
 
@@ -101,8 +109,10 @@
   const rememberMe = ref(false);
 
   const formData = reactive({
-    account: 'vben',
-    password: '123456',
+    host: '127.0.0.1',
+    port: '8081',
+    user: 'admin',
+    pwd: '123456',
   });
 
   const { validForm } = useFormValid(formRef);
@@ -117,8 +127,10 @@
     try {
       loading.value = true;
       const userInfo = await userStore.login({
-        password: data.password,
-        username: data.account,
+        host: formData.host,
+        port: formData.port,
+        pwd: data.pwd,
+        username: data.user,
         mode: 'none', //不要默认的错误提示
       });
       if (userInfo) {
@@ -139,3 +151,29 @@
     }
   }
 </script>
+
+<style lang="less" scoped>
+  :deep(.ant-input-group-addon) {
+    padding-right: 0;
+    background-color: transparent;
+    border: none;
+
+    input {
+      width: 80px !important;
+      min-width: 0px !important;
+    }
+  }
+</style>
+
+<style lang="less" scoped>
+  :deep(.ant-input-group-addon) {
+    padding-right: 0;
+    background-color: transparent;
+    border: none;
+
+    input {
+      width: 80px !important;
+      min-width: 0px !important;
+    }
+  }
+</style>

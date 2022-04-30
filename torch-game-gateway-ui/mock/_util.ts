@@ -47,7 +47,7 @@ export function pagination<T = any>(pageNo: number, pageSize: number, array: T[]
 export interface requestParams {
   method: string;
   body: any;
-  headers?: { authorization?: string };
+  headers?: { ['Auth-Token']?: string };
   query: any;
 }
 
@@ -56,5 +56,5 @@ export interface requestParams {
  *
  */
 export function getRequestToken({ headers }: requestParams): string | undefined {
-  return headers?.authorization;
+  return headers?.['Auth-Token'];
 }

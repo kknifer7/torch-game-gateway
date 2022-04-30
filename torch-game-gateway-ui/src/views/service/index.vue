@@ -2,15 +2,19 @@
   <PageWrapper dense contentFullHeight fixedHeight contentClass="flex">
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate"> 新增路由 </a-button>
-        <a-button type="primary" @click="handleSync"> 同步路由 </a-button>
+        <a-button type="primary" @click="handleCreate"> 新增服务 </a-button>
       </template>
       <template #action="{ record }">
         <TableAction
           :actions="[
             {
+              icon: 'clarity:info-standard-line',
+              tooltip: '查看路由详情',
+              onClick: handleView.bind(null, record),
+            },
+            {
               icon: 'clarity:note-edit-line',
-              tooltip: '编辑路由',
+              tooltip: '编辑服务',
               onClick: handleEdit.bind(null, record),
             },
             {
@@ -25,28 +29,29 @@
         />
       </template>
     </BasicTable>
-    <RouteModal @register="registerModal" @success="handleSuccess" />
+    <ServiceModal @register="registerModal" @success="handleSuccess" />
   </PageWrapper>
 </template>
-<script lang="ts" setup name="RouteList">
+<script lang="ts" setup name="ServiceList">
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import { PageWrapper } from '/@/components/Page';
 
-  import { deleteRoute, getRouteList } from '/@/api/route';
-
-  import RouteModal from './RouteModal.vue';
+  import ServiceModal from './ServiceModal.vue';
   import { useModal } from '/@/components/Modal';
+  import { useGo } from '/@/hooks/web/usePage';
 
-  import { columns, searchFormSchema } from './route.data';
+  import { deleteService, getServiceList } from '/@/api/service';
+  import { columns, searchFormSchema } from './service.data';
 
+  const go = useGo();
   const [registerModal, { openModal }] = useModal();
   const [registerTable, { reload, deleteTableDataRecord }] = useTable({
-    title: '路由列表',
-    api: getRouteList,
+    title: '服务列表',
+    api: getServiceList,
     columns,
     formConfig: {
       labelWidth: 120,
-      schemas: [],
+      schemas: searchFormSchema,
     },
     useSearchForm: true,
     showTableSetting: true,
@@ -75,7 +80,7 @@
   }
 
   function handleDelete(record: Recordable) {
-    deleteRoute([record.id]);
+    deleteService([record.id]);
     deleteTableDataRecord(record.id);
   }
 
@@ -83,7 +88,7 @@
     reload();
   }
 
-  function handleSync() {
-    // TODO: 同步路由接口给
+  function handleView(record: Recordable) {
+    go('/service/detail/' + record.name);
   }
 </script>

@@ -53,7 +53,7 @@
         columns,
         formConfig: {
           labelWidth: 120,
-          schemas: searchFormSchema,
+          schemas: [],
           autoSubmitOnEnter: true,
         },
         useSearchForm: true,
