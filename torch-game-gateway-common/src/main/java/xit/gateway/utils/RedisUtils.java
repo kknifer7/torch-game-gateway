@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.stereotype.Component;
+import xit.gateway.constant.RedisChannel;
 import xit.gateway.constant.RedisKey;
 
 import java.util.Map;
@@ -54,8 +55,12 @@ public class RedisUtils {
         return redisTemplate.opsForValue().getOperations().keys(key);
     }
 
-    public static void publish(String channel, Object obj){
+    public static<T> void publish(String channel, T obj){
         redisTemplate.convertAndSend(channel, obj);
+    }
+
+    public static<T> void publish(RedisChannel channel, T obj){
+        publish(channel.getValue(), obj);
     }
 
     public static RedisSerializer stringSerializer(){
