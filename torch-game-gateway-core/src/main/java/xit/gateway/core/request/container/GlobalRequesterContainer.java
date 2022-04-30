@@ -46,8 +46,8 @@ public class GlobalRequesterContainer implements RequesterContainer {
     }
 
     @Override
-    public boolean contains(Serializable primaryKey) {
-        return requesterMap.containsKey(primaryKey);
+    public boolean contains(Requester requester) {
+        return requesterMap.containsKey(requester.getKeyInContainer());
     }
 
     @Override

@@ -1,5 +1,7 @@
 package xit.gateway.core.route.container.impl;
 
+import io.jsonwebtoken.lang.Collections;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import xit.gateway.api.request.container.RoutesContainer;
 import xit.gateway.pojo.Route;
@@ -27,7 +29,7 @@ public class GlobalRoutesContainer implements RoutesContainer {
     @Override
     public void put(Route route) {
         String serviceId = route.getServiceName();
-        List<Route> routes = map.get(route.getServiceName());
+        List<Route> routes = map.get(serviceId);
 
         if (routes != null){
             routes.add(route);
@@ -42,8 +44,15 @@ public class GlobalRoutesContainer implements RoutesContainer {
     }
 
     @Override
-    public boolean contains(Serializable serviceId) {
-        return map.containsKey(serviceId);
+    public boolean contains(Route route) {
+        if (map.isEmpty())
+            return false;
+
+        List<Route> routes = map.get(route.getServiceName());
+
+        return !Collections.isEmpty(routes) &&
+                routes.stream()
+                        .anyMatch(r -> StringUtils.equals(r.getId(), route.getId()));
     }
 
     @Override

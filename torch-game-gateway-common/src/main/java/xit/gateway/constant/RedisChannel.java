@@ -2,13 +2,13 @@ package xit.gateway.constant;
 
 public enum RedisChannel implements ValueEnum<String>{
     // Route
-    ROUTE("route"),
+    ROUTE("ROUTE"),
     // List<Route>
-    ROUTE_LIST("route_list"),
+    ROUTE_LIST("ROUTE_LIST"),
     // routeId
-    ROUTE_DELETE("route_delete"),
+    ROUTE_DELETE("ROUTE_DELETE"),
     // serviceName
-    ROUTE_LIST_DELETE("route_list_delete");
+    ROUTE_LIST_DELETE("ROUTE_LIST_DELETE");
 
     private final String value;
 

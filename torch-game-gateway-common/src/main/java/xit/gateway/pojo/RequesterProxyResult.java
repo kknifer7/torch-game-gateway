@@ -8,24 +8,24 @@ import reactor.core.publisher.Mono;
  * Date: 2022/04/17
  */
 public class RequesterProxyResult {
-    private CallRecord callRecord;
+    private CallLog callRecord;
     private Mono<?> result;
     private volatile boolean completed;
 
     public RequesterProxyResult() {
     }
 
-    public RequesterProxyResult(CallRecord callRecord, Mono<?> result) {
+    public RequesterProxyResult(CallLog callRecord, Mono<?> result) {
         this.callRecord = callRecord;
         this.result = result;
         this.completed = false;
     }
 
-    public CallRecord getCallRecord() {
+    public CallLog getCallRecord() {
         return callRecord;
     }
 
-    public void setCallRecord(CallRecord callRecord) {
+    public void setCallRecord(CallLog callRecord) {
         this.callRecord = callRecord;
     }
 

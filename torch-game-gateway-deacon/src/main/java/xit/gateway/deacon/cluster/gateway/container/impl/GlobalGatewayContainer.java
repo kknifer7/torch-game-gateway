@@ -29,8 +29,8 @@ public class GlobalGatewayContainer implements SingleContainer<Gateway> {
     }
 
     @Override
-    public boolean contains(Serializable key) {
-        return map.containsKey(key);
+    public boolean contains(Gateway gateway) {
+        return map.containsKey(gateway.getId());
     }
 
     @Override

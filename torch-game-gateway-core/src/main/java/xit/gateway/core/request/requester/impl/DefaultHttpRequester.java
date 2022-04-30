@@ -50,7 +50,7 @@ public class DefaultHttpRequester extends AbstractRequester implements HttpReque
         WebClient.RequestHeadersSpec<?> spec;
         ServerHttpRequest request = exchange.getRequest();
         ServerHttpResponse response = exchange.getResponse();
-        CallRecord.Builder callRecordBuilder = CallRecord.builder()
+        CallLog.Builder callRecordBuilder = CallLog.builder()
                 .gatewayHost(request.getLocalAddress().getHostName())
                 .gatewayPort(String.valueOf(request.getLocalAddress().getPort()))
                 .gatewayUri(request.getPath().value())

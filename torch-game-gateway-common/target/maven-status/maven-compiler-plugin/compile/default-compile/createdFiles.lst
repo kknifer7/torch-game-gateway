@@ -1,5 +1,4 @@
 xit\gateway\pojo\RpcRoute.class
-xit\gateway\api\service\CallRecordService.class
 xit\gateway\loadbalancer\impl\RandomLoadbalancer.class
 xit\gateway\utils\OshiUtils.class
 xit\gateway\exception\route\RouteDisabledException.class
@@ -35,8 +34,8 @@ xit\gateway\api\cluster\gateway\selector\GatewaySelector.class
 xit\gateway\request\container\impl\GlobalRequestContextContainer.class
 xit\gateway\utils\OshiUtils$SimpleMemoryInfo.class
 xit\gateway\exception\user\UserVerificationFailedException.class
-xit\gateway\pojo\CallRecord$Builder.class
 xit\gateway\constant\ValueEnum.class
+xit\gateway\api\service\CallLogService.class
 xit\gateway\constant\RedisChannel.class
 xit\gateway\exception\route\RouteResolvingException.class
 xit\gateway\api\context\GatewayContext.class
@@ -59,6 +58,7 @@ xit\gateway\utils\RouteUtils.class
 xit\gateway\constant\ProtocolType.class
 xit\gateway\loadbalancer\impl\RoundRobinLoadbalancer.class
 xit\gateway\api\valve\ProcessCoreValve.class
+xit\gateway\pojo\CallLog$Builder.class
 xit\gateway\api\route\limiter\Limiter.class
 xit\gateway\api\container\SingleContainer.class
 xit\gateway\api\request\recordwatchdog\RecordWatchdog.class
@@ -72,6 +72,7 @@ xit\gateway\api\valve\Pipeline.class
 xit\gateway\api\cluster\heartbeatclient\HeartBeatClient.class
 xit\gateway\constant\ResultCode.class
 xit\gateway\api\loadbalancer\Loadbalanceable.class
+xit\gateway\pojo\CallLog.class
 xit\gateway\utils\GatewayUriUtils.class
 xit\gateway\api\cluster\heartbeatserver\HeartBeatServer.class
 xit\gateway\exception\user\UserNotFoundException.class
@@ -81,7 +82,6 @@ xit\gateway\api\service\ConfigService.class
 xit\gateway\pojo\UserWithAuths.class
 xit\gateway\exception\GlobalExceptionResolver.class
 xit\gateway\pojo\AuthToken.class
-xit\gateway\pojo\CallRecord.class
 xit\gateway\exception\requester\RequesterException.class
 xit\gateway\pojo\CalledRoute.class
 xit\gateway\api\request\requester\Requester.class

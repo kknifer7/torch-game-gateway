@@ -2,6 +2,7 @@ package xit.gateway.core.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import xit.gateway.api.request.container.RoutesContainer;
 import xit.gateway.api.route.accessor.RouteAccessor;
 import xit.gateway.api.service.RouteService;
 import xit.gateway.constant.RedisKey;
@@ -9,15 +10,18 @@ import xit.gateway.pojo.Route;
 import xit.gateway.utils.RedisUtils;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 @Service
 public class RouteServiceImpl implements RouteService {
     private final RouteAccessor accessor;
+    private final RoutesContainer container;
 
     @Autowired
-    public RouteServiceImpl(RouteAccessor accessor) {
+    public RouteServiceImpl(RouteAccessor accessor, RoutesContainer container) {
         this.accessor = accessor;
+        this.container = container;
     }
 
     @Override
@@ -40,6 +44,30 @@ public class RouteServiceImpl implements RouteService {
         Route route = RedisUtils.get(RedisKey.ROUTE.extend(routeId), Route.class);
 
         accessor.updateRoute(route);
+    }
+
+    @Override
+    public void save(Route route) {
+        if (container.contains(route)){
+            accessor.updateRoute(route);
+        }else{
+            accessor.loadRoute(route);
+        }
+    }
+
+    @Override
+    public void saveList(List<Route> routeList) {
+        accessor.loadRoutes(routeList);
+    }
+
+    @Override
+    public void remove(Route route) {
+        accessor.removeRoute(route.getServiceName(), route.getId());
+    }
+
+    @Override
+    public void removeByService(String serviceId) {
+        accessor.removeAllRoute(serviceId);
     }
 
     @Override

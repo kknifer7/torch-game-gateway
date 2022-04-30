@@ -12,6 +12,12 @@ import java.util.Collection;
 public interface RouteAccessor {
     /**
      * 将路由挂载到项目中使其生效
+     * @param route 路由
+     */
+    void loadRoute(Route route);
+
+    /**
+     * 将路由挂载到项目中使其生效
      * @param routes 路由列表
      */
     void loadRoutes(Collection<Route> routes);

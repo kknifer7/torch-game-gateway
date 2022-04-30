@@ -25,8 +25,8 @@ public class GlobalLimiterContainer implements LimiterContainer {
     }
 
     @Override
-    public boolean contains(Serializable key) {
-        return map.containsKey(key);
+    public boolean contains(Limiter limiter) {
+        return map.containsKey(limiter.getId());
     }
 
     @Override

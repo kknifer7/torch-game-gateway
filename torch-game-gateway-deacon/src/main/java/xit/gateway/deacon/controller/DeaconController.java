@@ -13,11 +13,11 @@ import xit.gateway.api.fuse.Fuse;
 import xit.gateway.api.cluster.gateway.agent.GatewayAgent;
 import xit.gateway.api.request.context.RequestContext;
 import xit.gateway.api.route.loadbalancer.Loadbalancer;
-import xit.gateway.api.service.CallRecordService;
+import xit.gateway.api.service.CallLogService;
 import xit.gateway.constant.ResultCode;
 import xit.gateway.deacon.cluster.gateway.container.impl.GlobalGatewayContainer;
 import xit.gateway.exception.user.AccessForbiddenException;
-import xit.gateway.pojo.CallRecord;
+import xit.gateway.pojo.CallLog;
 import xit.gateway.pojo.Gateway;
 import xit.gateway.pojo.ResultInfo;
 import xit.gateway.request.context.impl.DefaultRequestContext;
@@ -28,7 +28,7 @@ import java.util.Collection;
 @RestController
 public class DeaconController {
     private final Fuse fuse;
-    private final CallRecordService callRecordService;
+    private final CallLogService callRecordService;
     private final GatewaySelector gatewaySelector;
     private final GlobalGatewayContainer gatewayContainer;
     private final Loadbalancer loadbalancer;
@@ -40,7 +40,7 @@ public class DeaconController {
     @Autowired
     public DeaconController(
             Fuse fuse,
-            CallRecordService callRecordService,
+            CallLogService callRecordService,
             GatewaySelector gatewaySelector,
             GlobalGatewayContainer gatewayContainer,
             Loadbalancer loadbalancer,
@@ -58,7 +58,7 @@ public class DeaconController {
     }
 
     @PutMapping("/internal/record-visit/{password}")
-    public Mono<ResultInfo<Void>> recordVisit(@RequestBody CallRecord record, @PathVariable("password") String password){
+    public Mono<ResultInfo<Void>> recordVisit(@RequestBody CallLog record, @PathVariable("password") String password){
         validateIntervalCall(password);
         // 设置调用记录
         callRecordService.add(record);

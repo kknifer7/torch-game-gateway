@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import xit.gateway.api.context.GatewayContext;
 import xit.gateway.api.request.recordwatchdog.RecordWatchdog;
-import xit.gateway.pojo.CallRecord;
+import xit.gateway.pojo.CallLog;
 import xit.gateway.pojo.RequesterProxyResult;
 
 import java.util.concurrent.Executor;
@@ -46,7 +46,7 @@ public class DefaultRecordWatchdog implements RecordWatchdog {
     @Override
     public void watchAndSend(RequesterProxyResult proxyResult) {
         executor.execute(() -> {
-            CallRecord callRecord;
+            CallLog callRecord;
 
             while (true){
                 if (proxyResult.isCompleted()){

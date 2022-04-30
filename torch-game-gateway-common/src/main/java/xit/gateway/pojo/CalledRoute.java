@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
  */
 public class CalledRoute {
     protected String id;
-    protected String desc;
+    protected String remark;
     protected String host;
     protected int port;
     protected String url;
@@ -19,9 +19,9 @@ public class CalledRoute {
     public CalledRoute() {
     }
 
-    public CalledRoute(String id, String desc, String host, int port, String url, LocalDateTime creationDatetime, LocalDateTime updateDatetime) {
+    public CalledRoute(String id, String remark, String host, int port, String url, LocalDateTime creationDatetime, LocalDateTime updateDatetime) {
         this.id = id;
-        this.desc = desc;
+        this.remark = remark;
         this.host = host;
         this.port = port;
         this.url = url;
@@ -37,12 +37,12 @@ public class CalledRoute {
         this.id = id;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getRemark() {
+        return remark;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     public String getHost() {
@@ -89,7 +89,7 @@ public class CalledRoute {
     public String toString() {
         return "CalledRoute{" +
                 "id='" + id + '\'' +
-                ", desc='" + desc + '\'' +
+                ", desc='" + remark + '\'' +
                 ", host='" + host + '\'' +
                 ", port=" + port +
                 ", url='" + url + '\'' +

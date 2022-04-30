@@ -6,6 +6,7 @@ xit\gateway\core\request\requester\impl\DefaultRpcRequester.class
 xit\gateway\core\service\impl\RouteServiceImpl.class
 xit\gateway\core\cluster\heartbeatclient\impl\DefaultNettyHeartBeatClient.class
 xit\gateway\core\valve\impl\RouteInitializationLoadingValve.class
+xit\gateway\core\config\redis\RedisSubscriber$1.class
 xit\gateway\core\filter\AuthenticationFilter.class
 xit\gateway\core\route\accessor\impl\DefaultRouteAccessor.class
 xit\gateway\core\cluster\heartbeatclient\impl\DefaultNettyHeartBeatClient$DefaultHeatBeatClientHandler.class

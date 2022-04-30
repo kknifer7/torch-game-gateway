@@ -21,7 +21,7 @@ import reactor.core.publisher.Mono;
 import xit.gateway.exception.requester.RequestFailedException;
 import xit.gateway.api.request.requester.AbstractRequester;
 import xit.gateway.api.request.requester.RpcRequester;
-import xit.gateway.pojo.CallRecord;
+import xit.gateway.pojo.CallLog;
 import xit.gateway.pojo.CalledRoute;
 import xit.gateway.pojo.RequesterProxyResult;
 import xit.gateway.pojo.Route;
@@ -88,7 +88,7 @@ public class DefaultRpcRequester extends AbstractRequester implements RpcRequest
         Promise<byte[]> resultPromise = new DefaultPromise<>(channel.eventLoop());
         RequesterProxyResult proxyResult = new RequesterProxyResult();
         Mono<Void> result;
-        CallRecord.Builder callRecordBuilder = CallRecord.builder()
+        CallLog.Builder callRecordBuilder = CallLog.builder()
                 .gatewayHost(request.getLocalAddress().getHostName())
                 .gatewayPort(String.valueOf(request.getLocalAddress().getPort()))
                 .gatewayUri(request.getPath().value())

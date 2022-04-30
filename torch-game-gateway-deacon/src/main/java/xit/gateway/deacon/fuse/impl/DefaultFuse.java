@@ -10,7 +10,7 @@ import xit.gateway.constant.RedisKey;
 import xit.gateway.api.fuse.Fuse;
 import xit.gateway.api.service.ConfigService;
 import xit.gateway.deacon.cluster.gateway.container.impl.GlobalGatewayContainer;
-import xit.gateway.pojo.CallRecord;
+import xit.gateway.pojo.CallLog;
 import xit.gateway.utils.RedisUtils;
 
 import java.util.Optional;
@@ -38,7 +38,7 @@ public class DefaultFuse implements Fuse {
     }
 
     @Override
-    public void fuseIfNecessary(CallRecord record) {
+    public void fuseIfNecessary(CallLog record) {
         if (record.getSuccess()){
             return;
         }
@@ -54,7 +54,7 @@ public class DefaultFuse implements Fuse {
             Optional.ofNullable(gatewayContainer.get(record.getGatewayId()))
                     .ifPresent(gateway -> gatewayAgent.disableRoute(
                             gateway,
-                            record.getServiceId(), record.getRouteId()
+                            record.getServiceName(), record.getRouteId()
                     ));
         }
         RedisUtils.set(RedisKey.FUSE_COUNT.extend(routeId), fuseCount, FUSING_TIMEOUT.get(), FUSING_TIMEUNIT);

@@ -35,6 +35,14 @@ public class DefaultRouteAccessor implements RouteAccessor {
     }
 
     @Override
+    public void loadRoute(Route route) {
+        globalRoutesContainer.put(route);
+        globalRequesterContainer.put(RequesterFactory.get(route));
+        globalRouteRequestContextContainer.put(route.getServiceName(), new DefaultRequestContext());
+        limiterManager.addLimiter(route.getId());
+    }
+
+    @Override
     public void loadRoutes(Collection<Route> routeList) {
         routeList.forEach(route -> {
             globalRoutesContainer.put(route);

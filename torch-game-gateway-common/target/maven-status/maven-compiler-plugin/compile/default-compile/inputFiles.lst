@@ -12,6 +12,7 @@ E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\api\cluster\heartbeatserver\HeartBeatServer.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\exception\route\RouteLoadingException.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\exception\requester\RequestFailedException.java
+E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\api\service\CallLogService.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\api\valve\Pipeline.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\api\container\SingleContainer.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\pojo\Gateway.java
@@ -33,10 +34,10 @@ E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\utils\JsonUtils.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\utils\UUIDUtils.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\api\request\container\RequesterContainer.java
-E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\pojo\CallRecord.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\api\route\accessor\RouteAccessor.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\constant\ValueEnum.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\pojo\UserAuth.java
+E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\pojo\CallLog.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\api\loadbalancer\Loadbalanceable.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\exception\valve\ValveException.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\api\service\RouteService.java
@@ -55,7 +56,6 @@ E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\api\container\Container.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\api\container\MultiContainer.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\utils\RIUtils.java
-E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\api\service\CallRecordService.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\exception\route\RouteResolvingException.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\pojo\Route.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\utils\RedisUtils.java

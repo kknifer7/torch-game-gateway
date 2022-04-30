@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.function.Supplier;
 
 @Table
-public class CallRecord {
+public class CallLog {
     @Id
     private String id;
     private String gatewayId;
@@ -21,15 +21,15 @@ public class CallRecord {
     private String routeUrl;
     private LocalDateTime routeCreationDatetime;
     private LocalDateTime routeUpdateDatetime;
-    private String serviceId;
+    private String serviceName;
     private boolean success;
     private long timestamp; // 调用时间
-    private long callTime;  // 调用耗时
+    private long consumeTime;  // 调用耗时
 
-    public CallRecord() {
+    public CallLog() {
     }
 
-    public CallRecord(String id, String gatewayId, String gatewayHost, String gatewayPort, String gatewayUri, String routeId, String routeDesc, String routeHost, int routePort, String routeUrl, LocalDateTime routeCreationDatetime, LocalDateTime routeUpdateDatetime, String serviceId, boolean success, long timestamp, long callTime) {
+    public CallLog(String id, String gatewayId, String gatewayHost, String gatewayPort, String gatewayUri, String routeId, String routeDesc, String routeHost, int routePort, String routeUrl, LocalDateTime routeCreationDatetime, LocalDateTime routeUpdateDatetime, String serviceName, boolean success, long timestamp, long consumeTime) {
         this.id = id;
         this.gatewayId = gatewayId;
         this.gatewayHost = gatewayHost;
@@ -42,10 +42,10 @@ public class CallRecord {
         this.routeUrl = routeUrl;
         this.routeCreationDatetime = routeCreationDatetime;
         this.routeUpdateDatetime = routeUpdateDatetime;
-        this.serviceId = serviceId;
+        this.serviceName = serviceName;
         this.success = success;
         this.timestamp = timestamp;
-        this.callTime = callTime;
+        this.consumeTime = consumeTime;
     }
 
     public String getId() {
@@ -144,12 +144,12 @@ public class CallRecord {
         this.routeUpdateDatetime = routeUpdateDatetime;
     }
 
-    public String getServiceId() {
-        return serviceId;
+    public String getServiceName() {
+        return serviceName;
     }
 
-    public void setServiceId(String serviceId) {
-        this.serviceId = serviceId;
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
     }
 
     public boolean getSuccess() {
@@ -168,12 +168,12 @@ public class CallRecord {
         this.timestamp = timestamp;
     }
 
-    public long getCallTime() {
-        return callTime;
+    public long getConsumeTime() {
+        return consumeTime;
     }
 
-    public void setCallTime(long callTime) {
-        this.callTime = callTime;
+    public void setConsumeTime(long consumeTime) {
+        this.consumeTime = consumeTime;
     }
 
     public static Builder builder(){
@@ -181,10 +181,10 @@ public class CallRecord {
     }
 
     public static class Builder{
-        private final CallRecord callRecord;
+        private final CallLog callRecord;
 
         public Builder(){
-            this.callRecord = new CallRecord();
+            this.callRecord = new CallLog();
         }
 
         public Builder gatewayId(String id){
@@ -209,7 +209,7 @@ public class CallRecord {
 
         public Builder route(CalledRoute route){
             this.callRecord.setRouteId(route.getId());
-            this.callRecord.setRouteDesc(route.getDesc());
+            this.callRecord.setRouteDesc(route.getRemark());
             this.callRecord.setRouteHost(route.getHost());
             this.callRecord.setRoutePort(route.getPort());
             this.callRecord.setRouteUrl(route.getUrl());
@@ -223,7 +223,7 @@ public class CallRecord {
         }
 
         public Builder serviceId(String serviceId){
-            this.callRecord.setServiceId(serviceId);
+            this.callRecord.setServiceName(serviceId);
             return this;
         }
 
@@ -238,11 +238,11 @@ public class CallRecord {
         }
 
         public Builder callTime(long callTime){
-            this.callRecord.setCallTime(callTime);
+            this.callRecord.setConsumeTime(callTime);
             return this;
         }
 
-        public CallRecord build(){
+        public CallLog build(){
             return this.callRecord;
         }
     }
@@ -262,10 +262,10 @@ public class CallRecord {
                 ", routeUrl='" + routeUrl + '\'' +
                 ", routeCreationDatetime=" + routeCreationDatetime +
                 ", routeUpdateDatetime=" + routeUpdateDatetime +
-                ", serviceId='" + serviceId + '\'' +
+                ", serviceId='" + serviceName + '\'' +
                 ", success=" + success +
                 ", timestamp=" + timestamp +
-                ", callTime=" + callTime +
+                ", callTime=" + consumeTime +
                 '}';
     }
 }

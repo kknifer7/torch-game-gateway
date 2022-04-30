@@ -3,6 +3,7 @@ package xit.gateway.utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Component;
 import xit.gateway.constant.RedisChannel;
 import xit.gateway.constant.RedisKey;
@@ -63,8 +64,12 @@ public class RedisUtils {
         publish(channel.getValue(), obj);
     }
 
-    public static RedisSerializer stringSerializer(){
-        return redisTemplate.getStringSerializer();
+    public static StringRedisSerializer stringSerializer(){
+        return (StringRedisSerializer) redisTemplate.getStringSerializer();
+    }
+
+    public static RedisSerializer valueSerializer(){
+        return redisTemplate.getValueSerializer();
     }
 
     public static boolean isExist(String key){

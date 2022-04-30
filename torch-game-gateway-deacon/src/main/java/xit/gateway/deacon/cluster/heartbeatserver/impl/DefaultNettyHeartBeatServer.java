@@ -99,7 +99,7 @@ public class DefaultNettyHeartBeatServer implements HeartBeatServer {
                 clientAddress = ((InetSocketAddress) clientChannel.remoteAddress());
                 gateway.setHost(clientAddress.getHostName());
                 gatewayContainer.put(gateway);
-                if (!gatewayContainer.contains(gateway.getId())){
+                if (!gatewayContainer.contains(gateway)){
                     // 首次收到心跳包，添加心跳统计信息用于记录失联次数
                     heartBeatInfoMap.put(clientChannel.id(), new GatewayHeartBeatInfo(gateway.getId(), 0));
                 }
