@@ -24,14 +24,14 @@ const system: AppRouteModule = {
       component: () => import('/@/views/system/user/index.vue'),
     },
     {
-      path: 'monit',
-      name: 'ServeMonit',
+      path: 'limit',
+      name: 'LimitManagement',
       meta: {
-        title: '服务监控',
-        icon: 'ant-design:database-outlined',
-        ignoreKeepAlive: true,
+        icon: 'ant-design:lock-outlined',
+        title: '限流管理',
+        ignoreKeepAlive: false,
       },
-      component: () => import('/@/views/system/monitor/serve/index.vue'),
+      component: () => import('/@/views/system/limit/index.vue'),
     },
     // {
     //   path: 'role',

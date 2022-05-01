@@ -10,7 +10,6 @@ import xit.gateway.admin.service.RouteService;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 
 @Service
@@ -22,11 +21,6 @@ public class RouteServiceImpl implements RouteService {
 
     @Override
     public List<Route> findAll() {
-//        xit.gateway.admin.domain.Service service = serviceRepository.findByName("service-01");
-//
-//        Route route = new Route();
-//        route.setService(service);
-//        Example<Route> routeExample = Example.of(route);
         List<Route> all = routeRepository.findAll();
 
         return all;
@@ -39,6 +33,8 @@ public class RouteServiceImpl implements RouteService {
         if (service.isPresent()) {
             resources.setServiceName(service.get().getName());
         }
+
+//        RedisUtils.publish(RedisChannel.ROUTE, resources);
 
         routeRepository.save(resources);
         // TODO: 向deacon进行同步操作
@@ -65,7 +61,9 @@ public class RouteServiceImpl implements RouteService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void delete(Set<String> ids) {
-        routeRepository.deleteAllByIdIn(ids);
+    public void delete(String id) {
+
+//        RedisUtils.publish(RedisChannel.ROUTE, resources);
+        routeRepository.deleteById(id);
     }
 }

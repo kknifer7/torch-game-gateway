@@ -28,9 +28,9 @@ export const updateUser = (params) =>
     },
   );
 
-export const deleteUser = (ids) =>
+export const deleteUser = (data) =>
   defHttp.post(
-    { url: Api.Detele, params: ids },
+    { url: Api.Detele, data },
     {
       successMsg: '删除成功',
     },

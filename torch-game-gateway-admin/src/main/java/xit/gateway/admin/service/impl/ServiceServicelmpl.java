@@ -51,7 +51,7 @@ public class ServiceServicelmpl implements ServiceService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void delete(Set<Long> ids) {
-        serviceRepository.deleteAllByIdIn(ids);
+    public void delete(Long id) {
+        serviceRepository.deleteById(id);
     }
 }

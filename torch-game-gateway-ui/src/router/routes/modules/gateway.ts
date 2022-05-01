@@ -2,15 +2,15 @@ import type { AppRouteModule } from '/@/router/types';
 
 import { LAYOUT } from '/@/router/constant';
 
-const service: AppRouteModule = {
-  path: '/service',
-  name: 'Service',
+const gateway: AppRouteModule = {
+  path: '/gateway',
+  name: 'Gateway',
   component: LAYOUT,
-  redirect: '/service/serviceList',
+  redirect: '/gateway/serviceList',
   meta: {
     orderNo: 30,
-    icon: 'ion:aperture-outline',
-    title: '服务管理',
+    icon: 'ant-design:gateway-outlined',
+    title: '网关管理',
   },
   children: [
     {
@@ -28,7 +28,7 @@ const service: AppRouteModule = {
       name: 'RouteList',
       meta: {
         title: '路由列表',
-        icon: 'ant-design:cloud-server-outlined',
+        icon: 'ri:route-fill',
         ignoreKeepAlive: false,
       },
       component: () => import('/@/views/route/index.vue'),
@@ -38,23 +38,33 @@ const service: AppRouteModule = {
       name: 'CallLog',
       meta: {
         title: '调用日志',
-        icon: 'ant-design:cloud-server-outlined',
+        icon: 'icon-park-outline:log',
         ignoreKeepAlive: false,
       },
       component: () => import('/@/views/call-log/index.vue'),
     },
-    // {
-    //   path: 'detail/:name',
-    //   name: 'ServiceDetail',
-    //   meta: {
-    //     hideMenu: true,
-    //     title: '服务详情',
-    //     ignoreKeepAlive: false,
-    //     showMenu: false,
-    //     currentActiveMenu: '/serivce',
-    //   },
-    //   component: () => import('/@/views/service/ServiceDetail.vue'),
-    // },
+    {
+      path: 'monit',
+      name: 'ServeMonit',
+      meta: {
+        title: '集群监控',
+        icon: 'ant-design:database-outlined',
+        ignoreKeepAlive: true,
+      },
+      component: () => import('/@/views/system/monitor/serve/index.vue'),
+    },
+    {
+      path: 'detail/:name',
+      name: 'ServiceDetail',
+      meta: {
+        hideMenu: true,
+        title: '服务详情',
+        ignoreKeepAlive: false,
+        showMenu: false,
+        currentActiveMenu: '/serivce',
+      },
+      component: () => import('/@/views/service/ServiceDetail.vue'),
+    },
     // {
     //   path: 'test',
     //   name: 'RouteTest',
@@ -67,4 +77,4 @@ const service: AppRouteModule = {
   ],
 };
 
-export default service;
+export default gateway;

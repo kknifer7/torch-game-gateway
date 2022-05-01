@@ -42,11 +42,11 @@
       key: 'test',
       component: defineAsyncComponent(() => import('./components/RouteTest/index.vue')),
     },
-    {
-      name: '调用日志',
-      key: 'log',
-      component: defineAsyncComponent(() => import('./components/RouteLog/index.vue')),
-    },
+    // {
+    //   name: '调用日志',
+    //   key: 'log',
+    //   component: defineAsyncComponent(() => import('./components/RouteLog/index.vue')),
+    // },
   ];
 
   const Component = computed(

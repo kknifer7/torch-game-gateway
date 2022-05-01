@@ -19,5 +19,5 @@ public interface ServiceService {
     void update(Service resources);
 
     @Transactional(rollbackFor = Exception.class)
-    void delete(Set<Long> ids);
+    void delete(Long id);
 }

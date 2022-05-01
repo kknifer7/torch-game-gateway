@@ -15,7 +15,6 @@ import xit.gateway.exception.user.UserNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 
 @Service
@@ -63,8 +62,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void delete(Set<Long> ids) {
-        userRepository.deleteAllByIdIn(ids);
+    public void delete(Long id) {
+        userRepository.deleteById(id);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package xit.gateway.admin.service;
 
+import org.springframework.transaction.annotation.Transactional;
 import xit.gateway.admin.domain.Route;
 
 import java.util.List;
@@ -14,5 +15,6 @@ public interface RouteService {
 
     void update(Route resources);
 
-    void delete(Set<String> ids);
+    @Transactional(rollbackFor = Exception.class)
+    void delete(String id);
 }

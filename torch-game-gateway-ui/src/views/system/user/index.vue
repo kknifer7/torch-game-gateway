@@ -8,6 +8,11 @@
         <TableAction
           :actions="[
             {
+              icon: 'ant-design:lock-outlined',
+              tooltip: '限流',
+              onClick: handleLimit.bind(null, record),
+            },
+            {
               icon: 'clarity:note-edit-line',
               tooltip: '编辑用户资料',
               onClick: handleEdit.bind(null, record),
@@ -28,7 +33,7 @@
     <UserModal @register="registerModal" @success="handleSuccess" />
   </PageWrapper>
 </template>
-<script lang="ts">
+<script lang="ts" setup name="UserManagement">
   import { defineComponent, reactive } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
@@ -40,68 +45,55 @@
 
   import { columns, searchFormSchema } from './user.data';
 
-  export default defineComponent({
-    name: 'UserManagement',
-    components: { BasicTable, PageWrapper, UserModal, TableAction },
-    setup() {
-      const [registerModal, { openModal }] = useModal();
-      const searchInfo = reactive<Recordable>({});
-      const [registerTable, { reload, deleteTableDataRecord }] = useTable({
-        title: '账号列表',
-        api: getUserList,
-        rowKey: 'id',
-        columns,
-        formConfig: {
-          labelWidth: 120,
-          schemas: [],
-          autoSubmitOnEnter: true,
-        },
-        useSearchForm: true,
-        showTableSetting: true,
-        bordered: true,
-        handleSearchInfoFn(info) {
-          console.log('handleSearchInfoFn', info);
-          return info;
-        },
-        actionColumn: {
-          width: 120,
-          title: '操作',
-          dataIndex: 'action',
-          slots: { customRender: 'action' },
-        },
-      });
-
-      function handleCreate() {
-        openModal(true, {
-          isUpdate: false,
-        });
-      }
-
-      function handleEdit(record: Recordable) {
-        console.log(record);
-        openModal(true, {
-          record,
-          isUpdate: true,
-        });
-      }
-
-      function handleDelete(record: Recordable) {
-        deleteUser([record.id]);
-        deleteTableDataRecord(record.id);
-      }
-
-      function handleSuccess({}) {
-        reload();
-      }
-
-      return {
-        registerTable,
-        registerModal,
-        handleCreate,
-        handleEdit,
-        handleDelete,
-        handleSuccess,
-      };
+  const [registerModal, { openModal }] = useModal();
+  const searchInfo = reactive<Recordable>({});
+  const [registerTable, { reload, deleteTableDataRecord }] = useTable({
+    title: '账号列表',
+    api: getUserList,
+    rowKey: 'id',
+    columns,
+    formConfig: {
+      labelWidth: 120,
+      schemas: [],
+      autoSubmitOnEnter: true,
+    },
+    useSearchForm: true,
+    showTableSetting: true,
+    bordered: true,
+    handleSearchInfoFn(info) {
+      console.log('handleSearchInfoFn', info);
+      return info;
+    },
+    actionColumn: {
+      width: 120,
+      title: '操作',
+      dataIndex: 'action',
+      slots: { customRender: 'action' },
     },
   });
+
+  function handleCreate() {
+    openModal(true, {
+      isUpdate: false,
+    });
+  }
+
+  function handleEdit(record: Recordable) {
+    console.log(record);
+    openModal(true, {
+      record,
+      isUpdate: true,
+    });
+  }
+
+  function handleDelete(record: Recordable) {
+    deleteUser({ id: record.id });
+    deleteTableDataRecord(record.id);
+  }
+
+  function handleSuccess({}) {
+    reload();
+  }
+
+  function handleLimit() {}
 </script>

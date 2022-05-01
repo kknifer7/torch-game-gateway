@@ -65,12 +65,12 @@
 
           const data = {
             ...values,
+            id: rowId.value,
             services: values.services?.map((r) => ({ id: r })),
           };
           if (!unref(isUpdate)) {
             await addUser(data);
           } else {
-            data.id = rowId.value;
             await updateUser(data);
           }
 

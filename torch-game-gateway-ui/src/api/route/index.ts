@@ -32,9 +32,9 @@ export const updateRoute = (params) =>
     },
   );
 
-export const deleteRoute = (ids) =>
+export const deleteRoute = (data) =>
   defHttp.post(
-    { url: Api.Detele, params: ids },
+    { url: Api.Detele, data },
     {
       successMsg: '删除成功',
     },

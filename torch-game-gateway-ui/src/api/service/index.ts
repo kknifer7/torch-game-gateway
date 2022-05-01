@@ -37,9 +37,9 @@ export const updateService = (params) =>
     },
   );
 
-export const deleteService = (ids) =>
+export const deleteService = (data) =>
   defHttp.post(
-    { url: Api.Detele, params: ids },
+    { url: Api.Detele, data },
     {
       successMsg: '删除成功',
     },

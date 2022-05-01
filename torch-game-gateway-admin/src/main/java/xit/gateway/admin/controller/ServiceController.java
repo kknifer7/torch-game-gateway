@@ -9,6 +9,7 @@ import xit.gateway.utils.RIUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -44,8 +45,8 @@ public class ServiceController {
     }
 
     @PostMapping("delete")
-    public Mono<ResultInfo<Object>> delete(@RequestBody Set<Long> ids) {
-        serviceService.delete(ids);
+    public Mono<ResultInfo<Object>> delete(@RequestBody Map<String, Long> dto) {
+        serviceService.delete(dto.get("id"));
         return RIUtils.createOK();
     }
 }

@@ -9,6 +9,7 @@ import xit.gateway.utils.RIUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @RestController
@@ -36,8 +37,8 @@ public class UserController {
     }
 
     @PostMapping("delete")
-    public Mono<ResultInfo<Object>> delete(@RequestBody Set<Long> ids) {
-        userService.delete(ids);
+    public Mono<ResultInfo<Object>> delete(@RequestBody Map<String, Long> dto) {
+        userService.delete(dto.get("id"));
         return RIUtils.createOK();
     }
 

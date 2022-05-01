@@ -80,7 +80,7 @@
   }
 
   function handleDelete(record: Recordable) {
-    deleteService([record.id]);
+    deleteService({ id: record.id });
     deleteTableDataRecord(record.id);
   }
 

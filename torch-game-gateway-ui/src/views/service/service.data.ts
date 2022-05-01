@@ -4,21 +4,21 @@ import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
 
 export const columns: BasicColumn[] = [
-  // {
-  //   title: 'ID',
-  //   dataIndex: 'id',
-  //   width: 60,
-  // },
+  {
+    title: 'ID',
+    dataIndex: 'id',
+    width: 60,
+  },
   {
     title: '服务名',
     dataIndex: 'name',
     width: 100,
   },
-  {
-    title: '应用',
-    dataIndex: 'app',
-    width: 100,
-  },
+  // {
+  //   title: '应用',
+  //   dataIndex: 'app',
+  //   width: 100,
+  // },
   {
     title: '描述',
     dataIndex: 'remark',

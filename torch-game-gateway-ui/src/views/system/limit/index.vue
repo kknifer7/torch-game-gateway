@@ -2,20 +2,25 @@
   <PageWrapper dense contentFullHeight fixedHeight contentClass="flex">
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate"> 新增路由 </a-button>
-        <a-button type="primary" @click="handleSync"> 同步路由 </a-button>
+        <a-button type="primary" @click="handleCreate">新增账号</a-button>
       </template>
       <template #action="{ record }">
         <TableAction
           :actions="[
             {
+              icon: 'ant-design:lock-outlined',
+              tooltip: '限流',
+              onClick: handleLimit.bind(null, record),
+            },
+            {
               icon: 'clarity:note-edit-line',
-              tooltip: '编辑路由',
+              tooltip: '编辑用户资料',
               onClick: handleEdit.bind(null, record),
             },
             {
               icon: 'ant-design:delete-outlined',
               color: 'error',
+              tooltip: '删除此账号',
               popConfirm: {
                 title: '是否确认删除',
                 confirm: handleDelete.bind(null, record),
@@ -25,39 +30,45 @@
         />
       </template>
     </BasicTable>
-    <RouteModal @register="registerModal" @success="handleSuccess" />
+    <UserModal @register="registerModal" @success="handleSuccess" />
   </PageWrapper>
 </template>
-<script lang="ts" setup name="RouteList">
+<script lang="ts" setup name="LimitManagement">
+  import { defineComponent, reactive } from 'vue';
+
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
+  import { deleteUser, getUserList } from '/@/api/system/user';
   import { PageWrapper } from '/@/components/Page';
 
-  import { deleteRoute, getRouteList } from '/@/api/route';
-
-  import RouteModal from './RouteModal.vue';
   import { useModal } from '/@/components/Modal';
+  import UserModal from './UserModal.vue';
 
-  import { columns, searchFormSchema } from './route.data';
+  import { columns, searchFormSchema } from './user.data';
 
   const [registerModal, { openModal }] = useModal();
+  const searchInfo = reactive<Recordable>({});
   const [registerTable, { reload, deleteTableDataRecord }] = useTable({
-    title: '路由列表',
-    api: getRouteList,
+    title: '账号列表',
+    api: getUserList,
+    rowKey: 'id',
     columns,
     formConfig: {
       labelWidth: 120,
       schemas: [],
+      autoSubmitOnEnter: true,
     },
     useSearchForm: true,
     showTableSetting: true,
     bordered: true,
-    showIndexColumn: false,
+    handleSearchInfoFn(info) {
+      console.log('handleSearchInfoFn', info);
+      return info;
+    },
     actionColumn: {
       width: 120,
       title: '操作',
       dataIndex: 'action',
       slots: { customRender: 'action' },
-      fixed: undefined,
     },
   });
 
@@ -68,6 +79,7 @@
   }
 
   function handleEdit(record: Recordable) {
+    console.log(record);
     openModal(true, {
       record,
       isUpdate: true,
@@ -75,15 +87,13 @@
   }
 
   function handleDelete(record: Recordable) {
-    deleteRoute({ id: record.id });
+    deleteUser([record.id]);
     deleteTableDataRecord(record.id);
   }
 
-  function handleSuccess() {
+  function handleSuccess({}) {
     reload();
   }
 
-  function handleSync() {
-    // TODO: 同步路由接口给
-  }
+  function handleLimit() {}
 </script>

@@ -10,6 +10,7 @@ import xit.gateway.utils.RIUtils;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @RestController
@@ -38,8 +39,8 @@ public class RouteController {
     }
 
     @PostMapping("delete")
-    public Mono<ResultInfo<Object>> delete(@RequestBody Set<String> ids) {
-        routeService.delete(ids);
+    public Mono<ResultInfo<Object>> delete(@RequestBody Map<String, String> dto) {
+        routeService.delete(dto.get("id"));
         return RIUtils.createOK();
     }
 
