@@ -20,6 +20,7 @@ import xit.gateway.utils.JsonUtils;
 
 import java.net.InetSocketAddress;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
@@ -98,11 +99,11 @@ public class DefaultNettyHeartBeatServer implements HeartBeatServer {
                 clientChannel = ctx.channel();
                 clientAddress = ((InetSocketAddress) clientChannel.remoteAddress());
                 gateway.setHost(clientAddress.getHostName());
-                gatewayContainer.put(gateway);
                 if (!gatewayContainer.contains(gateway)){
                     // 首次收到心跳包，添加心跳统计信息用于记录失联次数
                     heartBeatInfoMap.put(clientChannel.id(), new GatewayHeartBeatInfo(gateway.getId(), 0));
                 }
+                gatewayContainer.put(gateway);
             }else{
 
                 ctx.close();
@@ -123,7 +124,7 @@ public class DefaultNettyHeartBeatServer implements HeartBeatServer {
             int looseBeatTimes = heartBeatInfo.getLoseBeatTimes() + 1;
 
             if (looseBeatTimes >= DEAD_THRESHOLD){
-                setGatewayDead(channelId, heartBeatInfo.getGatewayId());
+                setGatewayDead(channelId);
                 channel.close();
             }
             heartBeatInfo.setLoseBeatTimes(looseBeatTimes);
@@ -132,15 +133,14 @@ public class DefaultNettyHeartBeatServer implements HeartBeatServer {
 
         @Override
         public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
-            ChannelId channelId = ctx.channel().id();
-
-            setGatewayDead(channelId, heartBeatInfoMap.get(channelId).getGatewayId());
+            setGatewayDead(ctx.channel().id());
             super.handlerRemoved(ctx);
         }
 
-        private void setGatewayDead(ChannelId channelId, String gatewayId){
-            gatewayContainer.remove(gatewayId);
-            heartBeatInfoMap.remove(channelId);
+        private void setGatewayDead(ChannelId channelId){
+            // 网关实例已死，移除心跳信息和网关实例信息
+            Optional.ofNullable(heartBeatInfoMap.remove(channelId))
+                    .ifPresent(heartBeatInfo -> gatewayContainer.remove(heartBeatInfo.getGatewayId()));
         }
     }
 }
