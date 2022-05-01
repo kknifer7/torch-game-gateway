@@ -18,6 +18,7 @@ import xit.gateway.pojo.Route;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class DefaultRouteAccessor implements RouteAccessor {
@@ -89,9 +90,10 @@ public class DefaultRouteAccessor implements RouteAccessor {
 
     @Override
     public void removeRoute(String serviceId, String routeId) {
-        List<Route> routes = globalRoutesContainer.get(serviceId);
-
-        routes.removeIf(route -> StringUtils.equals(route.getId(), routeId));
+        Optional.ofNullable(globalRoutesContainer.get(serviceId))
+                        .ifPresent(routes ->
+                                routes.removeIf(route ->
+                                        StringUtils.equals(route.getId(), routeId)));
 
         // TODO 移除单个路由时，需要请求器对象中有路由id才能查找到目标请求器并加以删除（请求上下文也是差不多）
         // globalRouteRequestContextContainer.remove(...)

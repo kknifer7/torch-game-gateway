@@ -1,7 +1,7 @@
 package xit.gateway.core.config.redis;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.data.redis.connection.Message;
 import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
@@ -15,7 +15,7 @@ import xit.gateway.utils.RedisUtils;
 import java.util.List;
 
 @Component
-@Lazy
+@DependsOn("redisUtils")  // 必须，否则它会先于redisTemplate加载，构造器中会报空指针异常
 public class RedisSubscriber extends MessageListenerAdapter {
     private final StringRedisSerializer stringSerializer;
     private final Jackson2JsonRedisSerializer valueSerializer;

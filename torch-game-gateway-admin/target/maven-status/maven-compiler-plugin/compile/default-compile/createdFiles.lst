@@ -12,6 +12,7 @@ xit\gateway\admin\service\impl\CallLogServicelmpl.class
 xit\gateway\admin\controller\ServeController.class
 xit\gateway\admin\domain\User.class
 xit\gateway\admin\service\RouteService.class
+xit\gateway\admin\service\HTTPService.class
 xit\gateway\admin\domain\Route.class
 xit\gateway\admin\repository\UserRepository.class
 xit\gateway\admin\filter\AuthFilter.class

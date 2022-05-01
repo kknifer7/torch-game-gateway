@@ -11,6 +11,6 @@ import xit.gateway.utils.RedisUtils;
 public class TestRedisUtils {
     @Test
     void test(){
-        RedisUtils.publish(RedisChannel.ROUTE_DELETE, new Route("123", "123", "123", ProtocolType.HTTP, "127.0.0.1", 4040, "http://www.aaa.com/", true, null, null, null));
+        RedisUtils.publish(RedisChannel.ROUTE, new Route("123", "123", "123", ProtocolType.HTTP, "127.0.0.1", 4040, "http://www.aaa.com/", true, null, null, null));
     }
 }
