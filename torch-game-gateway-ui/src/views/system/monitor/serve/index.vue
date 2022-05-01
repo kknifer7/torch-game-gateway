@@ -1,72 +1,35 @@
 <template>
   <div class="sys-server-stat-container">
-    <!-- runtime -->
-    <Card class="stat-card" title="运行环境">
-      <Descriptions :column="1" :label-style="{ width: '50%' }">
-        <Descriptions.Item label="操作系统">{{ runtime.os }}</Descriptions.Item>
-        <Descriptions.Item label="系统架构">{{ runtime.arch }}</Descriptions.Item>
-        <Descriptions.Item label="Node版本">
-          <Tag color="processing" size="small">v{{ runtime.nodeVersion }}</Tag>
-        </Descriptions.Item>
-        <Descriptions.Item label="NPM版本">
-          <Tag color="processing" size="small">v{{ runtime.npmVersion }}</Tag>
-        </Descriptions.Item>
-      </Descriptions>
-    </Card>
-    <!-- CPU -->
-    <Card class="stat-card" title="CPU">
+    <Card v-for="item in clusterList" class="stat-card" :title="item.name" :key="item.id">
+      <template #extra><Badge status="processing" :color="getStatusColor(item.status)" /></template>
       <Descriptions :column="1" :label-style="{ width: '50%' }" :content-style="{ width: '50%' }">
-        <Descriptions.Item label="详细">{{ parseCpuInfo }}</Descriptions.Item>
-        <Descriptions.Item label="负载">
-          <Progress
-            :percent="
-              formarPercentage(cpu.rawCurrentLoad, cpu.rawCurrentLoadIdle + cpu.rawCurrentLoad)
-            "
-            :stroke-color="customProgressColor"
-          />
-        </Descriptions.Item>
-        <Descriptions.Item
-          v-for="(item, index) in cpu.coresLoad"
-          :key="index"
-          :label="`核心${index + 1} 负载`"
+        <Descriptions.Item label="主机端口">{{ item.host + ':' + item.port }}</Descriptions.Item>
+        <Descriptions.Item label="备用集群">
+          <Tag color="processing" size="small">{{
+            item.backup ? '是' : '否'
+          }}</Tag></Descriptions.Item
         >
-          <Progress
-            :percent="formarPercentage(item.rawLoad, item.rawLoad + item.rawLoadIdle)"
-            :stroke-color="customProgressColor"
-          />
+        <Descriptions.Item label="CPU负载">
+          <Progress :percent="Math.floor(item.cpuSys * 100)" :stroke-color="customProgressColor" />
         </Descriptions.Item>
+        <Descriptions.Item label="核心数量">{{ item.cpuCores }}</Descriptions.Item>
       </Descriptions>
-    </Card>
-    <!-- disk -->
-    <Card class="stat-card" title="磁盘">
       <div class="disk-info">
         <Descriptions class="disk-info--item" :column="1">
-          <Descriptions.Item label="总空间">{{ formatDiskUnit.size }}</Descriptions.Item>
-          <Descriptions.Item label="已用空间">{{ formatDiskUnit.used }}</Descriptions.Item>
-          <Descriptions.Item label="可用空间">{{ formatDiskUnit.available }}</Descriptions.Item>
+          <Descriptions.Item label="总内存">{{
+            formatSizeUnits(item.totalMemory)
+          }}</Descriptions.Item>
+          <Descriptions.Item label="已用内存">{{
+            formatSizeUnits(item.totalMemory - item.freeMemory)
+          }}</Descriptions.Item>
+          <Descriptions.Item label="可用内存">{{
+            formatSizeUnits(item.freeMemory)
+          }}</Descriptions.Item>
         </Descriptions>
         <div class="disk-info--item">
           <Progress
             type="dashboard"
-            :percent="parseDiskPercentage"
-            :width="100"
-            :stroke-color="customProgressColor"
-          />
-        </div>
-      </div>
-    </Card>
-    <!-- memoty -->
-    <Card class="stat-card" title="内存">
-      <div class="disk-info">
-        <Descriptions class="disk-info--item" :column="1">
-          <Descriptions.Item label="总内存">{{ formatMemoryUnit.total }}</Descriptions.Item>
-          <Descriptions.Item label="已用内存">{{ formatMemoryUnit.used }}</Descriptions.Item>
-          <Descriptions.Item label="可用内存">{{ formatMemoryUnit.free }}</Descriptions.Item>
-        </Descriptions>
-        <div class="disk-info--item">
-          <Progress
-            type="dashboard"
-            :percent="parseMemoryPercentage"
+            :percent="Math.floor((item.freeMemory / item.totalMemory) * 100)"
             :width="100"
             :stroke-color="customProgressColor"
           />
@@ -77,82 +40,21 @@
 </template>
 
 <script lang="ts" setup name="ServeMonit">
-  import { reactive, computed, toRefs, onMounted, onBeforeUnmount } from 'vue';
-  import { Card, Descriptions, Tag } from 'ant-design-vue';
+  import { ref, onMounted, onBeforeUnmount } from 'vue';
+  import { Card, Descriptions, Tag, Badge } from 'ant-design-vue';
   import Progress from '/@/components/Progress/index.vue';
   import { formatSizeUnits } from '/@/utils';
   import { getServeStat } from '/@/api/system/serve';
 
   let intervalId: NodeJS.Timer;
 
-  const sysInfo = reactive({
-    runtime: {
-      os: '',
-      arch: '',
-      nodeVersion: '',
-      npmVersion: '',
-    },
-    disk: {
-      size: 0,
-      used: 0,
-      available: 0,
-    },
-    memory: {
-      total: 0,
-      available: 0,
-    },
-    cpu: {
-      manufacturer: '',
-      brand: '',
-      physicalCores: 0,
-      model: '',
-      speed: 0,
-      rawCurrentLoad: 0,
-      rawCurrentLoadIdle: 0,
-      coresLoad: [],
-    },
-  });
-
-  const { runtime, disk, memory, cpu } = toRefs<API.ServeStat>(sysInfo);
-
-  const formatDiskUnit = computed(() => {
-    return {
-      size: formatSizeUnits(disk.value.size),
-      used: formatSizeUnits(disk.value.used),
-      available: formatSizeUnits(disk.value.available),
-    };
-  });
-  const formatMemoryUnit = computed(() => {
-    return {
-      total: formatSizeUnits(memory.value.total),
-      free: formatSizeUnits(memory.value.available),
-      used: formatSizeUnits(memory.value.total - memory.value.available),
-    };
-  });
-  const parseDiskPercentage = computed(() => {
-    if (disk.value.size <= 0) {
-      return 0;
-    }
-    return Math.floor((disk.value.used / disk.value.size) * 100);
-  });
-  const parseMemoryPercentage = computed(() => {
-    if (memory.value.total <= 0) {
-      return 0;
-    }
-    return Math.floor(((memory.value.total - memory.value.available) / memory.value.total) * 100);
-  });
-  const parseCpuInfo = computed(() => {
-    return `${cpu.value.manufacturer} ${cpu.value.brand} @ ${cpu.value.speed}GHz`;
-  });
+  const clusterList = ref<any>([]);
 
   const refresh = async () => {
-    const data = await getServeStat();
-    runtime.value = data.runtime;
-    disk.value = data.disk;
-    memory.value = data.memory;
-    cpu.value = data.cpu;
+    clusterList.value = await getServeStat();
   };
   refresh();
+
   const customProgressColor = (percentage) => {
     if (percentage < 30) {
       return '#5cb87a';
@@ -162,11 +64,14 @@
       return '#f53f3f';
     }
   };
-  const formarPercentage = (used, total) => {
-    if (total <= 0) {
-      return 0;
+
+  const getStatusColor = (status) => {
+    switch (status) {
+      case false:
+        return '#d9d9d9';
+      case true:
+        return '#52c41a';
     }
-    return Math.floor((used / total) * 100);
   };
 
   onMounted(() => {
