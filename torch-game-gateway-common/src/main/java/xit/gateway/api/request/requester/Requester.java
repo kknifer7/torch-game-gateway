@@ -18,7 +18,7 @@ public interface Requester {
     RequesterProxyResult invoke(ServerWebExchange exchange) throws UnknownHostException;
 
     /**
-     * 获取能够索引到这个Requester的所有Key（一般为requester中routeGroup下所有路由的名称）
+     * 获取能够索引到这个Requester的所有Key（一般为serviceName）
      * @return key
      */
     String getKeyInContainer();

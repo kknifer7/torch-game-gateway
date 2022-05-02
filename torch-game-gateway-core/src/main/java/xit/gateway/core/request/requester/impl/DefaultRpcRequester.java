@@ -62,7 +62,6 @@ public class DefaultRpcRequester extends AbstractRequester implements RpcRequest
                     }
                 });
 
-        // TODO 待开发：断开重连机制
         bootstrap.connect().addListener(future -> {
             if (!future.isSuccess()){
                 logger.warn("RPC服务：{}，连接失败", route.getRemark());
@@ -128,6 +127,11 @@ public class DefaultRpcRequester extends AbstractRequester implements RpcRequest
         proxyResult.setResult(result);
 
         return proxyResult;
+    }
+
+    @Override
+    public void close() {
+        channel.close();
     }
 
     private class DefaultRpcClientHandler extends ChannelInboundHandlerAdapter{

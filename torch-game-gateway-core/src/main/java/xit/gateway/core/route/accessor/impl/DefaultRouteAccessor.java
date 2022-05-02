@@ -9,6 +9,8 @@ import xit.gateway.api.request.container.RequesterContainer;
 import xit.gateway.api.request.container.RequestContextContainer;
 import xit.gateway.api.request.container.RoutesContainer;
 import xit.gateway.api.context.GatewayContext;
+import xit.gateway.api.request.requester.Requester;
+import xit.gateway.api.request.requester.RpcRequester;
 import xit.gateway.api.route.limiter.manager.LimiterManager;
 import xit.gateway.request.context.impl.DefaultRequestContext;
 import xit.gateway.api.route.accessor.RouteAccessor;
@@ -95,9 +97,12 @@ public class DefaultRouteAccessor implements RouteAccessor {
                                 routes.removeIf(route ->
                                         StringUtils.equals(route.getId(), routeId)));
 
-        // TODO 移除单个路由时，需要请求器对象中有路由id才能查找到目标请求器并加以删除（请求上下文也是差不多）
-        // globalRouteRequestContextContainer.remove(...)
-        // ...RequestContextContainer.remove(...)
+        Requester requesterRemoved = globalRequesterContainer.remove(routeId);
+
+        if (requesterRemoved instanceof RpcRequester){
+            ((RpcRequester) requesterRemoved).close();
+        }
+        globalRouteRequestContextContainer.remove(routeId);
         limiterManager.removeLimiter(routeId);
     }
 

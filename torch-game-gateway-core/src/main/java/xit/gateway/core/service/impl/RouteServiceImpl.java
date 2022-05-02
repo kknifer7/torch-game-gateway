@@ -33,7 +33,6 @@ public class RouteServiceImpl implements RouteService {
 
     @Override
     public void addRouteFromRedis(String routeId) {
-        // TODO 获取最新Route
         Route route = RedisUtils.get(RedisKey.ROUTE.extend(routeId), Route.class);
 
         accessor.loadRoutes(Collections.singletonList(route));

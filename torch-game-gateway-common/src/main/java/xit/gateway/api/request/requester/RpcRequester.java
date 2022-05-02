@@ -6,4 +6,5 @@ package xit.gateway.api.request.requester;
  * Date: 2022/03/27
  */
 public interface RpcRequester extends Requester{
+    void close();
 }
