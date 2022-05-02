@@ -27,20 +27,13 @@ public class GatewayUriUtils {
     // 从服务代理uri中取得服务名
     public static String getServiceNameFromUri(String path){
         String partWithServiceName = path.split(SERVICE_URI_WITH_NEXT_SEPARATOR, 2)[1];
-        boolean findFirstSeparator = false;
-        boolean noSeparator = true;     // 如果这项为true，说明“/service/”后面不再有“/”，可以直接认定后面的部分全部为服务名称
 
         for (int i = 0; i < partWithServiceName.length(); i++){
             if (partWithServiceName.charAt(i) == '/'){
-                noSeparator = false;
-                if (findFirstSeparator){
-                    return partWithServiceName.substring(0, i);
-                }else{
-                    findFirstSeparator = true;
-                }
+                return partWithServiceName.substring(0, i);
             }
         }
 
-        return noSeparator ? partWithServiceName : null;
+        return partWithServiceName;
     }
 }

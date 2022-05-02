@@ -1,5 +1,7 @@
 package xit.gateway.core.request.requester.impl;
 
+import io.netty.handler.ssl.SslContextBuilder;
+import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,6 +10,7 @@ import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpCookie;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.web.reactive.function.BodyInserters;
@@ -15,9 +18,11 @@ import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
+import reactor.netty.http.client.HttpClient;
 import xit.gateway.exception.route.RouteDisabledException;
 import xit.gateway.api.request.requester.AbstractRequester;
 import xit.gateway.api.request.requester.HttpRequester;
+import xit.gateway.exception.system.SystemException;
 import xit.gateway.pojo.*;
 
 import java.util.List;
@@ -35,7 +40,16 @@ public class DefaultHttpRequester extends AbstractRequester implements HttpReque
 
     public DefaultHttpRequester(Route route) {
         super(route);
-        this.webClient = WebClient.create(route.getUrl());
+        switch (route.getProtocol()){
+            case HTTP:
+                this.webClient = WebClient.create(route.getUrl());
+                break;
+            case HTTPS:
+                this.webClient = WebClient.builder().clientConnector(getClientConnector()).baseUrl(route.getUrl()).build();
+                break;
+            default:
+                throw new SystemException("创建WebClient失败，协议不合法");
+        }
     }
 
     @Override
@@ -132,5 +146,12 @@ public class DefaultHttpRequester extends AbstractRequester implements HttpReque
         response.getHeaders().putAll(proxyResponse.headers().asHttpHeaders());
         response.getCookies().putAll(proxyResponse.cookies());
         response.setStatusCode(proxyResponse.statusCode());
+    }
+
+    private ReactorClientHttpConnector getClientConnector(){
+        HttpClient secure = HttpClient.create()
+                .secure(t -> t.sslContext(SslContextBuilder.forClient().trustManager(InsecureTrustManagerFactory.INSTANCE)));
+
+        return new ReactorClientHttpConnector(secure);
     }
 }

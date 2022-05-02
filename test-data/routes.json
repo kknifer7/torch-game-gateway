@@ -47,5 +47,17 @@
     "creationDatetime": "2022-02-02 19:10:10",
     "updateDatetime": "2022-02-02 19:10:10",
     "extra": 111
+  },{
+    "id": "909009",
+    "serviceName": "https-test",
+    "remark": "HTTPS测试",
+    "protocol": "https",
+    "host": "127.0.0.1",
+    "port": 9898,
+    "url": "https://localhost:9898/",
+    "status": true,
+    "creationDatetime": "2022-02-02 19:10:10",
+    "updateDatetime": "2022-02-02 19:10:10",
+    "extra": 111
   }
 ]

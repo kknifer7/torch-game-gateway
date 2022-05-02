@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum ProtocolType implements ValueEnum<String>{
     HTTP("http"),
+    HTTPS("https"),
     RPC("rpc");
 
     @JsonValue

@@ -10,6 +10,7 @@ public class RequesterFactory {
         Requester res = null;
 
         switch (route.getProtocol()){
+            case HTTPS:
             case HTTP:
                 res = new DefaultHttpRequester(route);
                 break;
