@@ -14,7 +14,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Table(name = "user")
-public class User implements Serializable {
+public class User {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)

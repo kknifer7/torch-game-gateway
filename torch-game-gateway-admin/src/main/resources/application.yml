@@ -20,5 +20,7 @@ logging:
 
 torch:
   gateway:
+    core:
+      url: http://localhost:8081
     deacon:
       url: http://localhost:8082

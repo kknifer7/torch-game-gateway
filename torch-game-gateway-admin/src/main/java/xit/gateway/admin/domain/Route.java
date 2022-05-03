@@ -16,7 +16,7 @@ import java.sql.Timestamp;
 @Getter
 @Setter
 @Table(name = "route")
-public class Route implements Serializable {
+public class Route {
     @Id
     @Column(name = "id", nullable = false)
     @GenericGenerator(name = "my_id", strategy = "xit.gateway.admin.utils.MyIdGenerator")

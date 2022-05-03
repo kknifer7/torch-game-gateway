@@ -31,6 +31,7 @@
       </template>
     </BasicTable>
     <UserModal @register="registerModal" @success="handleSuccess" />
+    <LimitModal @register="registerLimitModal" />
   </PageWrapper>
 </template>
 <script lang="ts" setup name="UserManagement">
@@ -42,10 +43,13 @@
 
   import { useModal } from '/@/components/Modal';
   import UserModal from './UserModal.vue';
+  import LimitModal from './LimitModal.vue';
 
   import { columns, searchFormSchema } from './user.data';
 
   const [registerModal, { openModal }] = useModal();
+  const [registerLimitModal, { openModal: openLimitModal }] = useModal();
+
   const searchInfo = reactive<Recordable>({});
   const [registerTable, { reload, deleteTableDataRecord }] = useTable({
     title: '账号列表',
@@ -79,7 +83,6 @@
   }
 
   function handleEdit(record: Recordable) {
-    console.log(record);
     openModal(true, {
       record,
       isUpdate: true,
@@ -95,5 +98,9 @@
     reload();
   }
 
-  function handleLimit() {}
+  function handleLimit(record: Recordable) {
+    openLimitModal(true, {
+      record,
+    });
+  }
 </script>

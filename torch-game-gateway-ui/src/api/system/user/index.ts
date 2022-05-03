@@ -6,6 +6,7 @@ enum Api {
   Add = '/user/add',
   Update = '/user/update',
   Detele = '/user/delete',
+  Limit = '/user/limit',
 }
 
 export const getUserList = (params) => defHttp.get({ url: Api.List, params });
@@ -33,5 +34,13 @@ export const deleteUser = (data) =>
     { url: Api.Detele, data },
     {
       successMsg: '删除成功',
+    },
+  );
+
+export const userLimit = (data) =>
+  defHttp.post(
+    { url: Api.Limit, data },
+    {
+      successMsg: '设置成功',
     },
   );

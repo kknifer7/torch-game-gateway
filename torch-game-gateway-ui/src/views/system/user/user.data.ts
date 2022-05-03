@@ -87,3 +87,36 @@ export const userFormSchema: FormSchema[] = [
     colProps: { span: 24 },
   },
 ];
+
+export const limitFormSchema: FormSchema[] = [
+  {
+    field: 'userId',
+    label: '用户ID',
+    component: 'Input',
+    show: false,
+  },
+  {
+    field: 'limit',
+    label: '限流时间',
+    component: 'Input',
+  },
+  {
+    field: 'limitingTimeUnit',
+    label: '限流单位',
+    component: 'Select',
+    componentProps: {
+      options: [
+        { label: 'MILLISECONDS', value: 'MILLISECONDS' },
+        { label: 'SECONDS', value: 'SECONDS' },
+        { label: 'MINUTES', value: 'MINUTES' },
+        { label: 'HOURS', value: 'HOURS' },
+      ],
+    },
+    colProps: { span: 24 },
+  },
+  {
+    field: 'limitingTimeout',
+    label: '限流超时',
+    component: 'Input',
+  },
+];
