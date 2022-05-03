@@ -41,7 +41,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '描述',
-    dataIndex: 'desc',
+    dataIndex: 'remark',
     width: 120,
   },
   {
@@ -124,8 +124,9 @@ export const formSchema: FormSchema[] = [
     component: 'Select',
     componentProps: {
       options: [
-        { label: 'rpc', value: 1 },
-        { label: 'http', value: 0 },
+        { label: 'rpc', value: 'rpc' },
+        { label: 'http', value: 'http' },
+        { label: 'https', value: 'https' },
       ],
     },
   },
@@ -150,7 +151,7 @@ export const formSchema: FormSchema[] = [
   },
   {
     label: '描述',
-    field: 'desc',
+    field: 'remark',
     component: 'InputTextArea',
     colProps: { span: 24 },
   },

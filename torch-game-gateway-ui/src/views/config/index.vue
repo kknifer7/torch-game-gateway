@@ -1,62 +1,84 @@
 <template>
-  <PageWrapper title="配置选项">
-    <div class="flex flex-wrap gap-4">
-      <CollapseContainer title="限流" :canExpan="true" class="text-center mb-6 item">
-        <BasicForm @register="registerRateLimit" />
-      </CollapseContainer>
-    </div>
+  <PageWrapper dense contentFullHeight fixedHeight contentClass="flex">
+    <BasicTable @register="registerTable">
+      <template #toolbar>
+        <a-button type="primary" @click="handleCreate"> 新增配置 </a-button>
+      </template>
+      <template #action="{ record }">
+        <TableAction
+          :actions="[
+            {
+              icon: 'clarity:note-edit-line',
+              tooltip: '编辑配置',
+              onClick: handleEdit.bind(null, record),
+            },
+            {
+              icon: 'ant-design:delete-outlined',
+              color: 'error',
+              popConfirm: {
+                title: '是否确认删除',
+                confirm: handleDelete.bind(null, record),
+              },
+            },
+          ]"
+        />
+      </template>
+    </BasicTable>
+    <ConfigModal @register="registerModal" @success="handleSuccess" />
   </PageWrapper>
 </template>
-<script lang="ts" setup>
-  import { CollapseContainer } from '/@/components/Container/index';
-  import { BasicForm, useForm } from '/@/components/Form/index';
+<script lang="ts" setup name="ConfigList">
+  import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import { PageWrapper } from '/@/components/Page';
-  import { rateLimitSchemas } from './data';
 
-  const [registerRateLimit, { validate, setProps, setFieldsValue }] = useForm({
-    schemas: rateLimitSchemas,
-    labelWidth: 60,
-    submitButtonOptions: {
-      text: '保存',
+  import { deleteConfig, getConfigList } from '/@/api/config';
+
+  import ConfigModal from './ConfigModal.vue';
+  import { useModal } from '/@/components/Modal';
+
+  import { columns } from './config.data';
+
+  const [registerModal, { openModal }] = useModal();
+  const [registerTable, { reload, deleteTableDataRecord }] = useTable({
+    title: '配置列表',
+    api: getConfigList,
+    columns,
+    formConfig: {
+      labelWidth: 120,
+      schemas: [],
     },
-    actionColOptions: {
-      span: 24,
+    useSearchForm: true,
+    showTableSetting: true,
+    bordered: true,
+    showIndexColumn: false,
+    actionColumn: {
+      width: 120,
+      title: '操作',
+      dataIndex: 'action',
+      slots: { customRender: 'action' },
+      fixed: undefined,
     },
-    showResetButton: false,
-    submitFunc: handleSubmit,
   });
 
-  // 从后端获取数据,然后显示到页面上
-  async function fetchData() {
-    setFieldsValue({});
+  function handleCreate() {
+    openModal(true, {
+      isUpdate: false,
+    });
   }
-  fetchData();
 
-  async function handleSubmit() {
-    try {
-      let values = await validate();
-      setProps({
-        submitButtonOptions: {
-          loading: true,
-        },
-      });
+  function handleEdit(record: Recordable) {
+    openModal(true, {
+      record,
+      isUpdate: true,
+    });
+  }
 
-      console.log(values);
-      // 设置的api
-      // rechargeCardApi(values)
-      //   .then(() => {})
-      //   .finally(() => {});
+  function handleDelete(record: Recordable) {
+    deleteConfig({ id: record.id });
+    deleteTableDataRecord(record.id);
+  }
 
-      setProps({
-        submitButtonOptions: {
-          loading: false,
-        },
-      });
-    } catch (error) {}
+  function handleSuccess() {
+    reload();
   }
 </script>
-<style scoped>
-  .item {
-    width: 30%;
-  }
-</style>

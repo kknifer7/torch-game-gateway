@@ -10,12 +10,11 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class CallLogServicelmpl implements CallLogService {
+public class CallLogServiceImpl implements CallLogService {
     private final CallLogRepository callLogRepository;
 
     @Override
     public List<CallLog> findAll() {
-        List<CallLog> all = callLogRepository.findAll();
-        return all;
+        return callLogRepository.findAll();
     }
 }

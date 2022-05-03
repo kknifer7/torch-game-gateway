@@ -5,15 +5,13 @@ import org.springframework.transaction.annotation.Transactional;
 import xit.gateway.admin.domain.Service;
 import xit.gateway.admin.repository.ServiceRepository;
 import xit.gateway.admin.service.ServiceService;
-import xit.gateway.exception.requester.BadRequestException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @org.springframework.stereotype.Service
 @RequiredArgsConstructor
-public class ServiceServicelmpl implements ServiceService {
+public class ServiceServiceImpl implements ServiceService {
 
     private final ServiceRepository serviceRepository;
 
@@ -46,7 +44,6 @@ public class ServiceServicelmpl implements ServiceService {
         service.setStatus(resources.getStatus());
         serviceRepository.save(service);
 
-        // TODO: 向deacon进行同步操作
     }
 
     @Override

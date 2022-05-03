@@ -19,6 +19,6 @@ public class ServeController {
 
     @GetMapping("stat")
     public ResultInfo stat(@RequestHeader HttpHeaders headers) {
-        return httpService.post("http://127.0.0.1:8082/list-gateways", headers, new HashMap<>());
+        return httpService.post("/list-gateways", headers, new HashMap<>());
     }
 }
