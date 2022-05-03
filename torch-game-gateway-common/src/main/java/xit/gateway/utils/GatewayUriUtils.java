@@ -11,6 +11,8 @@ public class GatewayUriUtils {
     private GatewayUriUtils(){}
 
     private static final String LOGIN_URI = "/login";
+    private static final String ACTION_URI = "/action";
+    private static final String ACTION_ADMIN_URI = "/action/admin";
     private static final String SERVICE_URI = "/service";
     private static final String SERVICE_URI_WITH_NEXT_SEPARATOR = "/service/";
 
@@ -18,6 +20,9 @@ public class GatewayUriUtils {
         return StringUtils.equals(path, LOGIN_URI);
     }
 
+    public static boolean matchAction(String path){
+        return path.contains(ACTION_URI) && !path.contains(ACTION_ADMIN_URI);
+    }
 
     // 是否调用的是服务代理接口
     public static boolean isUsingService(String path){

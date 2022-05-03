@@ -11,6 +11,7 @@ import xit.gateway.exception.requester.BadRequestException;
 import xit.gateway.exception.requester.RequestFailedException;
 import xit.gateway.exception.route.RouteDisabledException;
 import xit.gateway.exception.route.RouteNotFoundException;
+import xit.gateway.exception.system.SystemException;
 import xit.gateway.exception.user.AccessForbiddenException;
 import xit.gateway.exception.user.UserVerificationFailedException;
 import xit.gateway.pojo.ResultInfo;
@@ -59,6 +60,12 @@ public class GlobalExceptionResolver {
     public ResultInfo<Void> handleException(AccessForbiddenException e){
         logger.warn(e.getMessage(), e);
         return new ResultInfo<>(ResultCode.FORBIDDEN.getValue(), "请登录", null);
+    }
+
+    @ExceptionHandler(SystemException.class)
+    public ResultInfo<Void> handleException(SystemException e){
+        logger.warn(e.getMessage(), e);
+        return new ResultInfo<>(ResultCode.SYSTEM_ERROR.getValue(), "网关业务层无法受理你的请求：参数非法", null);
     }
 
     @ExceptionHandler(Exception.class)

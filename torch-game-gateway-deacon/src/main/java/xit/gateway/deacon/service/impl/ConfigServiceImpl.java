@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 import xit.gateway.api.service.ConfigService;
 import xit.gateway.deacon.dao.ConfigDAO;
-import xit.gateway.pojo.Config;
 
 @Service
 public class ConfigServiceImpl implements ConfigService {
@@ -18,6 +17,6 @@ public class ConfigServiceImpl implements ConfigService {
 
     @Override
     public Mono<String> get(String kee) {
-        return configDAO.findById(kee).map(Config::getVal);
+        return configDAO.findByKee(kee).flatMap(config -> Mono.just(config.getVal()));
     }
 }

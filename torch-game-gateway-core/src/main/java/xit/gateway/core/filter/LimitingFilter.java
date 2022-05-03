@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
@@ -23,6 +24,7 @@ import xit.gateway.core.limiter.impl.DefaultLimiter;
 import xit.gateway.utils.GatewayUriUtils;
 import xit.gateway.utils.RIUtils;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -61,19 +63,20 @@ public class LimitingFilter implements WebFilter {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
-        String path = exchange.getRequest().getPath().toString();
+        ServerHttpRequest request = exchange.getRequest();
+        String path = request.getPath().toString();
 
-        if (GatewayUriUtils.matchLogin(path)){
+        // TODO 看看有没有更好的方案
+        if (GatewayUriUtils.matchLogin(path) || GatewayUriUtils.matchAction(path)){
             return chain.filter(exchange);
         }
 
         ServerHttpResponse response = exchange.getResponse();
-        Long userId = tokenHandler.parse(
-                exchange.getRequest()
-                        .getHeaders()
-                        .get("AUTH-TOKEN")
-                        .get(0)
-        ).getId();
+        List<String> authHeader = request.getHeaders().get("AUTH-TOKEN");
+        if (authHeader == null){
+            return RIUtils.send(response, ResultCode.FORBIDDEN, "Token不合法", null);
+        }
+        Long userId = tokenHandler.parse(authHeader.get(0)).getId();
         Limiter userLimiter = limiterContainer.get(userId);
         DefaultLimiter routeLimiter;
 

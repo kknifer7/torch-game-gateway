@@ -1,5 +1,6 @@
 package xit.gateway.utils;
 
+import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import reactor.core.publisher.Mono;
 import xit.gateway.constant.ResultCode;
@@ -25,6 +26,8 @@ public class RIUtils {
     }
 
     public static<T> Mono<Void> send(ServerHttpResponse response, ResultCode code, String msg, T data){
+        response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
+
         return response.writeWith(Mono.just(response.bufferFactory()
                 .wrap(JsonUtils.object2String(new ResultInfo<>(code.getValue(), msg, data))
                         .getBytes(StandardCharsets.UTF_8)
