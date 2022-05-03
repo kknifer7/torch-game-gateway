@@ -86,23 +86,26 @@ public class LimitingFilter implements WebFilter {
             if (StringUtils.equals(userAndServiceNameMapForFusing.get(userId), serviceName)){
                 return RIUtils.send(response, ResultCode.FORBIDDEN, "服务暂不可用，因为当前用户请求过多", null);
             }
-            if (enableFusingOnLimiting){
-                routeLimiter = (DefaultLimiter) limiterContainer.get(routesContainer.get(serviceName)
-                        .get(requestContextContainer.get(serviceName).lastCalledIndex().get()).getId());
-                if (limiting(userLimiter)){ // 针对用户
-                    response.setStatusCode(HttpStatus.TOO_MANY_REQUESTS);
+
+            routeLimiter = (DefaultLimiter) limiterContainer.get(routesContainer.get(serviceName)
+                    .get(requestContextContainer.get(serviceName).lastCalledIndex().get()).getId());
+            if (limiting(userLimiter)){ // 针对用户
+                response.setStatusCode(HttpStatus.TOO_MANY_REQUESTS);
+                if (enableFusingOnLimiting){
                     userAndServiceNameMapForFusing.put(userId, serviceName);
-                    logger.warn("[serviceName={}]-[userId={}]  已熔断，因为这个用户请求过多", serviceName, userId);
-
-                    return response.setComplete();
                 }
-                if (limiting(routeLimiter)){    // 针对接口
-                    response.setStatusCode(HttpStatus.TOO_MANY_REQUESTS);
+                logger.warn("[serviceName={}]-[userId={}]  已熔断，因为这个用户请求过多", serviceName, userId);
+
+                return response.setComplete();
+            }
+            if (limiting(routeLimiter)){    // 针对接口
+                response.setStatusCode(HttpStatus.TOO_MANY_REQUESTS);
+                if (enableFusingOnLimiting){
                     routeAccessor.disableRoute(serviceName, routeLimiter.getId().toString());
-                    logger.warn("[serviceName={}]-[routeId={}]  已熔断，因为这个路由请求过多", serviceName, routeLimiter.getId());
-
-                    return response.setComplete();
                 }
+                logger.warn("[serviceName={}]-[routeId={}]  已熔断，因为这个路由请求过多", serviceName, routeLimiter.getId());
+
+                return response.setComplete();
             }
         }
 

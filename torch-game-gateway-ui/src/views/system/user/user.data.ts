@@ -97,12 +97,17 @@ export const limitFormSchema: FormSchema[] = [
   },
   {
     field: 'limit',
-    label: '限流时间',
+    label: '每秒令牌数',
+    component: 'Input',
+  },
+  {
+    field: 'limitingTimeout',
+    label: '超时时间',
     component: 'Input',
   },
   {
     field: 'limitingTimeUnit',
-    label: '限流单位',
+    label: '超时时间单位',
     component: 'Select',
     componentProps: {
       options: [
@@ -113,10 +118,5 @@ export const limitFormSchema: FormSchema[] = [
       ],
     },
     colProps: { span: 24 },
-  },
-  {
-    field: 'limitingTimeout',
-    label: '限流超时',
-    component: 'Input',
   },
 ];

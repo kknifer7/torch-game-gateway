@@ -16,6 +16,8 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import xit.gateway.constant.RedisChannel;
 
+import java.util.Arrays;
+
 @Configuration
 public class RedisConfig {
     @Bean
@@ -54,10 +56,8 @@ public class RedisConfig {
         RedisMessageListenerContainer container = new RedisMessageListenerContainer();
 
         container.setConnectionFactory(connectionFactory);
-        container.addMessageListener(listenerAdapter, new PatternTopic(RedisChannel.ROUTE.getValue()));
-        container.addMessageListener(listenerAdapter, new PatternTopic(RedisChannel.ROUTE_LIST.getValue()));
-        container.addMessageListener(listenerAdapter, new PatternTopic(RedisChannel.ROUTE_DELETE.getValue()));
-        container.addMessageListener(listenerAdapter, new PatternTopic(RedisChannel.ROUTE_LIST_DELETE.getValue()));
+        Arrays.stream(RedisChannel.values())
+                        .forEach(channel -> container.addMessageListener(listenerAdapter, new PatternTopic(channel.getValue())));
 
         return container;
     }

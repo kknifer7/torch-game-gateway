@@ -1,8 +1,6 @@
 import { Tag } from 'ant-design-vue';
 import { h } from 'vue';
-import { getServiceList } from '/@/api/service';
 import { BasicColumn } from '/@/components/Table';
-import { FormSchema } from '/@/components/Table';
 import { formatToDateTime } from '/@/utils/dateUtil';
 
 export const columns: BasicColumn[] = [
@@ -91,7 +89,7 @@ export const columns: BasicColumn[] = [
   {
     title: '调用时间',
     width: 150,
-    dataIndex: 'timestamp',
+    dataIndex: 'startTimestamp',
     format: (text: string) => {
       return formatToDateTime(text);
     },

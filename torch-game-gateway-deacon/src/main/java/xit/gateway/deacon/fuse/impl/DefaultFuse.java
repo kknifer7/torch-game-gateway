@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Mono;
 import xit.gateway.api.cluster.gateway.agent.GatewayAgent;
 import xit.gateway.constant.RedisKey;
 import xit.gateway.api.fuse.Fuse;
@@ -62,16 +63,24 @@ public class DefaultFuse implements Fuse {
 
     @Override
     public void flush() {
-        String fusingThresholdStr = configService.get("fusing_threshold").block();
-        int fusingThreshold = StringUtils.isBlank(fusingThresholdStr) ? 5 : Integer.parseInt(fusingThresholdStr);
-        String fusingTimeoutStr = configService.get("fusing_timeout").block();
-        int fusingTimeout = StringUtils.isBlank(fusingTimeoutStr) ? 5 : Integer.parseInt(fusingTimeoutStr);
-        String fusingTimeUnitStr = configService.get("fusing_timeunit").block();
+        Mono.zip(
+                        configService.get("fusing_threshold"),
+                        configService.get("fusing_timeout"),
+                        configService.get("fusing_timeunit")
+                )
+                .flatMap(tuple3 -> {
+                    String fusingThresholdStr = tuple3.getT1();
+                    String fusingTimeoutStr = tuple3.getT2();
+                    String fusingTimeUnitStr = tuple3.getT3();
 
-        FUSING_TIMEUNIT = StringUtils.isBlank(fusingTimeUnitStr) ? TimeUnit.SECONDS : TimeUnit.valueOf(fusingTimeUnitStr);
-        setAtomicInteger(fusingThreshold, FUSING_THRESHOLD);
-        setAtomicInteger(fusingTimeout, FUSING_TIMEOUT);
+                    int fusingThreshold = StringUtils.isBlank(fusingThresholdStr) ? 3 : Integer.parseInt(fusingThresholdStr);
+                    int fusingTimeout = StringUtils.isBlank(fusingTimeoutStr) ? 0 : Integer.parseInt(fusingTimeoutStr);
 
+                    FUSING_TIMEUNIT = StringUtils.isBlank(fusingTimeUnitStr) ? TimeUnit.SECONDS : TimeUnit.valueOf(fusingTimeUnitStr);
+                    setAtomicInteger(fusingThreshold, FUSING_THRESHOLD);
+                    setAtomicInteger(fusingTimeout, FUSING_TIMEOUT);
+                    return Mono.empty();
+                }).subscribe();
     }
 
     private void setAtomicInteger(int val, AtomicInteger target){

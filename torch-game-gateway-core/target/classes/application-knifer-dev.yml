@@ -13,7 +13,7 @@ spring:
     password: 123
     url: r2dbcs:mysql://192.168.231.132:6670/torch_game_gateway?SSL=false&sslMode=DISABLED
 server:
-  port: 8081
+  port: 8085
 torch:
   gateway:
     password: 123456

@@ -1,5 +1,3 @@
-import { Space, Tag } from 'ant-design-vue';
-import { h } from 'vue';
 import { getServiceList } from '/@/api/service';
 import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
@@ -7,27 +5,19 @@ import { formatToDateTime } from '/@/utils/dateUtil';
 
 export const columns: BasicColumn[] = [
   {
-    title: '用户名',
-    dataIndex: 'username',
+    title: '限流器类型（用户或路由）',
+    dataIndex: 'type',
     width: 120,
   },
   {
     title: '服务',
     dataIndex: 'services',
-    customRender: ({ record }) => {
-      const services = (record.services as any[]).map((r) => r.name);
-      return h(Space, {}, () =>
-        services.map((r) => {
-          return h(Tag, { color: 'green' }, () => r);
-        }),
-      );
-    },
   },
-  // {
-  //   title: '状态',
-  //   dataIndex: 'status',
-  //   width: 120,
-  // },
+  {
+    title: '状态',
+    dataIndex: 'status',
+    width: 120,
+  },
   {
     title: '创建时间',
     dataIndex: 'createAt',

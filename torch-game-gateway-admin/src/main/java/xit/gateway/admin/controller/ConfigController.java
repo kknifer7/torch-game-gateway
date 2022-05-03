@@ -48,6 +48,8 @@ public class ConfigController {
 
         switch (key) {
             case "enable_fusing_on_limiting":
+                RedisUtils.publish(RedisChannel.ENABLE_FUSING_ON_LIMITING, 1);
+                break;
             case "fusing_threshold":
             case "fusing_timeout":
             case "fusing_timeunit":

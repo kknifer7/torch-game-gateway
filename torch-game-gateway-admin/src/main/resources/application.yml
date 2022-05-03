@@ -4,7 +4,7 @@ spring:
   main:
     allow-bean-definition-overriding: true
   profiles:
-    active: dev
+    active: kuizuo-dev
 
   jpa:
     hibernate:
@@ -16,7 +16,6 @@ spring:
 logging:
   level:
     org.hibernate.type.descriptor.sql.BasicBinder: trace
-
 
 torch:
   gateway:

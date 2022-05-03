@@ -52,9 +52,7 @@
                 colProps: { span: 24 },
               },
             ]);
-          }
-
-          if (['enable_fusing_on_limiting'].includes(key)) {
+          } else if (['enable_fusing_on_limiting'].includes(key)) {
             updateSchema([
               {
                 field: 'val',
@@ -66,6 +64,13 @@
                   ],
                 },
                 colProps: { span: 24 },
+              },
+            ]);
+          } else {
+            updateSchema([
+              {
+                field: 'val',
+                component: 'Input',
               },
             ]);
           }

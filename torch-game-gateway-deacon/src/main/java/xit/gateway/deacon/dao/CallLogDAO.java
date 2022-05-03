@@ -26,7 +26,7 @@ public interface CallLogDAO extends ReactiveCrudRepository<CallLog, String> {
                     ":#{#callLog.routeHost}, :#{#callLog.routePort}, :#{#callLog.routeUrl}," +
                     ":#{#callLog.routeCreationDatetime}, :#{#callLog.routeUpdateDatetime}," +
                     ":#{#callLog.serviceName}, :#{#callLog.success}," +
-                    ":#{#callLog.timestamp}, :#{#callLog.consumeTime})"
+                    ":#{#callLog.startTimestamp}, :#{#callLog.consumeTime})"
     )
     Mono<Void> insert(@Param("callLog") CallLog callLog);
 }

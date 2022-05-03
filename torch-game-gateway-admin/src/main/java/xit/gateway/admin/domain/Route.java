@@ -9,7 +9,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 import xit.gateway.constant.ProtocolType;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.sql.Timestamp;
 
 @Entity

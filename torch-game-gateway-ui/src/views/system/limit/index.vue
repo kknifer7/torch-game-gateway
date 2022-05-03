@@ -48,7 +48,7 @@
   const [registerModal, { openModal }] = useModal();
   const searchInfo = reactive<Recordable>({});
   const [registerTable, { reload, deleteTableDataRecord }] = useTable({
-    title: '账号列表',
+    title: '限流器列表',
     api: getUserList,
     rowKey: 'id',
     columns,

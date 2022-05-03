@@ -49,7 +49,7 @@ public class DefaultLimiterManager implements LimiterManager {
                     });
 
                     return Mono.empty();
-                }).block();
+                }).subscribe();
     }
 
     @Override

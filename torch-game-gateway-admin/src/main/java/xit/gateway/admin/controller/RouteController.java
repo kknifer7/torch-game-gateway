@@ -1,5 +1,6 @@
 package xit.gateway.admin.controller;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 import xit.gateway.admin.domain.Route;
@@ -13,6 +14,7 @@ import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/route")
@@ -31,14 +33,14 @@ public class RouteController {
     public Mono<ResultInfo<Object>> add(@RequestBody Route resources) {
         Route route = routeService.create(resources);
 
-        RedisUtils.publish(RedisChannel.ROUTE, route);
+        RedisUtils.publish(RedisChannel.ROUTE, toOriginRoute(route));
         return RIUtils.createOK();
     }
 
     @PostMapping("update")
     public Mono<ResultInfo<Object>> update(@RequestBody Route resources) {
         Route route = routeService.update(resources);
-        RedisUtils.publish(RedisChannel.ROUTE, route);
+        RedisUtils.publish(RedisChannel.ROUTE, toOriginRoute(route));
         return RIUtils.createOK();
     }
 
@@ -49,15 +51,30 @@ public class RouteController {
 
         routeService.delete(id);
 
-        RedisUtils.publish(RedisChannel.ROUTE_DELETE, route);
+        route.ifPresent(r ->
+                RedisUtils.publish(RedisChannel.ROUTE_DELETE, toOriginRoute(r)));
+
         return RIUtils.createOK();
     }
 
     @GetMapping("sync")
     public Mono<ResultInfo<Object>> sync() {
-        List<Route> routeList = routeService.findAll();
+        List<xit.gateway.pojo.Route> routeList = routeService.findAll()
+                .stream()
+                .map(this::toOriginRoute)
+                .collect(Collectors.toList());
 
         RedisUtils.publish(RedisChannel.ROUTE_LIST, routeList);
         return RIUtils.createOK();
+    }
+
+    private xit.gateway.pojo.Route toOriginRoute(Route route){
+        xit.gateway.pojo.Route newRoute = new xit.gateway.pojo.Route();
+
+        BeanUtils.copyProperties(route, newRoute);
+        newRoute.setCreateTime(route.getCreateTime().toLocalDateTime());
+        newRoute.setUpdateTime(route.getUpdateTime().toLocalDateTime());
+
+        return newRoute;
     }
 }

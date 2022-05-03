@@ -23,13 +23,13 @@ public class CallLog {
     private LocalDateTime routeUpdateDatetime;
     private String serviceName;
     private boolean success;
-    private long timestamp; // 调用时间
+    private long startTimestamp; // 调用时间
     private long consumeTime;  // 调用耗时
 
     public CallLog() {
     }
 
-    public CallLog(String id, String gatewayId, String gatewayHost, String gatewayPort, String gatewayUri, String routeId, String routeDesc, String routeHost, int routePort, String routeUrl, LocalDateTime routeCreationDatetime, LocalDateTime routeUpdateDatetime, String serviceName, boolean success, long timestamp, long consumeTime) {
+    public CallLog(String id, String gatewayId, String gatewayHost, String gatewayPort, String gatewayUri, String routeId, String routeDesc, String routeHost, int routePort, String routeUrl, LocalDateTime routeCreationDatetime, LocalDateTime routeUpdateDatetime, String serviceName, boolean success, long startTimestamp, long consumeTime) {
         this.id = id;
         this.gatewayId = gatewayId;
         this.gatewayHost = gatewayHost;
@@ -44,7 +44,7 @@ public class CallLog {
         this.routeUpdateDatetime = routeUpdateDatetime;
         this.serviceName = serviceName;
         this.success = success;
-        this.timestamp = timestamp;
+        this.startTimestamp = startTimestamp;
         this.consumeTime = consumeTime;
     }
 
@@ -160,12 +160,12 @@ public class CallLog {
         this.success = success;
     }
 
-    public long getTimestamp() {
-        return timestamp;
+    public long getStartTimestamp() {
+        return startTimestamp;
     }
 
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
+    public void setStartTimestamp(long startTimestamp) {
+        this.startTimestamp = startTimestamp;
     }
 
     public long getConsumeTime() {
@@ -233,7 +233,7 @@ public class CallLog {
         }
 
         public Builder timestamp(long timestamp){
-            this.callRecord.setTimestamp(timestamp);
+            this.callRecord.setStartTimestamp(timestamp);
             return this;
         }
 
@@ -264,7 +264,7 @@ public class CallLog {
                 ", routeUpdateDatetime=" + routeUpdateDatetime +
                 ", serviceId='" + serviceName + '\'' +
                 ", success=" + success +
-                ", timestamp=" + timestamp +
+                ", timestamp=" + startTimestamp +
                 ", callTime=" + consumeTime +
                 '}';
     }

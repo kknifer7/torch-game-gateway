@@ -10,7 +10,9 @@ public enum RedisChannel implements ValueEnum<String>{
     // serviceName
     ROUTE_LIST_DELETE("ROUTE_LIST_DELETE"),
     // 仅作通知用，推送即生效
-    LIMITER_SETTINGS_FLUSH("LIMITER_SETTINGS_FLUSH");
+    LIMITER_SETTINGS_FLUSH("LIMITER_SETTINGS_FLUSH"),
+    // 仅作通知用，推送即生效
+    ENABLE_FUSING_ON_LIMITING("ENABLE_FUSING_ON_LIMITING");
 
     private final String value;
 

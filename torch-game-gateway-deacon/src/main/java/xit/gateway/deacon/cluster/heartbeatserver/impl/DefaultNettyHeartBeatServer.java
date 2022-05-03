@@ -90,22 +90,37 @@ public class DefaultNettyHeartBeatServer implements HeartBeatServer {
         public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
             // password:gatewayInfo
             String[] heartBeatMsg = StringUtils.split(((String) msg), ":", 2);
-            Channel clientChannel;
+            Channel clientChannel = null;
             InetSocketAddress clientAddress;
             Gateway gateway;
 
             if (validateHeartBeatMsg(heartBeatMsg)){
-                gateway = JsonUtils.string2Object(heartBeatMsg[1], Gateway.class);
-                clientChannel = ctx.channel();
-                clientAddress = ((InetSocketAddress) clientChannel.remoteAddress());
-                gateway.setHost(clientAddress.getHostName());
-                if (!gatewayContainer.contains(gateway)){
-                    // 首次收到心跳包，添加心跳统计信息用于记录失联次数
-                    heartBeatInfoMap.put(clientChannel.id(), new GatewayHeartBeatInfo(gateway.getId(), 0));
-                }
-                gatewayContainer.put(gateway);
-            }else{
+                //  try catch 处理异常情况：算作心跳失联1次
+                try{
+                    gateway = JsonUtils.string2Object(heartBeatMsg[1], Gateway.class);
+                    clientChannel = ctx.channel();
+                    clientAddress = ((InetSocketAddress) clientChannel.remoteAddress());
+                    gateway.setHost(clientAddress.getHostName());
+                    if (!gatewayContainer.contains(gateway)){
+                        // 首次收到心跳包，添加心跳统计信息用于记录失联次数
+                        heartBeatInfoMap.put(clientChannel.id(), new GatewayHeartBeatInfo(gateway.getId(), 0));
+                    }
+                    gatewayContainer.put(gateway);
+                } catch (Exception e){
+                    if (clientChannel != null){
+                        ChannelId channelId = clientChannel.id();
+                        GatewayHeartBeatInfo heartBeatInfo = heartBeatInfoMap.get(channelId);
+                        int looseBeatTimes = heartBeatInfo.getLoseBeatTimes() + 1;
 
+                        if (looseBeatTimes >= DEAD_THRESHOLD){
+                            setGatewayDead(channelId);
+                            clientChannel.close();
+                        }
+                        heartBeatInfo.setLoseBeatTimes(looseBeatTimes);
+                    }
+                    e.printStackTrace();
+                }
+            }else{
                 ctx.close();
             }
 
@@ -126,6 +141,8 @@ public class DefaultNettyHeartBeatServer implements HeartBeatServer {
             if (looseBeatTimes >= DEAD_THRESHOLD){
                 setGatewayDead(channelId);
                 channel.close();
+            }else{
+                looseBeatTimes = 0;
             }
             heartBeatInfo.setLoseBeatTimes(looseBeatTimes);
             super.userEventTriggered(ctx, evt);

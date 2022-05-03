@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import xit.gateway.api.route.limiter.manager.LimiterManager;
 import xit.gateway.api.service.RouteService;
 import xit.gateway.constant.RedisChannel;
+import xit.gateway.core.filter.LimitingFilter;
 import xit.gateway.pojo.Route;
 import xit.gateway.utils.RedisUtils;
 
@@ -22,13 +23,15 @@ public class RedisSubscriber extends MessageListenerAdapter {
     private final Jackson2JsonRedisSerializer valueSerializer;
     private final RouteService routeService;
     private final LimiterManager limiterManager;
+    private final LimitingFilter limitingFilter;
 
     @Autowired
-    public RedisSubscriber(RouteService routeService, LimiterManager limiterManager) {
+    public RedisSubscriber(RouteService routeService, LimiterManager limiterManager, LimitingFilter limitingFilter) {
         this.stringSerializer = RedisUtils.stringSerializer();
         this.valueSerializer = (Jackson2JsonRedisSerializer) RedisUtils.valueSerializer();
         this.routeService = routeService;
         this.limiterManager = limiterManager;
+        this.limitingFilter = limitingFilter;
     }
 
     @Override
@@ -51,6 +54,9 @@ public class RedisSubscriber extends MessageListenerAdapter {
                 break;
             case LIMITER_SETTINGS_FLUSH:
                 limiterManager.flush();
+                break;
+            case ENABLE_FUSING_ON_LIMITING:
+                limitingFilter.flush();
                 break;
         }
     }

@@ -5,10 +5,11 @@ xit\gateway\admin\controller\ServiceController.class
 xit\gateway\admin\repository\CallLogRepository.class
 xit\gateway\admin\config\security\WebSecurityConfig.class
 xit\gateway\admin\domain\Service.class
+xit\gateway\admin\controller\UserController$1.class
 xit\gateway\admin\domain\CallLog.class
 xit\gateway\admin\service\impl\RouteServiceImpl.class
+xit\gateway\admin\service\dto\UserLimitDto.class
 xit\gateway\admin\controller\AuthController.class
-xit\gateway\admin\service\impl\CallLogServicelmpl.class
 xit\gateway\admin\controller\ServeController.class
 xit\gateway\admin\domain\User.class
 xit\gateway\admin\service\RouteService.class
@@ -26,5 +27,4 @@ xit\gateway\admin\repository\RouteRepository.class
 xit\gateway\admin\controller\CallLogController.class
 xit\gateway\admin\filter\CharsetFilter.class
 xit\gateway\admin\repository\ServiceRepository.class
-xit\gateway\admin\service\impl\ServiceServicelmpl.class
 xit\gateway\admin\service\CallLogService.class

@@ -17,22 +17,22 @@ public class Route implements Loadbalanceable {
     protected String remark;
     protected ProtocolType protocol;
     protected String host;
-    protected int port;
+    protected Integer port;
     protected String url;
-    protected boolean status;
+    protected Boolean status;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    protected LocalDateTime creationDatetime;
+    protected LocalDateTime createTime;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    protected LocalDateTime updateDatetime;
+    protected LocalDateTime updateTime;
 
     protected Object extra;
 
     public Route() {
     }
 
-    public Route(String id, String serviceName, String remark, ProtocolType protocol, String host, int port, String url, boolean status, LocalDateTime creationDatetime, LocalDateTime updateDatetime, Object extra) {
+    public Route(String id, String serviceName, String remark, ProtocolType protocol, String host, Integer port, String url, Boolean status, LocalDateTime createTime, LocalDateTime updateTime, Object extra) {
         this.id = id;
         this.serviceName = serviceName;
         this.remark = remark;
@@ -41,8 +41,8 @@ public class Route implements Loadbalanceable {
         this.port = port;
         this.url = url;
         this.status = status;
-        this.creationDatetime = creationDatetime;
-        this.updateDatetime = updateDatetime;
+        this.createTime = createTime;
+        this.updateTime = updateTime;
         this.extra = extra;
     }
 
@@ -86,11 +86,11 @@ public class Route implements Loadbalanceable {
         this.host = host;
     }
 
-    public int getPort() {
+    public Integer getPort() {
         return port;
     }
 
-    public void setPort(int port) {
+    public void setPort(Integer port) {
         this.port = port;
     }
 
@@ -102,28 +102,28 @@ public class Route implements Loadbalanceable {
         this.url = url;
     }
 
-    public boolean getStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 
-    public LocalDateTime getCreationDatetime() {
-        return creationDatetime;
+    public LocalDateTime getCreateTime() {
+        return createTime;
     }
 
-    public void setCreationDatetime(LocalDateTime creationDatetime) {
-        this.creationDatetime = creationDatetime;
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTime = createTime;
     }
 
-    public LocalDateTime getUpdateDatetime() {
-        return updateDatetime;
+    public LocalDateTime getUpdateTime() {
+        return updateTime;
     }
 
-    public void setUpdateDatetime(LocalDateTime updateDatetime) {
-        this.updateDatetime = updateDatetime;
+    public void setUpdateTime(LocalDateTime updateTime) {
+        this.updateTime = updateTime;
     }
 
     public Object getExtra() {
@@ -145,8 +145,8 @@ public class Route implements Loadbalanceable {
                 ", port=" + port +
                 ", url='" + url + '\'' +
                 ", disabled=" + status +
-                ", creationDatetime=" + creationDatetime +
-                ", updateDatetime=" + updateDatetime +
+                ", creationDatetime=" + createTime +
+                ", updateDatetime=" + updateTime +
                 ", extra=" + extra +
                 '}';
     }

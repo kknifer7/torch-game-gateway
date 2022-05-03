@@ -3,6 +3,7 @@ package xit.gateway.deacon.cluster.gateway.selector.impl;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Mono;
 import xit.gateway.api.cluster.gateway.selector.GatewaySelector;
 import xit.gateway.api.service.ConfigService;
 import xit.gateway.deacon.cluster.gateway.container.impl.GlobalGatewayContainer;
@@ -43,9 +44,12 @@ public class DefaultGatewaySelector implements GatewaySelector {
 
     @Override
     public void refresh() {
-        String backupEnableThresholdStr = configService.get("backup_enable_threshold").block();
+        configService.get("backup_enable_threshold")
+                .flatMap(backupEnableThreshold -> {
+                    this.backupEnableThreshold =
+                            StringUtils.isBlank(backupEnableThreshold) ? 5 : Integer.parseInt(backupEnableThreshold);
 
-        backupEnableThreshold =
-                StringUtils.isBlank(backupEnableThresholdStr) ? 5 : Integer.parseInt(backupEnableThresholdStr);
+                    return Mono.empty();
+                }).subscribe();
     }
 }

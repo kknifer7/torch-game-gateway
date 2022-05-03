@@ -45,7 +45,7 @@ public class CallLog {
     @Column
     private boolean success;
     @Column
-    private long timestamp;// 调用时间
+    private long startTimestamp;// 调用时间
     @Column
     private long consumeTime; // 调用耗时
 

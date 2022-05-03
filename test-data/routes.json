@@ -8,8 +8,8 @@
     "port": 80,
     "url": "https://www.10086.cn/web_notice/protocol/5003337_673_1937.json",
     "status": true,
-    "creationDatetime": "2022-02-02 19:10:10",
-    "updateDatetime": "2022-02-02 19:10:10",
+    "createTime": "2022-02-02 19:10:10",
+    "updateTime": "2022-02-02 19:10:10",
     "extra": 111
   },{
     "id": "1223",
@@ -20,8 +20,8 @@
     "port": 8080,
     "url": "http://localhost:8080/val",
     "status": true,
-    "creationDatetime": "2022-02-02 19:10:10",
-    "updateDatetime": "2022-02-02 19:10:10",
+    "createTime": "2022-02-02 19:10:10",
+    "updateTime": "2022-02-02 19:10:10",
     "extra": 111
   },{
     "id": "333",
@@ -32,8 +32,8 @@
     "port": 9000,
     "url": null,
     "status": true,
-    "creationDatetime": "2022-02-02 19:10:10",
-    "updateDatetime": "2022-02-02 19:10:10",
+    "createTime": "2022-02-02 19:10:10",
+    "updateTime": "2022-02-02 19:10:10",
     "extra": 111
   },{
     "id": "83",
@@ -44,8 +44,8 @@
     "port": 8000,
     "url": "http://218.62.100.7:8000/",
     "status": true,
-    "creationDatetime": "2022-02-02 19:10:10",
-    "updateDatetime": "2022-02-02 19:10:10",
+    "createTime": "2022-02-02 19:10:10",
+    "updateTime": "2022-02-02 19:10:10",
     "extra": 111
   },{
     "id": "909009",
@@ -56,8 +56,8 @@
     "port": 9898,
     "url": "https://localhost:9898/",
     "status": true,
-    "creationDatetime": "2022-02-02 19:10:10",
-    "updateDatetime": "2022-02-02 19:10:10",
+    "createTime": "2022-02-02 19:10:10",
+    "updateTime": "2022-02-02 19:10:10",
     "extra": 111
   }
 ]

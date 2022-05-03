@@ -1,0 +1,7 @@
+spring:
+  datasource:
+    url: jdbc:mysql://192.168.231.132:6670/torch_game_gateway?SSL=false&sslMode=DISABLED
+    username: admin
+    password: 123
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.mysql.cj.jdbc.MysqlConnectionPoolDataSource
