@@ -81,6 +81,13 @@ public class DeaconController {
         return RIUtils.createOK();
     }
 
+    @PutMapping("/flush-backup")
+    public Mono<ResultInfo<Void>> flushBackup(){
+        gatewaySelector.refresh();
+
+        return RIUtils.createOK();
+    }
+
     @PostMapping("/list-gateways")
     public Mono<ResultInfo<Collection<Gateway>>> listGateways(){
         return RIUtils.create(ResultCode.OK, null, gatewayContainer.getAll());

@@ -7,6 +7,7 @@ import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Component;
+import xit.gateway.api.route.limiter.manager.LimiterManager;
 import xit.gateway.api.service.RouteService;
 import xit.gateway.constant.RedisChannel;
 import xit.gateway.pojo.Route;
@@ -20,12 +21,14 @@ public class RedisSubscriber extends MessageListenerAdapter {
     private final StringRedisSerializer stringSerializer;
     private final Jackson2JsonRedisSerializer valueSerializer;
     private final RouteService routeService;
+    private final LimiterManager limiterManager;
 
     @Autowired
-    public RedisSubscriber(RouteService routeService) {
+    public RedisSubscriber(RouteService routeService, LimiterManager limiterManager) {
         this.stringSerializer = RedisUtils.stringSerializer();
         this.valueSerializer = (Jackson2JsonRedisSerializer) RedisUtils.valueSerializer();
         this.routeService = routeService;
+        this.limiterManager = limiterManager;
     }
 
     @Override
@@ -45,6 +48,9 @@ public class RedisSubscriber extends MessageListenerAdapter {
                 break;
             case ROUTE_LIST_DELETE:
                 routeService.removeByService((String) object);
+                break;
+            case LIMITER_SETTINGS_FLUSH:
+                limiterManager.flush();
                 break;
         }
     }
