@@ -8,6 +8,7 @@ enum Api {
   Add = '/route/add',
   Update = '/route/update',
   Detele = '/route/delete',
+  Sync = '/route/sync',
 }
 
 export const getRouteList = (params) => defHttp.get({ url: Api.List, params });
@@ -37,5 +38,13 @@ export const deleteRoute = (data) =>
     { url: Api.Detele, data },
     {
       successMsg: '删除成功',
+    },
+  );
+
+export const routeSync = () =>
+  defHttp.get(
+    { url: Api.Sync },
+    {
+      successMsg: '同步成功',
     },
   );

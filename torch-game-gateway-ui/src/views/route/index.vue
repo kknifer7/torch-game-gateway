@@ -32,7 +32,7 @@
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import { PageWrapper } from '/@/components/Page';
 
-  import { deleteRoute, getRouteList } from '/@/api/route';
+  import { deleteRoute, getRouteList, routeSync } from '/@/api/route';
 
   import RouteModal from './RouteModal.vue';
   import { useModal } from '/@/components/Modal';
@@ -84,6 +84,6 @@
   }
 
   function handleSync() {
-    // TODO: 同步路由接口给
+    routeSync();
   }
 </script>

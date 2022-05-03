@@ -21,27 +21,28 @@ public class RouteServiceImpl implements RouteService {
 
     @Override
     public List<Route> findAll() {
-        List<Route> all = routeRepository.findAll();
+        return routeRepository.findAll();
+    }
 
-        return all;
+    @Override
+    public Optional<Route> findById(String id) {
+        return routeRepository.findById(id);
     }
 
 
     @Override
-    public void create(Route resources) {
+    public Route create(Route resources) {
         Optional<xit.gateway.admin.domain.Service> service = serviceRepository.findById(resources.getService().getId());
         if (service.isPresent()) {
             resources.setServiceName(service.get().getName());
         }
 
-//        RedisUtils.publish(RedisChannel.ROUTE, resources);
-
-        routeRepository.save(resources);
-        // TODO: 向deacon进行同步操作
+        Route save = routeRepository.save(resources);
+        return save;
     }
 
     @Override
-    public void update(Route resources) {
+    public Route update(Route resources) {
         Route route = routeRepository.findById(resources.getId()).orElseGet(Route::new);
         Optional<xit.gateway.admin.domain.Service> service = serviceRepository.findById(resources.getService().getId());
         if (service.isPresent()) {
@@ -54,16 +55,13 @@ public class RouteServiceImpl implements RouteService {
         route.setPort(resources.getPort());
         route.setUrl(resources.getUrl());
         route.setExtra(resources.getExtra());
-        routeRepository.save(route);
-
-        // TODO: 向deacon进行同步操作
+        Route save = routeRepository.save(route);
+        return save;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void delete(String id) {
-
-//        RedisUtils.publish(RedisChannel.ROUTE, resources);
         routeRepository.deleteById(id);
     }
 }

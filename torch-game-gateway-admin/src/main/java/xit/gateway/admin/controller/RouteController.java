@@ -2,16 +2,17 @@ package xit.gateway.admin.controller;
 
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
-import xit.gateway.admin.service.RouteService;
-import xit.gateway.pojo.ResultInfo;
 import xit.gateway.admin.domain.Route;
+import xit.gateway.admin.service.RouteService;
+import xit.gateway.constant.RedisChannel;
+import xit.gateway.pojo.ResultInfo;
 import xit.gateway.utils.RIUtils;
+import xit.gateway.utils.RedisUtils;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/route")
@@ -28,21 +29,35 @@ public class RouteController {
 
     @PostMapping("add")
     public Mono<ResultInfo<Object>> add(@RequestBody Route resources) {
-        routeService.create(resources);
+        Route route = routeService.create(resources);
+
+        RedisUtils.publish(RedisChannel.ROUTE, route);
         return RIUtils.createOK();
     }
 
     @PostMapping("update")
     public Mono<ResultInfo<Object>> update(@RequestBody Route resources) {
-        routeService.update(resources);
+        Route route = routeService.update(resources);
+        RedisUtils.publish(RedisChannel.ROUTE, route);
         return RIUtils.createOK();
     }
 
     @PostMapping("delete")
     public Mono<ResultInfo<Object>> delete(@RequestBody Map<String, String> dto) {
-        routeService.delete(dto.get("id"));
+        String id = dto.get("id");
+        Optional<Route> route = routeService.findById(id);
+
+        routeService.delete(id);
+
+        RedisUtils.publish(RedisChannel.ROUTE_DELETE, route);
         return RIUtils.createOK();
     }
 
+    @GetMapping("sync")
+    public Mono<ResultInfo<Object>> sync() {
+        List<Route> routeList = routeService.findAll();
 
+        RedisUtils.publish(RedisChannel.ROUTE_LIST, routeList);
+        return RIUtils.createOK();
+    }
 }

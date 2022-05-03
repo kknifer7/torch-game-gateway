@@ -30,7 +30,6 @@ public class ServiceServiceImpl implements ServiceService {
     @Override
     public void create(Service resources) {
         serviceRepository.save(resources);
-        // TODO: 向deacon进行同步操作
     }
 
     @Override

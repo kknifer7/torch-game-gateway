@@ -4,6 +4,7 @@ import org.springframework.transaction.annotation.Transactional;
 import xit.gateway.admin.domain.Route;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 public interface RouteService {
@@ -11,9 +12,11 @@ public interface RouteService {
     List<Route> findAll();
 
 
-    void create(Route resources);
+    Optional<Route> findById(String id);
 
-    void update(Route resources);
+    Route create(Route resources);
+
+    Route update(Route resources);
 
     @Transactional(rollbackFor = Exception.class)
     void delete(String id);
