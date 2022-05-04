@@ -1,6 +1,7 @@
 package xit.gateway.core.limiter.manager.impl;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
@@ -8,9 +9,13 @@ import xit.gateway.api.route.limiter.manager.LimiterManager;
 import xit.gateway.api.service.ConfigService;
 import xit.gateway.core.limiter.container.impl.GlobalLimiterContainer;
 import xit.gateway.core.limiter.impl.DefaultLimiter;
+import xit.gateway.pojo.Limiter;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 @Component
 public class DefaultLimiterManager implements LimiterManager {
@@ -35,11 +40,17 @@ public class DefaultLimiterManager implements LimiterManager {
                 )
                 .flatMap(tuple3 -> {
                     String limitStr = tuple3.getT1();
+                    int limitParse;
                     String limitTimeoutStr = tuple3.getT3();
 
-                    limit = StringUtils.isBlank(limitStr) ? 10 : Integer.parseInt(limitStr);
+                    limit = StringUtils.isBlank(limitStr) ?
+                            10 :
+                            ((limitParse = Integer.parseInt(limitStr)) > 0 ?
+                                    limitParse :
+                                    10
+                            );
                     limitingTimeout = StringUtils.isBlank(limitTimeoutStr) ? 10 : Long.parseLong(limitTimeoutStr);
-                    limitingTimeUnit = TimeUnit.valueOf(tuple3.getT2());
+                    limitingTimeUnit = Optional.ofNullable(TimeUnit.valueOf(tuple3.getT2())).orElse(TimeUnit.SECONDS);
                     limiterContainer.getAll().forEach(lt -> {
                         DefaultLimiter limiter = (DefaultLimiter) lt;
 
@@ -49,7 +60,7 @@ public class DefaultLimiterManager implements LimiterManager {
                     });
 
                     return Mono.empty();
-                }).subscribe();
+                }).block();
     }
 
     @Override
@@ -60,6 +71,17 @@ public class DefaultLimiterManager implements LimiterManager {
     @Override
     public void addLimiter(Serializable userId, Long limit, Long limitingTimeout, TimeUnit limitingTimeUnit) {
         limiterContainer.put(new DefaultLimiter(userId, limit, limitingTimeout, limitingTimeUnit));
+    }
+
+    @Override
+    public List<Limiter> getAllLimiterVO() {
+        return limiterContainer.getAll().stream().map(limiter -> {
+            Limiter limiterVO = new Limiter();
+
+            BeanUtils.copyProperties(limiter, limiterVO);
+
+            return limiterVO;
+        }).collect(Collectors.toUnmodifiableList());
     }
 
     @Override

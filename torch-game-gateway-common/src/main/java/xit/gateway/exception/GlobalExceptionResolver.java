@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.server.UnsupportedMediaTypeStatusException;
 import xit.gateway.constant.ResultCode;
 import xit.gateway.exception.requester.BadRequestException;
 import xit.gateway.exception.requester.RequestFailedException;
@@ -32,7 +33,7 @@ public class GlobalExceptionResolver {
         return new ResultInfo<>(ResultCode.ROUTE_DISABLED.getValue(), e.getMessage(), e.getRequestPath());
     }
 
-    @ExceptionHandler(BadRequestException.class)
+    @ExceptionHandler({BadRequestException.class, UnsupportedMediaTypeStatusException.class})
     public ResultInfo<Object> badRequestException(BadRequestException e) {
         logger.error(e.getMessage(), e);
         return new ResultInfo<>(ResultCode.BAD_REQUEST.getValue(), e.getMessage(), null);

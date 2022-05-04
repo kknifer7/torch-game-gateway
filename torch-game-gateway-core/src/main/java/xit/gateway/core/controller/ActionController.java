@@ -10,6 +10,7 @@ import xit.gateway.api.route.limiter.manager.LimiterManager;
 import xit.gateway.api.service.RouteService;
 import xit.gateway.constant.ResultCode;
 import xit.gateway.core.dto.AddLimiterForUserDTO;
+import xit.gateway.pojo.Limiter;
 import xit.gateway.pojo.ResultInfo;
 import xit.gateway.pojo.Route;
 import xit.gateway.utils.RIUtils;
@@ -95,6 +96,13 @@ public class ActionController {
         return RIUtils.createOK();
     }
 
+    @PostMapping("/admin/remove-limiter-for-user/{id}")
+    public Mono<ResultInfo<Void>> removeLimiterForUser(@PathVariable("id") Long id){
+        limiterManager.removeLimiter(id);
+
+        return RIUtils.createOK();
+    }
+
     @PostMapping("/disable-route/{serviceId}/{routeId}/{auth}")
     public Mono<ResultInfo<Void>> disableRoute(
             @PathVariable("serviceId") String serviceId,
@@ -108,5 +116,10 @@ public class ActionController {
         }else{
             return RIUtils.create(ResultCode.FORBIDDEN, "校验不通过", null);
         }
+    }
+
+    @PostMapping("/admin/list-limiters")
+    public Mono<ResultInfo<List<Limiter>>> listLimiters(){
+        return RIUtils.createOK(limiterManager.getAllLimiterVO());
     }
 }
