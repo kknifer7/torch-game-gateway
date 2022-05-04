@@ -17,6 +17,7 @@ import java.util.concurrent.TimeUnit;
 @ToString
 public class Limiter {
     private Serializable id;
-    private long limitingTimeout;
+    private Long limit;
+    private Long limitingTimeout;
     private TimeUnit limitingTimeUnit;
 }

@@ -9,6 +9,7 @@ E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\api\cluster\gateway\selector\GatewaySelector.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\pojo\AuthToken.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\exception\GlobalExceptionResolver.java
+E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\pojo\Limiter.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\api\cluster\heartbeatserver\HeartBeatServer.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\exception\route\RouteLoadingException.java
 E:\Study\dev\Java\torch-game-gateway\torch-game-gateway-common\src\main\java\xit\gateway\exception\requester\RequestFailedException.java

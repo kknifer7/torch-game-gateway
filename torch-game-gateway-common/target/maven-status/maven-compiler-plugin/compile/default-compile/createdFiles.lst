@@ -47,6 +47,7 @@ xit\gateway\api\service\RouteService.class
 xit\gateway\exception\route\RouteLoadingException.class
 xit\gateway\api\request\container\RoutesContainer.class
 xit\gateway\pojo\Config.class
+xit\gateway\pojo\Limiter.class
 xit\gateway\api\route\accessor\RouteAccessor.class
 xit\gateway\pojo\Route.class
 xit\gateway\api\valve\AbstractValve.class

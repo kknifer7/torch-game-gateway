@@ -13,6 +13,8 @@ public class DefaultLimiter implements Limiter {
     private TimeUnit limitingTimeUnit;
     private RateLimiter rateLimiter;
 
+    public DefaultLimiter(){}
+
     public DefaultLimiter(Serializable id, long limit, long limitingTimeout, TimeUnit limitingTimeUnit) {
         this.id = id;
         this.limitingTimeout = limitingTimeout;
@@ -53,5 +55,9 @@ public class DefaultLimiter implements Limiter {
 
     public void setLimitingTimeUnit(TimeUnit limitingTimeUnit) {
         this.limitingTimeUnit = limitingTimeUnit;
+    }
+
+    public Long getLimiterRate(){
+        return new Double(rateLimiter.getRate()).longValue();
     }
 }

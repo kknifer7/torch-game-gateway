@@ -79,6 +79,7 @@ public class DefaultLimiterManager implements LimiterManager {
             Limiter limiterVO = new Limiter();
 
             BeanUtils.copyProperties(limiter, limiterVO);
+            limiterVO.setLimit(((DefaultLimiter)limiter).getLimiterRate());
 
             return limiterVO;
         }).collect(Collectors.toUnmodifiableList());
@@ -87,5 +88,10 @@ public class DefaultLimiterManager implements LimiterManager {
     @Override
     public void removeLimiter(Serializable id) {
         limiterContainer.remove(id);
+    }
+
+    @Override
+    public void addLimiter(Limiter limiter) {
+        addLimiter(limiter.getId(), limiter.getLimit(), limiter.getLimitingTimeout(), limiter.getLimitingTimeUnit());
     }
 }

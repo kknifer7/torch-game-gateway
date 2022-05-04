@@ -11,6 +11,7 @@ import xit.gateway.api.route.limiter.manager.LimiterManager;
 import xit.gateway.api.service.RouteService;
 import xit.gateway.constant.RedisChannel;
 import xit.gateway.core.filter.LimitingFilter;
+import xit.gateway.pojo.Limiter;
 import xit.gateway.pojo.Route;
 import xit.gateway.utils.RedisUtils;
 
@@ -51,6 +52,9 @@ public class RedisSubscriber extends MessageListenerAdapter {
                 break;
             case ROUTE_LIST_DELETE:
                 routeService.removeByService((String) object);
+                break;
+            case LIMITER:
+                limiterManager.addLimiter((Limiter) object);
                 break;
             case LIMITER_SETTINGS_FLUSH:
                 limiterManager.flush();

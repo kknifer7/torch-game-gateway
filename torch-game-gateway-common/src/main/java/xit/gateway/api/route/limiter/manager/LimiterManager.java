@@ -10,6 +10,7 @@ public interface LimiterManager {
     void flush();
     void addLimiter(Serializable id);
     void removeLimiter(Serializable id);
+    void addLimiter(Limiter limiter);
     void addLimiter(Serializable userId, Long limit, Long limitingTimeout, TimeUnit limitingTimeUnit);
     List<Limiter> getAllLimiterVO();
 }
