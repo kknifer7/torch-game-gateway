@@ -9,6 +9,7 @@
 
   const [registerTable, {}] = useTable({
     title: '调用日志',
+    rowKey: 'id',
     api: getCallLogList,
     columns,
     formConfig: {
@@ -18,6 +19,5 @@
     useSearchForm: true,
     showTableSetting: true,
     bordered: true,
-    showIndexColumn: false,
   });
 </script>

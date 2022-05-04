@@ -1,26 +1,14 @@
 <template>
-  <PageWrapper dense contentFullHeight fixedHeight contentClass="flex">
+  <PageWrapper title="限流器管理" contentBackground @back="goBack">
     <BasicTable @register="registerTable">
-      <template #toolbar>
-        <a-button type="primary" @click="handleCreate">新增账号</a-button>
-      </template>
       <template #action="{ record }">
         <TableAction
           :actions="[
             {
-              icon: 'ant-design:lock-outlined',
-              tooltip: '限流',
-              onClick: handleLimit.bind(null, record),
-            },
-            {
-              icon: 'clarity:note-edit-line',
-              tooltip: '编辑用户资料',
-              onClick: handleEdit.bind(null, record),
-            },
-            {
               icon: 'ant-design:delete-outlined',
               color: 'error',
-              tooltip: '删除此账号',
+              tooltip: '删除该限流器',
+              disabled: record.type === '路由',
               popConfirm: {
                 title: '是否确认删除',
                 confirm: handleDelete.bind(null, record),
@@ -30,70 +18,77 @@
         />
       </template>
     </BasicTable>
-    <UserModal @register="registerModal" @success="handleSuccess" />
   </PageWrapper>
 </template>
 <script lang="ts" setup name="LimitManagement">
-  import { defineComponent, reactive } from 'vue';
-
-  import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { deleteUser, getUserList } from '/@/api/system/user';
+  import { ref } from 'vue';
+  import { useRoute } from 'vue-router';
+  import { columns } from './limit.data';
+  import { getLimitList, getRouteList, deleteLimit } from '/@/api/system/serve';
+  import { getUserList } from '/@/api/system/user';
   import { PageWrapper } from '/@/components/Page';
+  import { BasicTable, TableAction, useTable } from '/@/components/Table';
+  import { useGo } from '/@/hooks/web/usePage';
 
-  import { useModal } from '/@/components/Modal';
-  import UserModal from './UserModal.vue';
+  const route = useRoute();
+  const go = useGo();
 
-  import { columns, searchFormSchema } from './user.data';
+  const domain = ref(route.params?.domain);
 
-  const [registerModal, { openModal }] = useModal();
-  const searchInfo = reactive<Recordable>({});
+  const limitData = ref([]);
+
+  const fetchData = async () => {
+    const limitList = await getLimitList({ domain: domain.value });
+    const userList = await getUserList();
+    const routeList = await getRouteList({ domain: domain.value });
+
+    const userIds = userList.map((u) => u.id);
+    const routeIds = routeList.map((r) => r.id);
+    limitData.value = limitList.map((l) => {
+      let type = '';
+      if (userIds.includes(l.id)) {
+        type = '用户';
+      } else if (routeIds.includes(l.id)) {
+        type = '路由';
+      } else {
+        type = '未知';
+      }
+
+      return {
+        ...l,
+        type,
+      };
+    });
+  };
+  fetchData();
+
   const [registerTable, { reload, deleteTableDataRecord }] = useTable({
     title: '限流器列表',
-    api: getUserList,
     rowKey: 'id',
+    dataSource: limitData,
     columns,
     formConfig: {
       labelWidth: 120,
       schemas: [],
       autoSubmitOnEnter: true,
     },
-    useSearchForm: true,
-    showTableSetting: true,
+    showIndexColumn: false,
+    useSearchForm: false,
     bordered: true,
-    handleSearchInfoFn(info) {
-      console.log('handleSearchInfoFn', info);
-      return info;
-    },
     actionColumn: {
-      width: 120,
+      width: 80,
       title: '操作',
       dataIndex: 'action',
       slots: { customRender: 'action' },
     },
   });
 
-  function handleCreate() {
-    openModal(true, {
-      isUpdate: false,
-    });
-  }
-
-  function handleEdit(record: Recordable) {
-    console.log(record);
-    openModal(true, {
-      record,
-      isUpdate: true,
-    });
-  }
-
-  function handleDelete(record: Recordable) {
-    deleteUser([record.id]);
+  async function handleDelete(record: Recordable) {
+    await deleteLimit({ userId: record.id, domain: domain.value });
     deleteTableDataRecord(record.id);
   }
 
-  function handleSuccess({}) {
-    reload();
+  function goBack() {
+    go('/gateway/cluster/monitor');
   }
-
-  function handleLimit() {}
 </script>

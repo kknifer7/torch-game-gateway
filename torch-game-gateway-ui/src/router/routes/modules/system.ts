@@ -23,16 +23,16 @@ const system: AppRouteModule = {
       },
       component: () => import('/@/views/system/user/index.vue'),
     },
-    {
-      path: 'limit',
-      name: 'LimitManagement',
-      meta: {
-        icon: 'ant-design:lock-outlined',
-        title: '限流管理',
-        ignoreKeepAlive: false,
-      },
-      component: () => import('/@/views/system/limit/index.vue'),
-    },
+    // {
+    //   path: 'limit',
+    //   name: 'LimitManagement',
+    //   meta: {
+    //     icon: 'ant-design:lock-outlined',
+    //     title: '限流管理',
+    //     ignoreKeepAlive: false,
+    //   },
+    //   component: () => import('/@/views/system/limit/index.vue'),
+    // },
     // {
     //   path: 'role',
     //   name: 'RoleManagement',

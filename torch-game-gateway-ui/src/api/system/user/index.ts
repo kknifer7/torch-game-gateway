@@ -9,7 +9,7 @@ enum Api {
   Limit = '/user/limit',
 }
 
-export const getUserList = (params) => defHttp.get({ url: Api.List, params });
+export const getUserList = (params?) => defHttp.get({ url: Api.List, params });
 
 export const getUserInfo = (params) => defHttp.get({ url: Api.Info, params });
 

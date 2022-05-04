@@ -42,6 +42,7 @@
   const [registerModal, { openModal }] = useModal();
   const [registerTable, { reload, deleteTableDataRecord }] = useTable({
     title: '路由列表',
+    rowKey: 'id',
     api: getRouteList,
     columns,
     formConfig: {
@@ -74,8 +75,8 @@
     });
   }
 
-  function handleDelete(record: Recordable) {
-    deleteRoute({ id: record.id });
+  async function handleDelete(record: Recordable) {
+    await deleteRoute({ id: record.id });
     deleteTableDataRecord(record.id);
   }
 

@@ -82,8 +82,8 @@
     });
   }
 
-  function handleDelete(record: Recordable) {
-    deleteRoute([record.id]);
+  async function handleDelete(record: Recordable) {
+    await deleteRoute([record.id]);
     deleteTableDataRecord(record.id);
   }
 

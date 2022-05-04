@@ -35,6 +35,9 @@
           />
         </div>
       </div>
+      <a-button type="success" @click="handleGetLimitList(item.host + ':' + item.port)">
+        限流器列表
+      </a-button>
     </Card>
   </div>
 </template>
@@ -45,6 +48,9 @@
   import Progress from '/@/components/Progress/index.vue';
   import { formatSizeUnits } from '/@/utils';
   import { getServeStat } from '/@/api/system/serve';
+  import { useGo } from '/@/hooks/web/usePage';
+
+  const go = useGo();
 
   let intervalId: NodeJS.Timer;
 
@@ -80,6 +86,10 @@
   onBeforeUnmount(() => {
     clearInterval(intervalId);
   });
+
+  const handleGetLimitList = (domain) => {
+    go('/gateway/limit/' + domain);
+  };
 </script>
 
 <style lang="less" scoped>

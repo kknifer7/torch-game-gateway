@@ -41,6 +41,7 @@
   const [registerModal, { openModal }] = useModal();
   const [registerTable, { reload, deleteTableDataRecord }] = useTable({
     title: '配置列表',
+    rowKey: 'id',
     api: getConfigList,
     columns,
     formConfig: {
@@ -73,8 +74,8 @@
     });
   }
 
-  function handleDelete(record: Recordable) {
-    deleteConfig({ id: record.id });
+  async function handleDelete(record: Recordable) {
+    await deleteConfig({ id: record.id });
     deleteTableDataRecord(record.id);
   }
 

@@ -7,11 +7,11 @@
       <template #action="{ record }">
         <TableAction
           :actions="[
-            {
-              icon: 'clarity:info-standard-line',
-              tooltip: '查看路由详情',
-              onClick: handleView.bind(null, record),
-            },
+            // {
+            //   icon: 'clarity:info-standard-line',
+            //   tooltip: '查看路由详情',
+            //   onClick: handleView.bind(null, record),
+            // },
             {
               icon: 'clarity:note-edit-line',
               tooltip: '编辑服务',
@@ -47,6 +47,7 @@
   const [registerModal, { openModal }] = useModal();
   const [registerTable, { reload, deleteTableDataRecord }] = useTable({
     title: '服务列表',
+    rowKey: 'id',
     api: getServiceList,
     columns,
     formConfig: {
@@ -79,8 +80,8 @@
     });
   }
 
-  function handleDelete(record: Recordable) {
-    deleteService({ id: record.id });
+  async function handleDelete(record: Recordable) {
+    await deleteService({ id: record.id });
     deleteTableDataRecord(record.id);
   }
 

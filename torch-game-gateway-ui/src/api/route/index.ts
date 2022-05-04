@@ -11,7 +11,7 @@ enum Api {
   Sync = '/route/sync',
 }
 
-export const getRouteList = (params) => defHttp.get({ url: Api.List, params });
+export const getRouteList = (params?) => defHttp.get({ url: Api.List, params });
 
 export const getRouteLogList = (params) => defHttp.get({ url: Api.LogList, params });
 

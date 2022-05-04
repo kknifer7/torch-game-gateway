@@ -35,8 +35,6 @@
   </PageWrapper>
 </template>
 <script lang="ts" setup name="UserManagement">
-  import { defineComponent, reactive } from 'vue';
-
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import { deleteUser, getUserList } from '/@/api/system/user';
   import { PageWrapper } from '/@/components/Page';
@@ -50,7 +48,6 @@
   const [registerModal, { openModal }] = useModal();
   const [registerLimitModal, { openModal: openLimitModal }] = useModal();
 
-  const searchInfo = reactive<Recordable>({});
   const [registerTable, { reload, deleteTableDataRecord }] = useTable({
     title: '账号列表',
     api: getUserList,
@@ -89,8 +86,8 @@
     });
   }
 
-  function handleDelete(record: Recordable) {
-    deleteUser({ id: record.id });
+  async function handleDelete(record: Recordable) {
+    await deleteUser({ id: record.id });
     deleteTableDataRecord(record.id);
   }
 

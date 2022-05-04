@@ -44,14 +44,26 @@ const gateway: AppRouteModule = {
       component: () => import('/@/views/call-log/index.vue'),
     },
     {
-      path: 'monit',
-      name: 'ServeMonit',
+      path: 'cluster/monitor',
+      name: 'ClusterMonitor',
       meta: {
         title: '集群监控',
         icon: 'ant-design:database-outlined',
         ignoreKeepAlive: true,
       },
-      component: () => import('/@/views/system/monitor/serve/index.vue'),
+      component: () => import('/@/views/system/cluster/monitor/index.vue'),
+    },
+    {
+      path: 'limit/:domain',
+      name: 'LimitManagement',
+      meta: {
+        hideMenu: true,
+        title: '限流器管理',
+        ignoreKeepAlive: false,
+        showMenu: false,
+        currentActiveMenu: '/gateway',
+      },
+      component: () => import('/@/views/system/limit/index.vue'),
     },
     {
       path: 'detail/:name',
@@ -61,7 +73,7 @@ const gateway: AppRouteModule = {
         title: '服务详情',
         ignoreKeepAlive: false,
         showMenu: false,
-        currentActiveMenu: '/serivce',
+        currentActiveMenu: '/gateway',
       },
       component: () => import('/@/views/service/ServiceDetail.vue'),
     },
