@@ -39,31 +39,30 @@
 
   const fetchData = async () => {
     const limitList = await getLimitList({ domain: domain.value });
-    const userList = await getUserList();
-    const routeList = await getRouteList({ domain: domain.value });
+    const userList: any[] = await getUserList();
+    const routeList: any[] = await getRouteList({ domain: domain.value });
 
-    const userIds = userList.map((u) => u.id);
-    const routeIds = routeList.map((r) => r.id);
+    const list = [...userList, ...routeList];
     limitData.value = limitList.map((l) => {
-      let type = '';
-      if (userIds.includes(l.id)) {
-        type = '用户';
-      } else if (routeIds.includes(l.id)) {
-        type = '路由';
+      let item = list.find((i) => i.id == l.id);
+      if (item) {
+        return {
+          ...item,
+          ...l,
+          type: item.username ? '用户' : '路由',
+        };
       } else {
-        type = '未知';
+        return {
+          ...l,
+          type: '未知',
+        };
       }
-
-      return {
-        ...l,
-        type,
-      };
     });
   };
   fetchData();
 
   const [registerTable, { reload, deleteTableDataRecord }] = useTable({
-    title: '限流器列表',
+    // title: '限流器列表',
     rowKey: 'id',
     dataSource: limitData,
     columns,
