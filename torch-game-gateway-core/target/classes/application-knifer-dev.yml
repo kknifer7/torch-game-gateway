@@ -17,14 +17,14 @@ server:
 torch:
   gateway:
     password: 123456
+    ssl:
+      use-client-auth: false
+      password: 123456
+      key-store-path: ssl/client.jks
     init:
       routes-json-path: test-data/routes.json
     loadbalance:
       loadbalancer-class: xit.gateway.loadbalancer.impl.NoLoadbalancer
-    route-limiting:
-      time-unit: second
-      permits-per-unit: 2
-      limit: 10
     call-trace:
       record-threads: 2
       deacon:

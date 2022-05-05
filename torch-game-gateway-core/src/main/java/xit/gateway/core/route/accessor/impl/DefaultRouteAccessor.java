@@ -65,7 +65,7 @@ public class DefaultRouteAccessor implements RouteAccessor {
             throw new SystemException("route need update's service doesn't exist");
         }
         oldRoute = routes.stream()
-                .filter(r -> !StringUtils.equals(r.getId(), route.getId()))
+                .filter(r -> StringUtils.equals(r.getId(), route.getId()))
                 .findFirst()
                 .orElseThrow(() -> new SystemException("route doesn't exist"));
         synchronized (this){

@@ -17,6 +17,10 @@ server:
 torch:
   gateway:
     password: 123456
+    ssl:
+      use-client-auth: false
+      password: 123456
+      key-store-path: ssl/client.jks
     init:
       routes-json-path: test-data/routes.json
     loadbalance:

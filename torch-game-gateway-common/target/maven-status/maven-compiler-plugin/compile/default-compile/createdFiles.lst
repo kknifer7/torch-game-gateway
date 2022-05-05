@@ -1,4 +1,3 @@
-xit\gateway\pojo\RpcRoute.class
 xit\gateway\loadbalancer\impl\RandomLoadbalancer.class
 xit\gateway\utils\OshiUtils.class
 xit\gateway\exception\route\RouteDisabledException.class
@@ -29,7 +28,6 @@ xit\gateway\exception\valve\ValveException.class
 xit\gateway\api\request\container\RequesterContainer.class
 xit\gateway\exception\requester\BadRequestException.class
 xit\gateway\api\request\requester\RpcRequester.class
-xit\gateway\pojo\Site.class
 xit\gateway\api\cluster\gateway\selector\GatewaySelector.class
 xit\gateway\request\container\impl\GlobalRequestContextContainer.class
 xit\gateway\utils\OshiUtils$SimpleMemoryInfo.class
@@ -52,7 +50,6 @@ xit\gateway\api\route\accessor\RouteAccessor.class
 xit\gateway\pojo\Route.class
 xit\gateway\api\valve\AbstractValve.class
 xit\gateway\api\valve\Valve.class
-xit\gateway\pojo\HttpRoute.class
 xit\gateway\pojo\RequesterProxyResult.class
 xit\gateway\api\request\context\RequestContext.class
 xit\gateway\utils\RouteUtils.class

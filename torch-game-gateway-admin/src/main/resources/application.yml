@@ -4,7 +4,7 @@ spring:
   main:
     allow-bean-definition-overriding: true
   profiles:
-    active: kuizuo-dev
+    active: knifer-dev
 
   jpa:
     hibernate:

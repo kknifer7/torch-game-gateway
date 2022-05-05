@@ -1,5 +1,6 @@
 package xit.gateway.core.request.requester.impl;
 
+import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 import org.apache.commons.lang3.StringUtils;
@@ -19,12 +20,18 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 import reactor.netty.http.client.HttpClient;
+import xit.gateway.core.request.requester.ssl.KeyStoreHolder;
 import xit.gateway.exception.route.RouteDisabledException;
 import xit.gateway.api.request.requester.AbstractRequester;
 import xit.gateway.api.request.requester.HttpRequester;
 import xit.gateway.exception.system.SystemException;
 import xit.gateway.pojo.*;
 
+import javax.net.ssl.*;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -45,7 +52,11 @@ public class DefaultHttpRequester extends AbstractRequester implements HttpReque
                 this.webClient = WebClient.create(route.getUrl());
                 break;
             case HTTPS:
-                this.webClient = WebClient.builder().clientConnector(getClientConnector()).baseUrl(route.getUrl()).build();
+                this.webClient = WebClient.builder()
+                        .clientConnector(KeyStoreHolder.hasKeyStore() ?
+                                getClientConnectorWithKeyStore() : getClientConnector())
+                        .baseUrl(route.getUrl())
+                        .build();
                 break;
             default:
                 throw new SystemException("创建WebClient失败，协议不合法");
@@ -153,5 +164,51 @@ public class DefaultHttpRequester extends AbstractRequester implements HttpReque
                 .secure(t -> t.sslContext(SslContextBuilder.forClient().trustManager(InsecureTrustManagerFactory.INSTANCE)));
 
         return new ReactorClientHttpConnector(secure);
+    }
+
+    private ReactorClientHttpConnector getClientConnectorWithKeyStore(){
+        SslContextBuilder builder = SslContextBuilder.forClient();
+        KeyManagerFactory keyManagerFactory = null;
+        try {
+            keyManagerFactory = KeyManagerFactory.getInstance("SunX509");
+            keyManagerFactory.init(KeyStoreHolder.getKeyStore(), KeyStoreHolder.getPassword());
+        } catch (NoSuchAlgorithmException | UnrecoverableKeyException | KeyStoreException e) {
+            e.printStackTrace();
+        }
+        builder.keyManager(keyManagerFactory);
+
+        TrustManagerFactory trustManagerFactory = null;
+        try {
+            trustManagerFactory = TrustManagerFactory.getInstance("SunX509");
+            trustManagerFactory.init(KeyStoreHolder.getKeyStore());
+        } catch (NoSuchAlgorithmException | KeyStoreException e) {
+            e.printStackTrace();
+        }
+        builder.trustManager(trustManagerFactory);
+
+        SslContext sslContext = null;
+        try {
+            sslContext = builder.build();
+        } catch (SSLException e) {
+            e.printStackTrace();
+        }
+
+        SslContext finalSslContext = sslContext;
+        HttpClient httpClient = HttpClient.create().secure(t -> t.sslContext(finalSslContext).handlerConfigurator(handler -> {
+            SSLEngine engine = handler.engine();
+            List<SNIMatcher> matchers = new LinkedList<>();
+            SNIMatcher matcher = new SNIMatcher(0) {
+                @Override
+                public boolean matches(SNIServerName serverName) {
+                    return true;
+                }
+            };
+            matchers.add(matcher);
+            SSLParameters params = new SSLParameters();
+            params.setSNIMatchers(matchers);
+            engine.setSSLParameters(params);
+        }));
+
+        return new ReactorClientHttpConnector(httpClient);
     }
 }
