@@ -28,11 +28,13 @@ import xit.gateway.pojo.Route;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.*;
 
 public class DefaultRpcRequester extends AbstractRequester implements RpcRequester {
     private Channel channel;
     private final Map<ChannelId, Promise<byte[]>> requestPromise;
+    private EventLoopGroup group;
     private final Logger logger = LoggerFactory.getLogger(DefaultRpcRequester.class);
 
     public DefaultRpcRequester(Route route) {
@@ -44,7 +46,7 @@ public class DefaultRpcRequester extends AbstractRequester implements RpcRequest
     private void connectService(){
         // 初始化连接RPC服务
         logger.debug("初始化连接RPC服务");
-        NioEventLoopGroup group = new NioEventLoopGroup();
+        group = new NioEventLoopGroup();
         Bootstrap bootstrap = new Bootstrap()
                 .group(group)
                 .channel(NioSocketChannel.class)
@@ -65,12 +67,12 @@ public class DefaultRpcRequester extends AbstractRequester implements RpcRequest
         bootstrap.connect().addListener(future -> {
             if (!future.isSuccess()){
                 logger.warn("RPC服务：{}，连接失败", route.getRemark());
-                reconnect(group);
+                reconnect();
             }
         });
     }
 
-    private void reconnect(EventLoopGroup group){
+    private void reconnect(){
         group.schedule(() -> {
             logger.info("RPC服务：{}，尝试重连", route.getRemark());
             connectService();
@@ -131,7 +133,8 @@ public class DefaultRpcRequester extends AbstractRequester implements RpcRequest
 
     @Override
     public void close() {
-        channel.close();
+        Optional.ofNullable(channel).ifPresent(Channel::close);
+        group.shutdownGracefully();
     }
 
     private class DefaultRpcClientHandler extends ChannelInboundHandlerAdapter{

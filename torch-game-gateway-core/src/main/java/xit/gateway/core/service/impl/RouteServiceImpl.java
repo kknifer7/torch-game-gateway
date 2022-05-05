@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import xit.gateway.api.request.container.RoutesContainer;
 import xit.gateway.api.route.accessor.RouteAccessor;
 import xit.gateway.api.service.RouteService;
+import xit.gateway.constant.ProtocolType;
 import xit.gateway.constant.RedisKey;
 import xit.gateway.pojo.Route;
 import xit.gateway.utils.RedisUtils;
@@ -48,7 +49,13 @@ public class RouteServiceImpl implements RouteService {
     @Override
     public void save(Route route) {
         if (container.contains(route)){
-            accessor.updateRoute(route);
+            if (route.getProtocol() == ProtocolType.RPC){
+                // 如果是RPC协议，先移除，再重新添加
+                accessor.removeRoute(route.getServiceName(), route.getId());
+                accessor.loadRoute(route);
+            }else{
+                accessor.updateRoute(route);
+            }
         }else{
             accessor.loadRoute(route);
         }
