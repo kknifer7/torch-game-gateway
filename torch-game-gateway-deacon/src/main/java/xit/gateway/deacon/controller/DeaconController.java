@@ -24,6 +24,7 @@ import xit.gateway.request.context.impl.DefaultRequestContext;
 import xit.gateway.utils.RIUtils;
 
 import java.util.Collection;
+import java.util.Map;
 
 @RestController
 public class DeaconController {
@@ -91,6 +92,11 @@ public class DeaconController {
     @PostMapping("/list-gateways")
     public Mono<ResultInfo<Collection<Gateway>>> listGateways(){
         return RIUtils.create(ResultCode.OK, null, gatewayContainer.getAll());
+    }
+
+    @PostMapping("/get-gateway-num")
+    public Mono<ResultInfo<Map<String, Integer>>> getGatewayNum(){
+        return RIUtils.createOK(Map.of("num", gatewayContainer.getAll().size()));
     }
 
     @RequestMapping("/service/{serviceId}/**")

@@ -1,4 +1,5 @@
 xit\gateway\admin\controller\UserController.class
+xit\gateway\admin\controller\ServeController$2.class
 xit\gateway\admin\controller\RouteController.class
 xit\gateway\admin\service\UserService.class
 xit\gateway\admin\controller\ServiceController.class
@@ -10,7 +11,9 @@ xit\gateway\admin\domain\CallLog.class
 xit\gateway\admin\service\impl\RouteServiceImpl.class
 xit\gateway\admin\service\dto\UserLimitDto.class
 xit\gateway\admin\controller\AuthController.class
+xit\gateway\admin\controller\ServeController$1.class
 xit\gateway\admin\controller\ServeController.class
+xit\gateway\admin\controller\ServeController$3.class
 xit\gateway\admin\domain\User.class
 xit\gateway\admin\service\RouteService.class
 xit\gateway\admin\service\HTTPService.class
