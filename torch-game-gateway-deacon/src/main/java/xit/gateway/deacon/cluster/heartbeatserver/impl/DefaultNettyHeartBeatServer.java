@@ -1,10 +1,12 @@
 package xit.gateway.deacon.cluster.heartbeatserver.impl;
 
+import com.fasterxml.jackson.core.io.JsonEOFException;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.LineBasedFrameDecoder;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.timeout.IdleStateHandler;
@@ -18,6 +20,7 @@ import xit.gateway.pojo.Gateway;
 import xit.gateway.pojo.GatewayHeartBeatInfo;
 import xit.gateway.utils.JsonUtils;
 
+import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.Map;
 import java.util.Optional;
@@ -63,6 +66,7 @@ public class DefaultNettyHeartBeatServer implements HeartBeatServer {
                         socketChannel.pipeline()
                                 .addLast(new LoggingHandler())
                                 .addLast(new StringDecoder())
+                                .addLast(new LineBasedFrameDecoder(1024))
                                 .addLast(new IdleStateHandler(
                                         heartBeatIdleTimeout,
                                         0, 0,

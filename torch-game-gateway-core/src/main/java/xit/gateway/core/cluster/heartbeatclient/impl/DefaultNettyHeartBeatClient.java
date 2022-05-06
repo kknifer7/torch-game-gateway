@@ -7,6 +7,7 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.string.LineSeparator;
 import io.netty.handler.codec.string.StringEncoder;
 import io.netty.handler.timeout.IdleState;
 import io.netty.handler.timeout.IdleStateEvent;
@@ -94,7 +95,7 @@ public class DefaultNettyHeartBeatClient implements HeartBeatClient {
             if (evt instanceof IdleStateEvent){
                 IdleStateEvent event = (IdleStateEvent)evt;
                 if (event.state() == IdleState.WRITER_IDLE){
-                    ctx.writeAndFlush(packageHeartBeatInfo());
+                    ctx.writeAndFlush(packageHeartBeatInfo() + LineSeparator.DEFAULT);
                 }
             }
             super.userEventTriggered(ctx, evt);
