@@ -12,18 +12,6 @@
     "updateTime": "2022-02-02 19:10:10",
     "extra": 111
   },{
-    "id": "1223",
-    "serviceName": "service-01",
-    "remark": "本地测试服务-http",
-    "protocol": "http",
-    "host": "localhost",
-    "port": 8080,
-    "url": "http://localhost:8080/val",
-    "status": true,
-    "createTime": "2022-02-02 19:10:10",
-    "updateTime": "2022-02-02 19:10:10",
-    "extra": 111
-  },{
     "id": "333",
     "serviceName": "service-02",
     "remark": "本地测试服务-rpc",
@@ -31,18 +19,6 @@
     "host": "localhost",
     "port": 9000,
     "url": null,
-    "status": true,
-    "createTime": "2022-02-02 19:10:10",
-    "updateTime": "2022-02-02 19:10:10",
-    "extra": 111
-  },{
-    "id": "83",
-    "serviceName": "service-05",
-    "remark": "远程服务-http",
-    "protocol": "http",
-    "host": "218.62.100.7",
-    "port": 8000,
-    "url": "http://218.62.100.7:8000/",
     "status": true,
     "createTime": "2022-02-02 19:10:10",
     "updateTime": "2022-02-02 19:10:10",
