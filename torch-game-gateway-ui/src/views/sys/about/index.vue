@@ -3,96 +3,74 @@
     <template #headerContent>
       <div class="flex justify-between items-center">
         <span class="flex-1">
-          <a :href="GITHUB_URL" target="_blank">{{ name }}</a>
-          是一个基于Vue3.0、Vite、 Ant-Design-Vue 、TypeScript
-          的后台解决方案，目标是为中大型项目开发,提供现成的开箱解决方案及丰富的示例,原则上不会限制任何代码用于商用。
+          本项目是“厦门市火炬高新区挑战赛 - 微服务网关开发”演示项目，均为本参赛队伍自主设计实现
         </span>
       </div>
     </template>
-    <Description @register="infoRegister" class="enter-y" />
-    <Description @register="register" class="my-4 enter-y" />
-    <Description @register="registerDev" class="enter-y" />
+
+    <!-- <Description @register="infoRegister" class="enter-y" /> -->
+
+    <CollapseContainer class="enter-y" title="演示视频 ">
+      <video controls="true">
+        <source id="mp4" :src="introVideo" type="video/mp4" />
+      </video>
+    </CollapseContainer>
+
+    <CollapseContainer class="my-4 enter-y" title="模块介绍">
+      <div class="text-base">
+        <MarkdownViewer :value="introText" />
+      </div>
+    </CollapseContainer>
   </PageWrapper>
 </template>
 <script lang="ts" setup>
   import { h } from 'vue';
   import { Tag } from 'ant-design-vue';
   import { PageWrapper } from '/@/components/Page';
+  import { CollapseContainer } from '/@/components/Container/index';
   import { Description, DescItem, useDescription } from '/@/components/Description/index';
-  import { GITHUB_URL, SITE_URL, DOC_URL } from '/@/settings/siteSetting';
+  import { MarkdownViewer } from '/@/components/Markdown';
 
-  const { pkg, lastBuildTime } = __APP_INFO__;
-
-  const { dependencies, devDependencies, name, version } = pkg;
-
-  const schema: DescItem[] = [];
-  const devSchema: DescItem[] = [];
-
+  import introText from './模块介绍.md?raw';
   const commonTagRender = (color: string) => (curVal) => h(Tag, { color }, () => curVal);
-  const commonLinkRender = (text: string) => (href) => h('a', { href, target: '_blank' }, text);
 
+  const introVideo = 'https://img.kuizuo.cn/演示视频.mp4';
   const infoSchema: DescItem[] = [
     {
-      label: '版本',
+      label: 'Java版本',
       field: 'version',
       render: commonTagRender('blue'),
     },
     {
-      label: '最后编译时间',
-      field: 'lastBuildTime',
-      render: commonTagRender('blue'),
-    },
-    {
-      label: '文档地址',
-      field: 'doc',
-      render: commonLinkRender('文档地址'),
-    },
-    {
-      label: '预览地址',
-      field: 'preview',
-      render: commonLinkRender('预览地址'),
-    },
-    {
-      label: 'Github',
-      field: 'github',
-      render: commonLinkRender('Github'),
+      label: '技术栈',
+      field: 'skill',
     },
   ];
 
   const infoData = {
-    version,
-    lastBuildTime,
-    doc: DOC_URL,
-    preview: SITE_URL,
-    github: GITHUB_URL,
+    version: 11,
+    skill: '',
   };
-
-  Object.keys(dependencies).forEach((key) => {
-    schema.push({ field: key, label: key });
-  });
-
-  Object.keys(devDependencies).forEach((key) => {
-    devSchema.push({ field: key, label: key });
-  });
-
-  const [register] = useDescription({
-    title: '生产环境依赖',
-    data: dependencies,
-    schema: schema,
-    column: 3,
-  });
-
-  const [registerDev] = useDescription({
-    title: '开发环境依赖',
-    data: devDependencies,
-    schema: devSchema,
-    column: 3,
-  });
 
   const [infoRegister] = useDescription({
     title: '项目信息',
     data: infoData,
     schema: infoSchema,
-    column: 2,
+    column: 1,
+    collapseOptions: {
+      canExpand: true,
+    },
   });
 </script>
+
+<style scoped>
+  :deep(h2) {
+    font-size: x-large;
+    font-weight: bold;
+  }
+
+  :deep(ul) {
+    list-style: auto;
+    padding-left: 40px;
+  }
+</style>
