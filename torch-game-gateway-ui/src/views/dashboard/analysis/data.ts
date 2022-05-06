@@ -1,43 +1,79 @@
+import { getAnalysis } from '/@/api/system/serve/index';
+import { onBeforeMount, ref } from 'vue';
+
 export interface GrowCardItem {
   icon: string;
   title: string;
   value: number;
-  total: number;
   color: string;
-  action: string;
+  path?: string;
+}
+
+export function useDashboard() {
+  const growCardList = ref<GrowCardItem[]>([]);
+
+  onBeforeMount(() => {
+    getAnalysis().then((data) => {
+      const { gatewayCount, routeCount, serviceCount, callLogCount } = data;
+      growCardList.value = [
+        {
+          title: '网关数',
+          icon: 'cluster|svg',
+          value: gatewayCount,
+          color: 'blue',
+          path: '/gateway/cluster/monitor',
+        },
+        {
+          title: '服务数',
+          icon: 'service|svg',
+          value: serviceCount,
+          color: 'blue',
+          path: '/gateway/serviceList',
+        },
+        {
+          title: '路由数',
+          icon: 'route|svg',
+          value: routeCount,
+          color: 'blue',
+          path: '/gateway/routeList',
+        },
+        {
+          title: '调用数',
+          icon: 'call-log|svg',
+          value: callLogCount,
+          color: 'blue',
+          path: '/gateway/call-log',
+        },
+      ];
+    });
+  });
+
+  return { growCardList };
 }
 
 export const growCardList: GrowCardItem[] = [
   {
+    title: '网关数',
+    icon: 'total-sales|svg',
+    value: 20000,
+    color: 'blue',
+  },
+  {
+    title: '服务数',
+    icon: 'download-count|svg',
+    value: 8000,
+    color: 'orange',
+  },
+  {
+    title: '路由数',
+    icon: 'transaction|svg',
+    value: 5000,
+    color: 'purple',
+  },
+  {
     title: '访问数',
     icon: 'visit-count|svg',
     value: 2000,
-    total: 120000,
     color: 'green',
-    action: '月',
-  },
-  {
-    title: '成交额',
-    icon: 'total-sales|svg',
-    value: 20000,
-    total: 500000,
-    color: 'blue',
-    action: '月',
-  },
-  {
-    title: '下载数',
-    icon: 'download-count|svg',
-    value: 8000,
-    total: 120000,
-    color: 'orange',
-    action: '周',
-  },
-  {
-    title: '成交数',
-    icon: 'transaction|svg',
-    value: 5000,
-    total: 50000,
-    color: 'purple',
-    action: '年',
   },
 ];

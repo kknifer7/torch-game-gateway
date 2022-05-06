@@ -20,6 +20,10 @@ public class RouteServiceImpl implements RouteService {
     private final ServiceRepository serviceRepository;
 
     @Override
+    public long count() {
+        return routeRepository.count();
+    }
+    @Override
     public List<Route> findAll() {
         return routeRepository.findAll();
     }
@@ -55,6 +59,7 @@ public class RouteServiceImpl implements RouteService {
         route.setPort(resources.getPort());
         route.setUrl(resources.getUrl());
         route.setExtra(resources.getExtra());
+        route.setStatus(resources.getStatus());
         Route save = routeRepository.save(route);
         return save;
     }

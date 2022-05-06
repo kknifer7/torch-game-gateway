@@ -9,6 +9,8 @@ import java.util.Set;
 
 public interface RouteService {
 
+    long count();
+
     List<Route> findAll();
 
 

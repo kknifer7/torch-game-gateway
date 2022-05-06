@@ -24,6 +24,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserRepository userRepository;
 
     @Override
+    public long count() {
+        return userRepository.count();
+    }
+
+    @Override
     public Optional<User> findOne(Long id) {
         return this.userRepository.findById(id);
     }

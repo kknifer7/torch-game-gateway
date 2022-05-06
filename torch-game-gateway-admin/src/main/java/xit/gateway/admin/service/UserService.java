@@ -9,6 +9,8 @@ import java.util.Optional;
 import java.util.Set;
 
 public interface UserService {
+    long count();
+
     Optional<User> findOne(Long id);
 
     List<User> findAll();

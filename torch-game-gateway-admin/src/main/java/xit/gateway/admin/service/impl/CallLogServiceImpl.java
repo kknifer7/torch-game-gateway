@@ -14,6 +14,10 @@ public class CallLogServiceImpl implements CallLogService {
     private final CallLogRepository callLogRepository;
 
     @Override
+    public long count() {
+        return callLogRepository.count();
+    }
+    @Override
     public List<CallLog> findAll() {
         return callLogRepository.findAll();
     }

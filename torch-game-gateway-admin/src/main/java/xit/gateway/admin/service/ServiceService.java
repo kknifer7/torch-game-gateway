@@ -9,6 +9,8 @@ import java.util.Optional;
 import java.util.Set;
 
 public interface ServiceService {
+    long count();
+
     List<Service> findAll();
 
     Optional<Service> findByName(String name);

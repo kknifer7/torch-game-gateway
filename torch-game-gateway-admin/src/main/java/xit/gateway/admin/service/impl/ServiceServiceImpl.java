@@ -16,6 +16,11 @@ public class ServiceServiceImpl implements ServiceService {
     private final ServiceRepository serviceRepository;
 
     @Override
+    public long count() {
+        return serviceRepository.count();
+    }
+
+    @Override
     public List<Service> findAll() {
         List<Service> all = serviceRepository.findAll();
         return all;
