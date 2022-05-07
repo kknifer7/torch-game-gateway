@@ -32,6 +32,7 @@ public class DefaultNettyHeartBeatClient implements HeartBeatClient {
     private final int serverPort;
     private final String serverPwd;
     private final Gateway gateway;
+    private EventLoopGroup group;
     private final Logger logger = LoggerFactory.getLogger(DefaultNettyHeartBeatClient.class);
 
     public DefaultNettyHeartBeatClient(
@@ -51,7 +52,8 @@ public class DefaultNettyHeartBeatClient implements HeartBeatClient {
 
     @Override
     public void startBeat() {
-        NioEventLoopGroup group = new NioEventLoopGroup(1);
+        group = new NioEventLoopGroup(1);
+        DefaultNettyHeartBeatClient client = this;
 
         new Bootstrap()
                 .group(group)
@@ -65,29 +67,37 @@ public class DefaultNettyHeartBeatClient implements HeartBeatClient {
                                         TimeUnit.SECONDS
                                 ))
                                 .addLast(new StringEncoder())
-                                .addLast(new DefaultHeatBeatClientHandler(serverPwd, gateway));
+                                .addLast(new DefaultHeatBeatClientHandler(serverPwd, gateway, client));
                     }
                 })
                 .remoteAddress(new InetSocketAddress(serverHost, serverPort))
                 .connect().addListener(future -> {
                     if (!future.isSuccess()){
                         logger.warn("[{}]连接失败，尝试重连...", serverHost + ":" + serverPort);
-                        reconnect(group);
+                        reconnect();
                     }
                 });
     }
 
-    private void reconnect(EventLoopGroup group){
+    private void reconnect(){
         group.schedule(this::startBeat, 5, TimeUnit.SECONDS);
     }
 
     private static class DefaultHeatBeatClientHandler extends ChannelInboundHandlerAdapter{
         private final String serverPwd;
         private final Gateway gateway;
+        private final DefaultNettyHeartBeatClient heartBeatClient;
 
-        public DefaultHeatBeatClientHandler(String serverPwd, Gateway gateway){
+        public DefaultHeatBeatClientHandler(String serverPwd, Gateway gateway, DefaultNettyHeartBeatClient heartBeatClient){
             this.serverPwd = serverPwd;
             this.gateway = gateway;
+            this.heartBeatClient = heartBeatClient;
+        }
+
+        @Override
+        public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
+            heartBeatClient.reconnect();
+            super.handlerRemoved(ctx);
         }
 
         @Override
