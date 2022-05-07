@@ -31,7 +31,7 @@ public class GlobalRoutesContainer implements RoutesContainer {
         String serviceId = route.getServiceName();
         List<Route> routes = map.get(serviceId);
 
-        if (routes != null){
+        if (routes != null && routes.stream().noneMatch(r -> StringUtils.equals(r.getId(), route.getId()))){
             routes.add(route);
         }else{
             map.put(serviceId, new CopyOnWriteArrayList<>(List.of(route)));

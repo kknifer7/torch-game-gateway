@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
@@ -21,9 +22,11 @@ import xit.gateway.api.service.ConfigService;
 import xit.gateway.constant.ResultCode;
 import xit.gateway.core.limiter.container.impl.GlobalLimiterContainer;
 import xit.gateway.core.limiter.impl.DefaultLimiter;
+import xit.gateway.pojo.Route;
 import xit.gateway.utils.GatewayUriUtils;
 import xit.gateway.utils.RIUtils;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -87,7 +90,12 @@ public class LimitingFilter implements WebFilter {
                 return RIUtils.send(response, ResultCode.FORBIDDEN, "服务暂不可用，因为当前用户请求过多", null);
             }
 
-            routeLimiter = (DefaultLimiter) limiterContainer.get(routesContainer.get(serviceName)
+            List<Route> routes = routesContainer.get(serviceName);
+
+            if (CollectionUtils.isEmpty(routes)){
+                return RIUtils.send(response, ResultCode.REQUESTER_NOT_FOUND, "没有找到服务", null);
+            }
+            routeLimiter = (DefaultLimiter) limiterContainer.get(routes
                     .get(requestContextContainer.get(serviceName).lastCalledIndex().get()).getId());
             if (limiting(userLimiter)){ // 针对用户
                 response.setStatusCode(HttpStatus.TOO_MANY_REQUESTS);
